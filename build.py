@@ -538,9 +538,10 @@ add("bcs/consultancy/index.html",
 
     <h2>Dates</h2>
     <p>
-      I worked on the Cox Automotive account from 2004 to 2022, serving it from Capgemini's
-      Pune delivery centre before relocating to Atlanta. The mainframe migration itself ran
-      from 2013 to 2022.
+      I worked on the Cox Automotive account from 2004 to 2021, serving it from Capgemini's
+      Pune delivery centre before relocating to Atlanta in 2013. I was senior consultant on
+      the account from 2008, and from March 2020 to April 2021 I was the engineering manager
+      accountable for the mainframe retirement.
     </p>
   </section>
 </div>
