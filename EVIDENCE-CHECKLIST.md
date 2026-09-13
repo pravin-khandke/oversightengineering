@@ -221,6 +221,7 @@ Fourteen of the nineteen external URLs return 200. The other five are bot-protec
 
 | Date | Change |
 |---|---|
+| 13 September 2026 | IECON and IEEE GLOBECOM marked and highlighted as flagship, with a line naming what each is flagship of. Both claims verified against the societies' own published wording rather than asserted. |
 | 13 September 2026 | Peer review list rebuilt from the authoritative venue list. 26 venues, years removed from the names, counts added where more than five papers were reviewed, ordered closest to furthest from the author's own field. |
 | 13 September 2026 | RSS corrected to Fellow, which is the grade the Society conferred. |
 | 13 September 2026 | CAISAIS full name corrected. The page had it as Advances in Artificial Intelligence, Security and Information Systems. The conference is Artificial Intelligence Science and Applications in Industry and Society. |
