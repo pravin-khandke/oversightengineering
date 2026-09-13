@@ -221,6 +221,9 @@ Fourteen of the nineteen external URLs return 200. The other five are bot-protec
 
 | Date | Change |
 |---|---|
+| 13 September 2026 | Peer review list rebuilt from the authoritative venue list. 26 venues, years removed from the names, counts added where more than five papers were reviewed, ordered closest to furthest from the author's own field. |
+| 13 September 2026 | RSS corrected to Fellow, which is the grade the Society conferred. |
+| 13 September 2026 | CAISAIS full name corrected. The page had it as Advances in Artificial Intelligence, Security and Information Systems. The conference is Artificial Intelligence Science and Applications in Industry and Society. |
 | 13 September 2026 | Search engines asked not to index the site. robots.txt and a meta robots tag added to every page. |
 | 13 September 2026 | The four BCS URL rows filled in the form, one per Section 3 sub-section. |
 | 13 September 2026 | DNS cut over. The apex resolves to the four GitHub addresses and all four BCS form URLs return 200 over http. HTTPS pending certificate issue. |

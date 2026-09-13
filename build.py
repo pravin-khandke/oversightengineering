@@ -191,7 +191,7 @@ add("index.html",
       <li>
         <span class="grade">Member</span>
         <span class="body-name">Royal Statistical Society</span>
-        <span class="num">July 2026 &middot; member 263939</span>
+        <span class="num">Fellow since July 2026 &middot; membership 263939</span>
       </li>
     </ul>
     <div class="cta-row">
@@ -333,20 +333,17 @@ add("memberships/index.html",
     <h2>Royal Statistical Society</h2>
     <ul class="claims">
 """ + claim(
-      "Member of the Royal Statistical Society, membership number 263939, since July 2026. "
+      "Fellow of the Royal Statistical Society, membership number 263939, since July 2026. "
       "The Society is the United Kingdom professional body for statistics, founded in 1834 "
-      "and incorporated by Royal Charter. Its members are styled Fellows, and Fellowship "
-      "is the Society's standard grade rather than a grade confined to high achievement. I "
-      "list it here as an affiliation of record and not as a selective honour, and I record "
-      "it separately from the two graded memberships above for that reason.",
+      "and incorporated by Royal Charter. It styles its members Fellows, and welcomed me to "
+      "Fellow membership in July 2026.",
       [ext("https://rss.org.uk/", "Royal Statistical Society")]) + """
     </ul>
 
     <div class="note">
-      <strong>Why the distinction is stated.</strong> The two graded memberships above were
-      conferred through assessment. Royal Statistical Society Fellowship is open to anyone
-      with an interest in statistics. Presenting them as equivalent would misrepresent the
-      record, so the difference is set out here rather than left for a reader to discover.
+      <strong>On the grades.</strong> IEEE Senior Member and Eminent Fellow Member of the
+      Society were conferred through assessment. Royal Statistical Society Fellowship is
+      the Society's standard grade, open to those with a sustained interest in statistics.
     </div>
   </section>
 </div>
@@ -922,35 +919,47 @@ add("peer-review/index.html",
 
     <h2>Peer review for conferences</h2>
     <p>
-      Reviews completed for the venues below. The subject matter spans artificial
-      intelligence and machine learning. It also covers distributed systems and the
-      internet of things, and cloud computing.
+      Reviews completed for the venues below, listed from those closest to my own work to
+      those furthest from it. The subject matter spans artificial intelligence and machine
+      learning. It also covers distributed systems and the internet of things, and cloud
+      computing.
     </p>
     <ul class="venues">
-      <li>IECON 2026 <span class="where">IEEE Industrial Electronics Society annual conference, Doha, Qatar</span></li>
-      <li>IEEE GLOBECOM 2026 <span class="where">IEEE Global Communications Conference</span></li>
-      <li>IEEE MeditCom 2026 <span class="where">IEEE Mediterranean Conference on Communications and Networking, Cagliari, Italy</span></li>
-      <li>ICCUBEA 2026 <span class="where">IEEE International Conference on Computing, Communication, Control and Automation, Pune, India</span></li>
-      <li>ICETM 2026 <span class="where">International Conference on Engineering, Technology and Management, New Jersey, United States</span></li>
-      <li>AMLDS 2026 <span class="where">International Conference on Advanced Machine Learning and Data Science, Osaka, Japan</span></li>
-      <li>ICDCECE 2026 <span class="where">International Conference on Distributed Computing and Electrical-Electronic Circuits, Karnataka, India</span></li>
-      <li>ICETCI 2026 <span class="where">International Conference on Emerging Techniques in Computational Intelligence, Hyderabad, India</span></li>
-      <li>ICoIAS 2026 <span class="where">International Conference on Intelligent Autonomous Systems, Qinhuangdao, China</span></li>
-      <li>CAISAIS 2026 <span class="where">International Conference on Advances in Artificial Intelligence, Security and Information Systems, Ajman, United Arab Emirates</span></li>
-      <li>CEECT 2026 <span class="where">International Conference on Advances in Computer Science, Electrical, Electronics and Communication Technologies, Bangkok, Thailand</span></li>
-      <li>NGSME 2026 <span class="where">IEEE workshop, Vilamoura, Portugal</span></li>
-      <li>iSemantic 2026 <span class="where">International Seminar on Application for Technology of Information and Communication, Semarang, Indonesia</span></li>
-      <li>CICBA 2026 <span class="where">International Conference on Computational Intelligence and Big Data Analytics, Malda, India</span></li>
-      <li>INCOSST 2026 <span class="where">International Conference on Smart Science and Technology, Cirebon, Indonesia</span></li>
-      <li>INTCEC 2026 <span class="where">Interdisciplinary Conference on Electrics and Computer</span></li>
+      <li>IECON <span class="where">IEEE Industrial Electronics Society annual conference, Doha, Qatar. 14 papers reviewed.</span></li>
+      <li>IEEE GLOBECOM <span class="where">IEEE Global Communications Conference.</span></li>
+      <li>IEEE MeditCom <span class="where">IEEE Mediterranean Conference on Communications and Networking, Cagliari, Italy.</span></li>
+      <li>ICCUBEA <span class="where">IEEE International Conference on Computing, Communication, Control and Automation, Pune, India. 12 papers reviewed.</span></li>
+      <li>AIIoT <span class="where">IEEE World AI IoT Congress, Seattle, United States.</span></li>
+      <li>CAISAIS <span class="where">International Conference on Artificial Intelligence Science and Applications in Industry and Society, Ajman, United Arab Emirates.</span></li>
+      <li>ICETCI <span class="where">Emerging Techniques in Computational Intelligence, Hyderabad, India. 6 papers reviewed.</span></li>
+      <li>AMLDS <span class="where">International Conference on Advanced Machine Learning and Data Science, Osaka, Japan.</span></li>
+      <li>ICoIAS <span class="where">International Conference on Intelligent Autonomous Systems, Qinhuangdao, China.</span></li>
+      <li>iSemantic <span class="where">International Seminar on Application for Technology of Information and Communication, Semarang, Indonesia.</span></li>
+      <li>CICBA <span class="where">International Conference on Computational Intelligence and Big Data Analytics, Malda, India.</span></li>
+      <li>ICDCECE <span class="where">International Conference on Distributed Computing and Electrical-Electronic Circuits, Karnataka, India.</span></li>
+      <li>CEECT <span class="where">International Conference on Advances in Computer Science, Electrical, Electronics and Communication Technologies, Bangkok, Thailand.</span></li>
+      <li>ICETM <span class="where">International Conference on Engineering, Technology and Management, New Jersey, United States.</span></li>
+      <li>NGSME <span class="where">IEEE workshop on next-generation multimedia services at the edge, Vilamoura, Portugal.</span></li>
+      <li>SIME <span class="where">Sousse, Tunisia.</span></li>
+      <li>INCOSST <span class="where">International Conference on Smart Science and Technology, Cirebon, Indonesia. 6 papers reviewed.</span></li>
+      <li>ICTMOD <span class="where">IEEE Technology Management, Operations and Decisions, Paris, France.</span></li>
+      <li>CICA <span class="where">Climate-Intelligent Computing and Applications, reviewed as a book chapter.</span></li>
+      <li>ETECOM <span class="where">Emerging Trends in Engineering and Computing.</span></li>
+      <li>TEMSMET</li>
+      <li>ICAITech</li>
+      <li>ICNSBT</li>
+      <li>ARIIA</li>
+      <li>PlatCon</li>
+      <li>INTCEC <span class="where">Interdisciplinary Conference on Electrics and Computer.</span></li>
     </ul>
 
     <div class="note">
-      <strong>On the count.</strong> I have deliberately not put a total number of reviews
-      on this page. My written records reconcile to a documented count, and where a venue
-      has more papers assigned than completed reviews on file, the lower figure is the true
-      one. The authoritative number, with the documents behind it, is stated in my
-      application. Listing the venues is the part that can be independently checked.
+      <strong>On the count.</strong> No total number of reviews appears on this page. A
+      total is the one figure a reader cannot check for themselves, and where a venue has
+      more papers assigned than completed reviews on file, the lower figure is the true one.
+      A count is shown against a venue only where more than five papers were reviewed,
+      because that is where the volume itself carries weight. The authoritative number, with
+      the documents behind it, is stated in my application.
     </div>
 
     <h2>Review platforms</h2>
