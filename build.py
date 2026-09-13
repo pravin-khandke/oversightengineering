@@ -48,10 +48,10 @@ FOOTER = """
   <div class="wrap">
     <p class="foot-line">{name} &middot; {field}</p>
     <p class="foot-line small">
-      <a href="{base}/memberships/">Memberships</a> &middot;
-      <a href="{base}/publications/">Publications</a> &middot;
-      <a href="{base}/peer-review/">Peer review</a> &middot;
-      <a href="{base}/talks/">Talks</a> &middot;
+      <a href="/memberships/">Memberships</a> &middot;
+      <a href="/publications/">Publications</a> &middot;
+      <a href="/peer-review/">Peer review</a> &middot;
+      <a href="/talks/">Talks</a> &middot;
       <a href="mailto:{email}">{email}</a>
     </p>
     <p class="foot-line small muted">
@@ -79,7 +79,7 @@ def nav(current: str) -> str:
     out = []
     for href, label in items:
         cur = ' aria-current="page"' if href == current else ""
-        out.append(f'      <li><a href="{SITE["base"]}/{href}"{cur}>{label}</a></li>')
+        out.append(f'      <li><a href="/{href}"{cur}>{label}</a></li>')
     return '<ul class="nav-list">\n' + "\n".join(out) + "\n    </ul>"
 
 
@@ -96,13 +96,13 @@ BASE = """<!DOCTYPE html>
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{base}/{path}">
-<link rel="stylesheet" href="{base}/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="{base}/">
+    <a class="brand" href="/">
       <span class="brand-name">{name}</span>
       <span class="brand-sub">{tagline}</span>
     </a>
@@ -194,8 +194,8 @@ add("index.html",
       </li>
     </ul>
     <div class="cta-row">
-      <a class="btn" href="https://oversightengineering.com/publications/">Publications</a>
-      <a class="btn ghost" href="https://oversightengineering.com/peer-review/">Peer review record</a>
+      <a class="btn" href="/publications/">Publications</a>
+      <a class="btn ghost" href="/peer-review/">Peer review record</a>
     </div>
   </div>
 </section>
@@ -211,27 +211,27 @@ add("index.html",
     <div class="grid two">
       <div class="card">
         <span class="kicker">Body of work</span>
-        <h3><a class="card-link" href="https://oversightengineering.com/bcs/invention/">Invention and innovation</a></h3>
+        <h3><a class="card-link" href="/bcs/invention/">Invention and innovation</a></h3>
         <p>A human-in-the-loop pipeline that reconciles customer remittances arriving
         through four separate channels, and the peer-reviewed publication of the pattern
         behind it.</p>
       </div>
       <div class="card">
         <span class="kicker">Body of work</span>
-        <h3><a class="card-link" href="https://oversightengineering.com/bcs/consultancy/">Consultancy</a></h3>
+        <h3><a class="card-link" href="/bcs/consultancy/">Consultancy</a></h3>
         <p>Advisory work on retiring a continental-scale automotive data platform, where a
         recommended data model became the client organisation's standing integration
         standard.</p>
       </div>
       <div class="card">
         <span class="kicker">Professional impact</span>
-        <h3><a class="card-link" href="https://oversightengineering.com/bcs/mentoring/">Mentoring and coaching</a></h3>
+        <h3><a class="card-link" href="/bcs/mentoring/">Mentoring and coaching</a></h3>
         <p>Structured development of engineers inside my teams, a sponsored university
         capstone, and an open standard for children's use of AI.</p>
       </div>
       <div class="card">
         <span class="kicker">Standing in the community</span>
-        <h3><a class="card-link" href="https://oversightengineering.com/bcs/standing/">Public influencer</a></h3>
+        <h3><a class="card-link" href="/bcs/standing/">Public influencer</a></h3>
         <p>Keynotes at recognised external events. Technical programme committees at
         international conferences. A peer review record and sustained written work on
         digital and IT topics.</p>
@@ -241,27 +241,27 @@ add("index.html",
     <h2>Supporting records</h2>
     <div class="grid three">
       <div class="card">
-        <h3><a class="card-link" href="https://oversightengineering.com/memberships/">Memberships</a></h3>
+        <h3><a class="card-link" href="/memberships/">Memberships</a></h3>
         <p>Grades held, the body that conferred each, and a verification link where one
         exists.</p>
       </div>
       <div class="card">
-        <h3><a class="card-link" href="https://oversightengineering.com/publications/">Publications</a></h3>
+        <h3><a class="card-link" href="/publications/">Publications</a></h3>
         <p>Peer-reviewed papers and technical writing, with links to the published
         record.</p>
       </div>
       <div class="card">
-        <h3><a class="card-link" href="https://oversightengineering.com/talks/">Talks</a></h3>
+        <h3><a class="card-link" href="/talks/">Talks</a></h3>
         Keynotes and invited talks, with the organiser's own listing where it is public.
         listing where it is public.</p>
       </div>
       <div class="card">
-        <h3><a class="card-link" href="https://oversightengineering.com/peer-review/">Peer review</a></h3>
+        <h3><a class="card-link" href="/peer-review/">Peer review</a></h3>
         <p>The international venues where I have reviewed submissions, named rather than
         counted.</p>
       </div>
       <div class="card">
-        <h3><a class="card-link" href="https://oversightengineering.com/iet/">IET</a></h3>
+        <h3><a class="card-link" href="/iet/">IET</a></h3>
         <p>The criteria I am preparing for IET Fellowship, and how that application differs
         from the BCS one.</p>
       </div>
@@ -691,7 +691,7 @@ add("bcs/standing/index.html",
     <h2>Peer review</h2>
     <p>
       I review submitted papers for international conferences, across artificial\n      intelligence and distributed systems as well as the internet of things and cloud\n      computing. The venues are named on the
-      <a href="https://oversightengineering.com/peer-review/">peer review record</a> rather
+      <a href="/peer-review/">peer review record</a> rather
       than summarised as a number here, because a named venue can be checked and a total
       cannot.
     </p>
@@ -702,7 +702,7 @@ add("bcs/standing/index.html",
       "Two peer-reviewed publications, one in the International Journal of Computer "
       "Applications and one in the proceedings of an IEEE-sponsored conference, covering "
       "human-in-the-loop interfaces and event-driven architectures.",
-      [ext("https://oversightengineering.com/publications/", "Publications, with a link to each paper")]) + "\n" + claim(
+      [ext("/publications/", "Publications, with a link to each paper")]) + "\n" + claim(
       "Sustained technical writing for engineers, published on developer platforms and read "
       "outside my own organisation, The subjects are architecture and "
       "reliability, and the practical failure modes of AI systems in production.",
@@ -718,7 +718,7 @@ add("bcs/standing/index.html",
     <p>
       I have judged student computing projects at Kennesaw State University, most recently
       on the spring 2026 Computing Showcase panel. That sits with the rest of the development
-      work on the <a href="https://oversightengineering.com/bcs/mentoring/">mentoring page</a>
+      work on the <a href="/bcs/mentoring/">mentoring page</a>
       rather than being counted twice.
     </p>
 
@@ -1052,12 +1052,12 @@ add("404.html",
     <p class="lede">
       The address you followed does not match anything on this site. The pages that do
       exist are listed in the navigation above, or you can start from the
-      <a href="https://oversightengineering.com/">home page</a>.
+      <a href="/">home page</a>.
     </p>
     <div class="cta-row">
-      <a class="btn" href="https://oversightengineering.com/">Home</a>
-      <a class="btn ghost" href="https://oversightengineering.com/publications/">Publications</a>
-      <a class="btn ghost" href="https://oversightengineering.com/peer-review/">Peer review</a>
+      <a class="btn" href="/">Home</a>
+      <a class="btn ghost" href="/publications/">Publications</a>
+      <a class="btn ghost" href="/peer-review/">Peer review</a>
     </div>
   </div>
 </section>
