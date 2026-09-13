@@ -166,6 +166,12 @@ ul.venues li {
   border: 1px solid var(--line-soft); border-radius: 5px; font-size: 15px;
 }
 ul.venues .where { color: var(--muted); font-size: 13.5px; display: block; }
+/* country flags on the venue lists */
+img.flag {
+  width: 18px; height: 12px; display: inline-block; vertical-align: -1px;
+  margin-right: 7px; border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(22, 32, 43, .14); object-fit: cover;
+}
 
 /* ---------- identifiers ---------- */
 ul.ids list-style: none;

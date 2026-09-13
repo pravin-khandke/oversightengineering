@@ -680,10 +680,10 @@ add("bcs/standing/index.html",
       is an IEEE workshop rather than a full conference, and I describe it as such.
     </p>
     <ul class="venues">
-      <li>AIIoT 2026 <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
-      <li>BDAA 2026 <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
-      <li>SIME 2026 <span class="where">Sousse, Tunisia</span></li>
-      <li>NGSME 2026 <span class="where">IEEE workshop, Vilamoura, Portugal</span></li>
+      <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT 2026 <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
+      <li><img class="flag" src="/assets/flags/es.png" alt="Spain" width="18" height="12"> BDAA 2026 <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
+      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME 2026 <span class="where">Sousse, Tunisia</span></li>
+      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME 2026 <span class="where">IEEE workshop, Vilamoura, Portugal</span></li>
     </ul>
 
     <h2>Peer review</h2>
@@ -911,10 +911,10 @@ add("peer-review/index.html",
       conference rather than a stand-alone event.
     </p>
     <ul class="venues">
-      <li>AIIoT 2026 <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
-      <li>BDAA 2026 <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
-      <li>SIME 2026 <span class="where">Sousse, Tunisia</span></li>
-      <li>NGSME 2026 <span class="where">IEEE workshop on next-generation multimedia services at the edge, Vilamoura, Portugal</span></li>
+      <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT 2026 <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
+      <li><img class="flag" src="/assets/flags/es.png" alt="Spain" width="18" height="12"> BDAA 2026 <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
+      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME 2026 <span class="where">Sousse, Tunisia</span></li>
+      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME 2026 <span class="where">IEEE workshop on next-generation multimedia services at the edge, Vilamoura, Portugal</span></li>
     </ul>
 
     <h2>Peer review for conferences</h2>
@@ -922,7 +922,7 @@ add("peer-review/index.html",
       Reviews completed for the venues below, listed from those closest to my own work to
       those furthest from it. The subject matter spans artificial intelligence and machine
       learning. It also covers distributed systems and the internet of things, and cloud
-      computing.
+      computing. The flags mark 13 countries across four continents.
     </p>
     <p>
       The list opens with the two flagship conferences, both marked as such. IECON is the
@@ -930,26 +930,26 @@ add("peer-review/index.html",
       is one of the two flagship conferences of the IEEE Communications Society.
     </p>
     <ul class="venues">
-      <li class="flagship">IECON <span class="pill flag">Flagship</span> <span class="where">IEEE Industrial Electronics Society annual conference, Doha, Qatar. 14 papers reviewed.</span></li>
-      <li class="flagship">IEEE GLOBECOM <span class="pill flag">Flagship</span> <span class="where">IEEE Global Communications Conference, Macau, China.</span></li>
-      <li>IEEE MeditCom <span class="where">IEEE Mediterranean Conference on Communications and Networking, Cagliari, Italy.</span></li>
-      <li>ICCUBEA <span class="where">IEEE International Conference on Computing, Communication, Control and Automation, Pune, India. 12 papers reviewed.</span></li>
-      <li>AIIoT <span class="where">IEEE World AI IoT Congress, Seattle, United States.</span></li>
-      <li>CAISAIS <span class="where">International Conference on Artificial Intelligence Science and Applications in Industry and Society, Ajman, United Arab Emirates.</span></li>
-      <li>ICETCI <span class="where">Emerging Techniques in Computational Intelligence, Hyderabad, India. 6 papers reviewed.</span></li>
-      <li>AMLDS <span class="where">International Conference on Advanced Machine Learning and Data Science, Osaka, Japan.</span></li>
-      <li>ICoIAS <span class="where">International Conference on Intelligent Autonomous Systems, Qinhuangdao, China.</span></li>
-      <li>iSemantic <span class="where">International Seminar on Application for Technology of Information and Communication, Semarang, Indonesia.</span></li>
-      <li>CICBA <span class="where">International Conference on Computational Intelligence and Big Data Analytics, Malda, India.</span></li>
-      <li>ICDCECE <span class="where">International Conference on Distributed Computing and Electrical-Electronic Circuits, Karnataka, India.</span></li>
-      <li>CEECT <span class="where">International Conference on Advances in Computer Science, Electrical, Electronics and Communication Technologies, Bangkok, Thailand.</span></li>
-      <li>ICETM <span class="where">International Conference on Engineering, Technology and Management, New Jersey, United States.</span></li>
-      <li>NGSME <span class="where">IEEE workshop on next-generation multimedia services at the edge, Vilamoura, Portugal.</span></li>
-      <li>SIME <span class="where">Sousse, Tunisia.</span></li>
-      <li>INCOSST <span class="where">International Conference on Smart Science and Technology, Cirebon, Indonesia. 6 papers reviewed.</span></li>
-      <li>ICTMOD <span class="where">IEEE Technology Management, Operations and Decisions, Paris, France.</span></li>
+      <li class="flagship"><img class="flag" src="/assets/flags/qa.png" alt="Qatar" width="18" height="12"> IECON <span class="pill flag">Flagship</span> <span class="where">IEEE Industrial Electronics Society annual conference, Doha, Qatar. 14 papers reviewed.</span></li>
+      <li class="flagship"><img class="flag" src="/assets/flags/cn.png" alt="China" width="18" height="12"> IEEE GLOBECOM <span class="pill flag">Flagship</span> <span class="where">IEEE Global Communications Conference, Macau, China.</span></li>
+      <li><img class="flag" src="/assets/flags/it.png" alt="Italy" width="18" height="12"> IEEE MeditCom <span class="where">IEEE Mediterranean Conference on Communications and Networking, Cagliari, Italy.</span></li>
+      <li><img class="flag" src="/assets/flags/in.png" alt="India" width="18" height="12"> ICCUBEA <span class="where">IEEE International Conference on Computing, Communication, Control and Automation, Pune, India. 12 papers reviewed.</span></li>
+      <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT <span class="where">IEEE World AI IoT Congress, Seattle, United States.</span></li>
+      <li><img class="flag" src="/assets/flags/ae.png" alt="United Arab Emirates" width="18" height="12"> CAISAIS <span class="where">International Conference on Artificial Intelligence Science and Applications in Industry and Society, Ajman, United Arab Emirates.</span></li>
+      <li><img class="flag" src="/assets/flags/in.png" alt="India" width="18" height="12"> ICETCI <span class="where">Emerging Techniques in Computational Intelligence, Hyderabad, India. 6 papers reviewed.</span></li>
+      <li><img class="flag" src="/assets/flags/jp.png" alt="Japan" width="18" height="12"> AMLDS <span class="where">International Conference on Advanced Machine Learning and Data Science, Osaka, Japan.</span></li>
+      <li><img class="flag" src="/assets/flags/cn.png" alt="China" width="18" height="12"> ICoIAS <span class="where">International Conference on Intelligent Autonomous Systems, Qinhuangdao, China.</span></li>
+      <li><img class="flag" src="/assets/flags/id.png" alt="Indonesia" width="18" height="12"> iSemantic <span class="where">International Seminar on Application for Technology of Information and Communication, Semarang, Indonesia.</span></li>
+      <li><img class="flag" src="/assets/flags/in.png" alt="India" width="18" height="12"> CICBA <span class="where">International Conference on Computational Intelligence and Big Data Analytics, Malda, India.</span></li>
+      <li><img class="flag" src="/assets/flags/in.png" alt="India" width="18" height="12"> ICDCECE <span class="where">International Conference on Distributed Computing and Electrical-Electronic Circuits, Karnataka, India.</span></li>
+      <li><img class="flag" src="/assets/flags/th.png" alt="Thailand" width="18" height="12"> CEECT <span class="where">International Conference on Advances in Computer Science, Electrical, Electronics and Communication Technologies, Bangkok, Thailand.</span></li>
+      <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> ICETM <span class="where">International Conference on Engineering, Technology and Management, New Jersey, United States.</span></li>
+      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME <span class="where">IEEE workshop on next-generation multimedia services at the edge, Vilamoura, Portugal.</span></li>
+      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME <span class="where">Sousse, Tunisia.</span></li>
+      <li><img class="flag" src="/assets/flags/id.png" alt="Indonesia" width="18" height="12"> INCOSST <span class="where">International Conference on Smart Science and Technology, Cirebon, Indonesia. 6 papers reviewed.</span></li>
+      <li><img class="flag" src="/assets/flags/fr.png" alt="France" width="18" height="12"> ICTMOD <span class="where">IEEE Technology Management, Operations and Decisions, Paris, France.</span></li>
       <li>CICA <span class="where">Climate-Intelligent Computing and Applications, reviewed as a book chapter.</span></li>
-      <li>ETECOM <span class="where">Emerging Trends in Engineering and Computing.</span></li>
+      <li><img class="flag" src="/assets/flags/fr.png" alt="France" width="18" height="12"> ETECOM <span class="where">Emerging Trends in Engineering and Computing.</span></li>
       <li>TEMSMET</li>
       <li>ICAITech</li>
       <li>ICNSBT</li>
