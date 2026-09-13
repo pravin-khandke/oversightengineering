@@ -30,12 +30,24 @@ Do not hand-edit files in `docs/`. They are generated, and the next build overwr
 
 The BCS form allows one URL per experiential statement. This is the mapping.
 
-| Form section | Criterion (verify the tick each time) | URL to enter |
+Section 3 of the form has four sub-sections, and each carries one URL field. Entered in
+`bcs-fellow-application-form-pravin-khandke.docx` on 13 September 2026, in this order.
+Backup at `old/bcs-fellow-application-form-pravin-khandke.backup-20260913-140042-pre-urls.docx`.
+
+| Section 3 | What that section evidences | URL now in the form |
 |---|---|---|
-| Body of work | Invention and innovation | `https://oversightengineering.com/bcs/invention/` |
-| Body of work | Consultancy | `https://oversightengineering.com/bcs/consultancy/` |
-| Professional impact | Mentoring and coaching | `https://oversightengineering.com/bcs/mentoring/` |
-| Standing in the community | Public influencer | `https://oversightengineering.com/bcs/standing/` |
+| A: Body of work | The human-in-the-loop remittance pipeline | `https://oversightengineering.com/bcs/invention/` |
+| B: Professional impact | Mentoring engineers, and the capstone team | `https://oversightengineering.com/bcs/mentoring/` |
+| C: Additional sub-criterion | The Cox Automotive platform engagement | `https://oversightengineering.com/bcs/consultancy/` |
+| D: Standing in the community | Talks, judging, peer review, media | `https://oversightengineering.com/bcs/standing/` |
+
+The four fields are plain text, not hyperlinks, matching the template. A reader copies the
+address rather than clicking it. Convert them to clickable links if you want to.
+
+**Read this before submitting.** `https://` does not work yet, because GitHub has not issued
+the certificate for the domain. The matching `http://` addresses work today. If the
+certificate is still missing when you submit, change these four to `http://`, so an assessor
+who follows them lands on the page rather than on a browser warning.
 
 Supporting pages:
 
@@ -192,6 +204,7 @@ Fourteen of the nineteen external URLs return 200. The other five are bot-protec
 
 | Date | Change |
 |---|---|
+| 13 September 2026 | The four BCS URL rows filled in the form, one per Section 3 sub-section. |
 | 13 September 2026 | DNS cut over. The apex resolves to the four GitHub addresses and all four BCS form URLs return 200 over http. HTTPS pending certificate issue. |
 | 13 September 2026 | Internal links made root-relative. They were absolute to https, so the page loaded over http while the stylesheet request failed, and the site rendered unstyled. Canonical and og:url stay absolute. |
 | 13 September 2026 | Site built. 11 pages. Three dead URLs found by probe and replaced: Extract Summit, IEEE ICCBI and AIC 2026 were all guessed wrong and corrected against their official sites. Zero em dashes, zero semicolons, zero multi-item comma lists in the prose. Zero broken internal links. |
