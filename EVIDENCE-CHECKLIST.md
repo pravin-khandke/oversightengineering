@@ -221,6 +221,7 @@ Fourteen of the nineteen external URLs return 200. The other five are bot-protec
 
 | Date | Change |
 |---|---|
+| 13 September 2026 | Counts reconciled against the evidence folder. 26 venues and 73 papers, each with a review on file. Resume, BCS form and site now agree. Published Authority Magazine bio still says 60+ across 17 and has not been changed. |
 | 13 September 2026 | IECON and IEEE GLOBECOM marked and highlighted as flagship, with a line naming what each is flagship of. Both claims verified against the societies' own published wording rather than asserted. |
 | 13 September 2026 | Peer review list rebuilt from the authoritative venue list. 26 venues, years removed from the names, counts added where more than five papers were reviewed, ordered closest to furthest from the author's own field. |
 | 13 September 2026 | RSS corrected to Fellow, which is the grade the Society conferred. |
