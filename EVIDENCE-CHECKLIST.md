@@ -1,4 +1,4 @@
-# Evidence checklist — oversightingengineering.com
+# Evidence checklist — oversightengineering.com
 
 Maintained record of what this site carries, what backs each claim, and what is still missing.
 
@@ -192,4 +192,6 @@ Fourteen of the nineteen external URLs return 200. The other five are bot-protec
 
 | Date | Change |
 |---|---|
+| 13 September 2026 | DNS cut over. The apex resolves to the four GitHub addresses and all four BCS form URLs return 200 over http. HTTPS pending certificate issue. |
+| 13 September 2026 | Internal links made root-relative. They were absolute to https, so the page loaded over http while the stylesheet request failed, and the site rendered unstyled. Canonical and og:url stay absolute. |
 | 13 September 2026 | Site built. 11 pages. Three dead URLs found by probe and replaced: Extract Summit, IEEE ICCBI and AIC 2026 were all guessed wrong and corrected against their official sites. Zero em dashes, zero semicolons, zero multi-item comma lists in the prose. Zero broken internal links. |

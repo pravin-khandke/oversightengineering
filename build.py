@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Static site generator for oversightingengineering.com
+Static site generator for oversightengineering.com
 
 Writes plain HTML into docs/ (the GitHub Pages publish root).
 Run:  python3 build.py

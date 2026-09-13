@@ -1,4 +1,32 @@
-# Deploy — oversightingengineering.com on GitHub Pages
+# Deploy — oversightengineering.com on GitHub Pages
+
+> ## Current status, 13 September 2026
+>
+> **Live and working over http.** DNS is done: the apex resolves to all four GitHub
+> addresses and the site serves `Server: GitHub.com`.
+>
+>     http://oversightengineering.com/                200
+>     http://oversightengineering.com/bcs/invention/  200
+>     http://oversightengineering.com/bcs/consultancy/ 200
+>     http://oversightengineering.com/bcs/mentoring/  200
+>     http://oversightengineering.com/bcs/standing/   200
+>
+> **HTTPS is not ready.** GitHub is still presenting its `*.github.io` wildcard, which does
+> not match the domain, so `https://` fails the certificate check. Let's Encrypt
+> provisioning usually completes within a few minutes and can take up to 24 hours. Do not
+> tick Enforce HTTPS until `https://oversightengineering.com/` loads without a warning.
+>
+> **The repo name is misspelled.** It is `oversightengineering` with an extra "ing",
+> while the domain is `oversightengineering`. The Pages custom domain is correct, so
+> nothing is broken. Rename it if you want the GitHub URL to match:
+>
+>     gh repo rename oversightengineering
+>     git remote set-url origin https://github.com/pravin-khandke/oversightengineering.git
+>
+> **www points at the apex rather than at GitHub.** It resolves and works, because the apex
+> A records carry it through to GitHub. GitHub's own documentation asks for a CNAME to
+> `pravin-khandke.github.io` instead. Worth changing if the certificate does not issue on
+> its own, since an unexpected record can fail their domain check.
 
 Everything below is the exact sequence. Nothing here is published, because it sits outside `docs/`.
 
@@ -15,21 +43,21 @@ Run from `~/Documents/GitHub/oversightengineering`:
     git init -b main
     git add -A
     git commit -m "site: BCS and IET fellowship evidence record"
-    gh repo create oversightingengineering --public --source=. --remote=origin --push
+    gh repo create oversightengineering --public --source=. --remote=origin --push
 
-Already done for you if the repo exists. Check with `gh repo view pravin-khandke/oversightingengineering`.
+Already done for you if the repo exists. Check with `gh repo view pravin-khandke/oversightengineering`.
 
 ---
 
 ## Part B — Turn on GitHub Pages
 
-1. Open `https://github.com/pravin-khandke/oversightingengineering`
+1. Open `https://github.com/pravin-khandke/oversightengineering`
 2. Click **Settings** (top row of tabs, far right).
 3. In the left sidebar, click **Pages**.
 4. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
 5. Under **Branch**, pick **main** and set the folder to **/docs**. Click **Save**.
 6. Wait one to two minutes. Reload the page. A banner appears saying "Your site is live at ...".
-7. The temporary address is `https://pravin-khandke.github.io/oversightingengineering/`. Open it and confirm the site loads before touching DNS.
+7. The temporary address is `https://pravin-khandke.github.io/oversightengineering/`. Open it and confirm the site loads before touching DNS.
 
 Do not skip step 7. If the site does not load there, DNS will not fix it.
 
@@ -84,7 +112,7 @@ The four A records are GitHub's published addresses, confirmed by DNS lookup at 
 
 Once DNS has propagated:
 
-    dig +short A oversightingengineering.com          # expect the four GitHub addresses
+    dig +short A oversightengineering.com          # expect the four GitHub addresses
     dig +short CNAME www.oversightengineering.com     # expect pravin-khandke.github.io
     curl -sS -o /dev/null -w "%{http_code}\n" https://oversightengineering.com/
     curl -sS -o /dev/null -w "%{http_code}\n" https://oversightengineering.com/bcs/invention/

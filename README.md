@@ -1,4 +1,4 @@
-# oversightingengineering.com
+# oversightengineering.com
 
 Source for `https://oversightengineering.com`, the public record of the work cited in
 Pravin Khandke's BCS and IET fellowship applications.
