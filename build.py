@@ -91,6 +91,7 @@ BASE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <meta name="author" content="{name}">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="canonical" href="{base}/{path}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
@@ -1064,6 +1065,19 @@ add("404.html",
 """)
 
 # ============================================================================
+# robots
+# ============================================================================
+# Search engines are asked not to index this site. It exists so that an assessing
+# body can check claims made in an application, and it is reached from the links
+# in that application rather than from a search result.
+ROBOTS = """User-agent: *
+Disallow: /
+
+# Crawlers that ignore this file are handled by the meta robots tag on every page.
+"""
+
+
+# ============================================================================
 # emit
 # ============================================================================
 def emit_meta():
@@ -1071,6 +1085,8 @@ def emit_meta():
     (OUT / "CNAME").write_text("oversightengineering.com\n", encoding="utf-8")
     # skip Jekyll: no build step needed, and it would ignore nothing we want
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
+    # keep the site out of search results
+    (OUT / "robots.txt").write_text(ROBOTS, encoding="utf-8")
 
 if __name__ == "__main__":
     emit_meta()
@@ -1078,4 +1094,4 @@ if __name__ == "__main__":
     print(f"built {len(BUILT)} pages, {total:,} bytes")
     for path, n in BUILT:
         print(f"  {n:>7,}  {path}")
-    print("\nwrote docs/CNAME and docs/.nojekyll")
+    print("\nwrote docs/CNAME, docs/.nojekyll and docs/robots.txt")

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# Crawlers that ignore this file are handled by the meta robots tag on every page.
