@@ -192,12 +192,6 @@ ul.ids .k {
   background: var(--bg-band); color: var(--accent-ink); border: 1px solid #cfdcec;
 }
 .pill.grade { background: #eef6f1; color: var(--ok); border-color: #cde3d6; }
-.pill.flag { background: var(--accent); color: #fff; border-color: var(--accent); margin-left: 5px; }
-/* flagship venues in the peer review list */
-ul.venues li.flagship {
-  background: var(--bg-band); border-color: #ccdcef; border-left: 3px solid var(--accent);
-}
-ul.venues li.flagship .where { color: var(--ink-soft); }
 
 /* ---------- tables ---------- */
 table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 15px; }
