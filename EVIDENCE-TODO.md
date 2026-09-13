@@ -1,8 +1,8 @@
 # Evidence TODO
 
 Generated 13 September 2026 from the evidence register in `EVIDENCE-CHECKLIST.md`.
-Open count: **32**. The three under Start here repeat items further down, so there are 35
-boxes and 32 distinct jobs. Nothing here is finished until its box is ticked.
+Open count: **38**. The three under Start here repeat items further down, so there are 41
+boxes and 38 distinct jobs. Nothing here is finished until its box is ticked.
 
 Markers
 
@@ -48,9 +48,17 @@ Markers
       Nine are on file, seven from IECON and two from iSemantic. One screenshot of a completed
       review on the conference's own portal outperforms any sentence about it.
 
-- [ ] **Produce the eleven missing reviews** `[file]` **You**
-      CICBA 3, ETECOM 2, ICAITech 1, PlatCon 1, and four of INTCEC's five. Until these close
-      those venues should not be presented as reviewed.
+- [ ] **Produce the thirteen missing reviews** `[file]` **You**
+      CICBA 3, ETECOM 2, ICTMOD 2, ICAITech 1, PlatCon 1, and four of INTCEC's five.
+      Corrected from eleven after two earlier audits in the same folder were found. ICTMOD's
+      two papers sit loose in the conference folder root, and the first scan only looked inside
+      `Papers/` so it missed them and understated the gap.
+
+- [ ] **Decide which review definition the application rests on** **You**
+      The 29 August audit counts only dedicated per-paper review documents and finds 66 papers
+      covered with a 20 paper gap. The 5 September audit also counts confirmation emails and
+      console screenshots and finds 73 covered with a 12 paper gap. The published figure is 73,
+      true under the looser definition and overstated under the stricter one.
 
 - [ ] **Open evidence folders for the six venues that have none** `[file]` **You**
       SIME, TEMSMET, ARIIA and ICNSBT have no folder. CICA and ICTMOD have empty ones. Largest
@@ -135,6 +143,27 @@ Markers
 
 ---
 
+## Folder hygiene, surfaced by the earlier audits
+
+- [ ] **Rename `2206_PlatCon` to `2026_PlatCon`** **You**
+      Year typo in the folder name.
+
+- [ ] **Strip the trailing space from the `2026 ICAITech ` folder name** **You**
+      The space breaks path handling in scripts that do not quote.
+
+- [ ] **Move the misfiled AMLDS certificate** **You**
+      `2026_SMC/Certificate Pravin Khandke.pdf` is actually the AMLDS 2026 certificate. It
+      belongs in `2026_AMLDS/` named `05_Certificate_AMLDS_2026.pdf` per the convention, and
+      the SMC folder holds nothing else.
+
+- [ ] **Give ICTMOD a folder structure** **You**
+      Its two papers sit loose at the folder root with no `Papers/` or `Reviews/`. That is what
+      made the first count miss them.
+
+- [ ] **Consolidate `2026_iSemantic/reviews/` into `Reviews/`** **You**
+      A redundant lowercase directory sits alongside the uppercase one. macOS treats them as
+      separate, which is how evidence has gone missing before.
+
 ## Carried over from the first build
 
 - [ ] **Lock the Capgemini and Cox dates** **You**
@@ -179,7 +208,9 @@ Markers
       ICETM returns 404, and the CICBA domain no longer resolves.
 
 - [ ] **Decide on the IECON and INCOSST counts** **You**
-      The venue list says IECON 14 and INCOSST 6. The evidence folders hold 17 and 5.
+      IECON now carries three figures: 10 papers with a dedicated review, 14 on the venue list,
+      17 papers on file. The 29 August audit is the only one that separates dedicated reviews
+      from confirmations and it says 10. INCOSST: 6 on the list, 5 in the folder.
 
 - [ ] **Settle the published figure conflict** **You**
       The Authority Magazine bio says 60+ papers across 17 conferences. The resume, the form
@@ -202,9 +233,10 @@ Markers
 | Standing and influence | 3 |
 | Mentoring | 1 |
 | Venue locations for flags | 1 |
+| Folder hygiene | 5 |
 | Carried over | 6 |
 | Earlier today | 5 |
-| **Total** | **32** |
+| **Total** | **38** |
 
 Items marked **Me** can be done without anything from you, except the eighteen venue links
 which need the ICETM and CICBA replacements and the six missing locations first.
