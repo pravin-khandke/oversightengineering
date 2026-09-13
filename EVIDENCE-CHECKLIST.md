@@ -195,6 +195,11 @@ The site is the checking surface for the application. It is not a substitute for
 
 ### Peer review and technical programme committees
 
+**0. Seven venues carry no country flag** because no location is recorded anywhere in the
+records: CICA, TEMSMET, ICAITech, ICNSBT, ARIIA, PlatCon and INTCEC. INTCEC is a CMT-based
+international conference with no physical venue. Supply the location for the other six and
+their flags can be added in one pass.
+
 **1. Per-venue verification links.** Thirty venues are named across the two sections on
 `/peer-review/` and not one of them is linked. Eighteen verified URLs already exist in the
 resume and all eighteen returned 200 when probed on 13 September. Two cannot be reused,
@@ -337,6 +342,7 @@ Fourteen of the nineteen external URLs return 200. The other five are bot-protec
 
 | Date | Change |
 |---|---|
+| 13 September 2026 | Country flags added beside the venues whose location is known, 13 countries across four continents. Self-hosted PNGs, 2.7 KB total, no external requests. Seven venues carry none because no location is recorded for them. |
 | 13 September 2026 | Evidence register added, grouped by peer review and committees, talks, publications, memberships, standing, and mentoring, each item marked as public page or application file and by who supplies it. |
 | 13 September 2026 | Counts reconciled against the evidence folder. 26 venues and 73 papers, each with a review on file. Resume, BCS form and site now agree. Published Authority Magazine bio still says 60+ across 17 and has not been changed. |
 | 13 September 2026 | IECON and IEEE GLOBECOM marked and highlighted as flagship, with a line naming what each is flagship of. Both claims verified against the societies' own published wording rather than asserted. |
