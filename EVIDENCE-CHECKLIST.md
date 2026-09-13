@@ -1,0 +1,195 @@
+# Evidence checklist — oversightingengineering.com
+
+Maintained record of what this site carries, what backs each claim, and what is still missing.
+
+**Not published.** This file sits outside `docs/`, which is the GitHub Pages publish root, so nothing here is served.
+
+Last reviewed: 13 September 2026.
+
+---
+
+## How to change the site
+
+1. Edit `build.py`. The page content lives in the `add(...)` calls near the bottom, one per page.
+2. Run it:
+
+       cd ~/Documents/GitHub/oversightengineering
+       python3 build.py
+
+3. It rewrites `docs/`. Then commit and push:
+
+       git add -A && git commit -m "content: describe the change" && git push
+
+GitHub Pages redeploys on its own within a minute or two.
+
+Do not hand-edit files in `docs/`. They are generated, and the next build overwrites them.
+
+---
+
+## Site map, and the four BCS URL rows
+
+The BCS form allows one URL per experiential statement. This is the mapping.
+
+| Form section | Criterion (verify the tick each time) | URL to enter |
+|---|---|---|
+| Body of work | Invention and innovation | `https://oversightengineering.com/bcs/invention/` |
+| Body of work | Consultancy | `https://oversightengineering.com/bcs/consultancy/` |
+| Professional impact | Mentoring and coaching | `https://oversightengineering.com/bcs/mentoring/` |
+| Standing in the community | Public influencer | `https://oversightengineering.com/bcs/standing/` |
+
+Supporting pages:
+
+| Page | Purpose |
+|---|---|
+| `/` | Overview and the evidence map |
+| `/memberships/` | Grades held, conferring body, verification route |
+| `/publications/` | Peer-reviewed papers, presentations, technical writing |
+| `/talks/` | Keynotes and conference sessions |
+| `/peer-review/` | Review venues and committee appointments, named |
+| `/iet/` | The IET criteria being prepared, and how IET differs from BCS |
+
+---
+
+## Evidence added, by page
+
+Every claim on the site carries a source line. This table tracks the pairing.
+
+### /memberships/
+
+| Claim | Source | Status |
+|---|---|---|
+| IEEE Senior Member, June 2026, #102303821 | IEEE Senior Member grade page | Verified 200 |
+| IEEE's own description of the grade | Same page | Verified |
+| SAS Eminent Fellow Member (SEFM), June 2026 | sassociety.com verification page for SEFM-770-2026 | Verified 200 |
+| Royal Statistical Society member, July 2026, #263939 | rss.org.uk, plus the welcome email of 20 July 2026 | Verified. Grade described as the Society's standard grade, not a selective honour |
+
+### /bcs/invention/
+
+| Claim | Source | Status |
+|---|---|---|
+| The human-in-the-loop design rule and why it exists | IJCA 2026 paper | **Weak link.** Points at the journal home page, not the article. See outstanding item 3 |
+| Confidence-tiered review model | Same | As above |
+| Customer identification cascade | Same | As above |
+| Validation layer and immutable audit trail | Same | As above |
+| IJCA 2026 paper title and subject | ijcaonline.org | Verified 200 |
+| IEEE ICCBI 2026 paper title and subject | iccbi.com | Verified 200, corrected from a dead guess |
+| The measured result is withheld | n/a, explained on the page | Deliberate |
+
+### /bcs/consultancy/
+
+| Claim | Source | Status |
+|---|---|---|
+| The strangler fig pattern | martinfowler.com | Verified 200 |
+| Canonical data model adopted as the standard | Client confirmation via the named supporter | **Needs the supporter to confirm.** No document held |
+| Change data capture recommendation | Same | Same |
+| Consumer-driven contract testing recommendation | Same | Same |
+| Distributed delivery and handover | Same | Same |
+| Account dates 2004 to 2022, migration 2013 to 2022 | The BCS form | **Must stay in sync.** See outstanding item 1 |
+
+### /bcs/mentoring/
+
+| Claim | Source | Status |
+|---|---|---|
+| Mentored engineers inside my teams | Named mentees, in the application | **Needs the named outcomes confirming** |
+| Sponsored a university capstone | Project documentation | **Not on file.** See outstanding item 4 |
+| Authored the capstone specification | Specification | **Not on file.** See outstanding item 4 |
+| Judged the KSU Computing Showcase, spring 2026 | kennesaw.edu and the LinkedIn post with certificate | Verified 200 for KSU. LinkedIn is bot-protected to scripts but fine to a human |
+| Authored an open children's AI standard | github.com/pravin-khandke/safe-ai-for-kids | Verified 200 |
+
+### /bcs/standing/
+
+| Claim | Source | Status |
+|---|---|---|
+| AIC 2026 keynote, Jabalpur, 29 to 30 August 2026 | scrs.in/conference/aic2026 | Verified 200, corrected from a dead guess |
+| Extract Summit 2026, Austin, 7 to 8 October 2026 | extractsummit.io | Verified 200, corrected from a dead guess |
+| Four TPC appointments | Conference committee pages | Venues named. Individual committee-page URLs not yet linked |
+| Peer review venues | Conference sites | Named. Not individually linked |
+| Two peer-reviewed publications | See /publications/ | Verified |
+| Technical writing | dev.to and hashnode.dev | dev.to 200. Hashnode bot-protected to scripts |
+| Authority Magazine interview | medium.com/authority-magazine | Bot-protected to scripts. See outstanding item 5 |
+
+### /publications/ and /talks/
+
+| Claim | Source | Status |
+|---|---|---|
+| IJCA 2026 paper | Journal home page | **Weak link.** See outstanding item 3 |
+| IEEE ICCBI 2026 paper, presented Dubai June 2026 | iccbi.com | Verified. Conference ran 18 to 20 June 2026 at Manipal Dubai |
+| Feature Flags That Actually Ship | dev.to article URL | Verified 200 |
+| Messaging in the Age of AI | dev.to article URL | Verified 200 |
+| Clean Code at Scale | Hashnode article URL | Bot-protected to scripts |
+| The Emergence of Explainable AI | Hashnode root | Bot-protected. **Points at the profile, not the article** |
+| Backend Architecture in the Age of AI | Medium article URL | Bot-protected to scripts |
+| AIC 2026 keynote | scrs.in/conference/aic2026 | Verified 200 |
+
+### /peer-review/
+
+| Claim | Source | Status |
+|---|---|---|
+| Four TPC appointments | Conference sites | Named by venue and location |
+| Sixteen review venues | Conference sites | Named by venue and location |
+| Deliberately no total review count | n/a, explained on the page | Deliberate. The count is contested across documents |
+| Review platforms | EDAS, CMT, EasyChair, IEEE IES portal | General knowledge, not a specific page |
+
+---
+
+## Deliberately withheld, and why
+
+Keep these off the site unless the reason changes.
+
+| Item | Why it is not published |
+|---|---|
+| Matching accuracy before and after, daily match volume, customer count | Employer operational data. It is the applicant's evidence to the body, not public material |
+| The internal name of the reconciliation system | An internal product name carries several names across the business document and the engineering PRD. Publishing either is a disclosure decision, and the site describes the system by function instead |
+| Bank name, ledger system, company codes | Employer internals with no evidentiary value to a reader |
+| Everything describing circumvention of third-party bot protections | The Amadeus role reads as a resilient data collection platform. Detection and countermeasure detail is not published |
+| Scanned certificates | The awarding body's own register is the better source, and BCS does not want a document dump |
+| The supporter letter and supporter details | Third-party personal data. Goes to BCS directly |
+| Georgia Tech judging | Claimed in three documents, documented nowhere. Do not publish until a letter exists |
+| The KSU Cybersecurity Speaker Series talk | Announced on LinkedIn, no confirmation on file. Holding it back until confirmed |
+| Named mentees and their current roles | Private individuals. They appear in the application, where the people concerned can verify them |
+| Google Scholar | Shows no citations. Featuring an empty profile invites the wrong comparison |
+| SCRS Fellow | Claimed in the BCS form. Not yet confirmed from a document. See outstanding item 6 |
+
+---
+
+## Outstanding — what to add
+
+Ordered by what it unlocks.
+
+1. **Lock the Capgemini and Cox dates.** The site says account 2004 to 2022 and migration 2013 to 2022, taken from the live form. The resume, LinkedIn and three earlier notes give other values, and there is an unexplained gap from March 2008 to May 2013. The site must match whatever the form finally says. Nothing else on the consultancy page should be trusted until this is settled.
+
+2. **Confirm the four consultancy recommendations with the supporter.** Every consultancy claim on the site currently sources to "client confirmation available through the named supporter". That is honest and it is also the weakest sourcing on the site. If the supporter will not attest to a specific recommendation, it comes off the page.
+
+3. **Find the IJCA article URL or DOI.** The invention page links four claims to the journal home page, which proves the journal exists and not that the paper does. This is the single highest-value link to add, because the invention page rests on it.
+
+4. **Get the KnowledgeBridge capstone on file.** Sponsorship letter, project listing, or the university's own page. Two claims on the mentoring page currently source to "project documentation" that is not in hand.
+
+5. **Verify the Medium and Hashnode links in a browser.** Both refuse scripted requests, so they could not be checked. Open each one by hand and confirm the article loads. The Explainable AI entry currently points at the profile rather than the article, so that one needs the article URL.
+
+6. **Confirm SCRS Fellow from a document.** The Soft Computing Research Society organises AIC 2026, which is the conference whose keynote the standing page cites. That makes the SCRS connection more than a line on a form, and a fellowship grade from an IEEE conference organiser is worth publishing properly. Note that SCRS is a Fellow grade and belongs in the graded section if confirmed.
+
+7. **Add the individual committee-page URLs.** The four TPC venues and sixteen review venues are named but not individually linked. A reader can find them, and linking them removes the work. This is the highest-leverage batch of links available, and the venue names are already public record.
+
+8. **Add evidence images.** The reference sites carry none, and neither does this one. Screenshots of a TPC listing, a keynote slide, or an award page would make the pages credible at a glance. Keep them out of `docs/` if any contains personal data.
+
+9. **Add the ORCID record and the LinkedIn profile to /memberships/.** ORCID is linked from the footer and the home page. It belongs on the memberships page too, since that is what an assessor reads alongside the form.
+
+10. **Revisit the IET page when the criteria are settled.** It currently names Repute and Insight and Experience as in preparation, and leaves a third criterion open. Nothing on it is a submission yet.
+
+---
+
+## Known weak links, summarised
+
+Fourteen of the nineteen external URLs return 200. The other five are bot-protected rather than broken, and one of those points at a profile rather than an article.
+
+- `linkedin.com` returns 999 to every scripted request. This is normal and the profile is live.
+- Medium and Hashnode sit behind Cloudflare. Confirmed blocked to scripts, not confirmed broken.
+- The IJCA links point at the journal, not the paper. This is the weakest claim support on the site.
+
+---
+
+## Change log
+
+| Date | Change |
+|---|---|
+| 13 September 2026 | Site built. 11 pages. Three dead URLs found by probe and replaced: Extract Summit, IEEE ICCBI and AIC 2026 were all guessed wrong and corrected against their official sites. Zero em dashes, zero semicolons, zero multi-item comma lists in the prose. Zero broken internal links. |

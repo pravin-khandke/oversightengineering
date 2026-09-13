@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invention and innovation | Pravin Khandke</title>
+<meta name="description" content="A human-in-the-loop pipeline that reconciles customer remittances arriving through four separate channels, and the peer-reviewed publication of the pattern behind it.">
+<meta name="author" content="Pravin Khandke">
+<link rel="canonical" href="https://oversightengineering.com/bcs/invention/index.html">
+<meta property="og:title" content="Invention and innovation | Pravin Khandke">
+<meta property="og:description" content="A human-in-the-loop pipeline that reconciles customer remittances arriving through four separate channels, and the peer-reviewed publication of the pattern behind it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://oversightengineering.com/bcs/invention/index.html">
+<link rel="stylesheet" href="https://oversightengineering.com/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="https://oversightengineering.com/">
+      <span class="brand-name">Pravin Khandke</span>
+      <span class="brand-sub">Applied researcher and systems architect</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+<ul class="nav-list">
+      <li><a href="https://oversightengineering.com/">Home</a></li>
+      <li><a href="https://oversightengineering.com/memberships/">Memberships</a></li>
+      <li><a href="https://oversightengineering.com/bcs/invention/" aria-current="page">Invention and innovation</a></li>
+      <li><a href="https://oversightengineering.com/bcs/consultancy/">Consultancy</a></li>
+      <li><a href="https://oversightengineering.com/bcs/mentoring/">Mentoring and coaching</a></li>
+      <li><a href="https://oversightengineering.com/bcs/standing/">Public influencer</a></li>
+      <li><a href="https://oversightengineering.com/publications/">Publications</a></li>
+      <li><a href="https://oversightengineering.com/talks/">Talks</a></li>
+      <li><a href="https://oversightengineering.com/peer-review/">Peer review</a></li>
+      <li><a href="https://oversightengineering.com/iet/">IET</a></li>
+    </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">BCS Fellowship &middot; Body of work</p>
+    <h1>A human-in-the-loop pipeline for remittance reconciliation</h1>
+    <p class="lede">
+      Customer payments arrive through four channels, and no two channels speak the same
+      language. I designed and delivered the pipeline that reads all four and matches them
+      to invoices, and I published the pattern behind it so the approach reaches engineers
+      beyond my employer.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+    <h2>The situation</h2>
+    <p>
+      Customer remittances reach a finance function through channels that each carry a
+      different shape of data. Physical cheques arrive as lockbox scans that need reading.
+      Electronic payments arrive as ACH files. Remittance advice arrives by email, in
+      whatever format each customer chooses. A fourth stream sits inside vendor portals,
+      and no two portals behave alike.
+    </p>
+    <p>
+      Matching those payments to open invoices was a manual process. Payments without clear
+      advice sat unresolved, and reporting fell behind. The consequence of an incorrect
+      match is specific and serious. Cash is applied to the wrong customer, and the error
+      surfaces later as a dispute.
+    </p>
+
+    <h2>What I set out to do</h2>
+    <p>
+      Build a system that reads remittance detail from all four channels and reconciles it
+      automatically, without giving up accuracy to do it. Every payment had to land on the
+      right customer and the right invoice, or stop and wait for a person to decide.
+    </p>
+
+    <h2>What I designed and built</h2>
+    <ul class="claims">
+<li><span class="claim-text">The pipeline rests on one rule. The model reads, and it never closes the books alone. That rule follows from the properties of the technology. Language models are not deterministic, and financial reconciliation demands accuracy, so the design places a person at the decision point rather than at the end of a queue.</span>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">IJCA 2026, where the pattern is published<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+<li><span class="claim-text">Every extracted field carries a confidence score, and handling is tiered by that score. High confidence assigns the match automatically. The middle band surfaces the closest candidates and a person chooses. Low confidence goes to manual review.</span>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">Published description of the confidence model<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+<li><span class="claim-text">Customer identification runs as a cascade rather than a single rule. It falls through from name matching to bank account details to invoice numbers, so a payment can still be placed when the first signal is missing.</span>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">Published description of the matching cascade<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+<li><span class="claim-text">A validation layer checks each proposed match against that customer's own history before it posts, and flags an unusual result with the reason attached. Every validation and every override is written to an audit trail that cannot be altered, which is what the financial reporting controls require.</span>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">Published description of the validation and audit layer<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+    </ul>
+
+    <h2>Why it reaches beyond one employer</h2>
+    <p>
+      The design rationale behind the system is published as peer-reviewed work, so the
+      approach is available to any team building automation over financial data. The paper
+      sets out what happens when generative models are put in front of remittance data, and
+      why a confidence-based human review step is the part that makes the automation safe
+      to deploy.
+    </p>
+    <ul class="claims">
+<li><span class="claim-text">Designing Adaptive Human-in-the-Loop Interfaces for Enhanced Collaborative Incident Management, International Journal of Computer Applications, 2026. The human-in-the-loop pattern applied to operational workflows, including the confidence-tiered review model used in the reconciliation pipeline.</span>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">IJCA, 2026<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+<li><span class="claim-text">Scalable Event-Driven Architectures for Distributed Retail Data Collection Using ActiveMQ Artemis, IEEE ICCBI 2026. The messaging architecture that moves collected and reconciled data between systems.</span>
+      <span class="claim-src">Source: <a class="src" href="https://iccbi.com/" rel="noopener">IEEE ICCBI 2026<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+    </ul>
+
+    <div class="note">
+      <strong>On the measured result.</strong> The system is in production. Its effect on
+      matching accuracy, and the volume it handles, are stated in my fellowship
+      application, because those are my employer's operational figures and they are not
+      mine to publish. What is public is the pattern, and the publication that carries it.
+    </div>
+  </section>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="foot-line">Pravin Khandke &middot; Human-in-the-Loop AI and Autonomous Agent Systems for Collaborative Workflows</p>
+    <p class="foot-line small">
+      <a href="https://oversightengineering.com/memberships/">Memberships</a> &middot;
+      <a href="https://oversightengineering.com/publications/">Publications</a> &middot;
+      <a href="https://oversightengineering.com/peer-review/">Peer review</a> &middot;
+      <a href="https://oversightengineering.com/talks/">Talks</a> &middot;
+      <a href="mailto:pravin.khandke@ieee.org">pravin.khandke@ieee.org</a>
+    </p>
+    <p class="foot-line small muted">
+      This site is the public record of the work cited in my fellowship applications.
+      It was last reviewed on 13 September 2026. Where a claim rests on a document held by a
+      third party, that document is linked rather than reproduced.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
