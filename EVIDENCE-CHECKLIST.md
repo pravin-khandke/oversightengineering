@@ -181,29 +181,145 @@ Keep these off the site unless the reason changes.
 
 ---
 
-## Outstanding — what to add
+## Evidence register — what is still needed
 
-Ordered by what it unlocks.
+Every item names what is needed, what it unlocks, and who supplies it.
 
-1. **Lock the Capgemini and Cox dates.** The site says account 2004 to 2022 and migration 2013 to 2022, taken from the live form. The resume, LinkedIn and three earlier notes give other values, and there is an unexplained gap from March 2008 to May 2013. The site must match whatever the form finally says. Nothing else on the consultancy page should be trusted until this is settled.
+- `[site]` the evidence belongs on a public page
+- `[file]` the evidence belongs in the application and the evidence folder, not the public site
+- **Me** or **You** says who can produce it
 
-2. **Confirm the four consultancy recommendations with the supporter.** Every consultancy claim on the site currently sources to "client confirmation available through the named supporter". That is honest and it is also the weakest sourcing on the site. If the supporter will not attest to a specific recommendation, it comes off the page.
+The site is the checking surface for the application. It is not a substitute for it.
 
-3. **Find the IJCA article URL or DOI.** The invention page links four claims to the journal home page, which proves the journal exists and not that the paper does. This is the single highest-value link to add, because the invention page rests on it.
+---
 
-4. **Get the KnowledgeBridge capstone on file.** Sponsorship letter, project listing, or the university's own page. Two claims on the mentoring page currently source to "project documentation" that is not in hand.
+### Peer review and technical programme committees
 
-5. **Verify the Medium and Hashnode links in a browser.** Both refuse scripted requests, so they could not be checked. Open each one by hand and confirm the article loads. The Explainable AI entry currently points at the profile rather than the article, so that one needs the article URL.
+**1. Per-venue verification links.** Thirty venues are named across the two sections on
+`/peer-review/` and not one of them is linked. Eighteen verified URLs already exist in the
+resume and all eighteen returned 200 when probed on 13 September. Two cannot be reused,
+because ICETM returns 404 and the CICBA domain no longer resolves. For the four technical
+programme committee venues the committee page is the correct target rather than the
+homepage, since the committee page is what names the person. AIIoT and SIME are held. BDAA
+and NGSME are not. No URL exists anywhere in the records for TEMSMET, ARIIA, ICNSBT, CICA,
+ICAITech or PlatCon. `[site]` **Me** for the eighteen, **You** for the rest.
 
-6. **Confirm SCRS Fellow from a document.** The Soft Computing Research Society organises AIC 2026, which is the conference whose keynote the standing page cites. That makes the SCRS connection more than a line on a form, and a fellowship grade from an IEEE conference organiser is worth publishing properly. Note that SCRS is a Fellow grade and belongs in the graded section if confirmed.
+**2. A Web of Science Researcher Profile.** Not created. This is the one item that changes
+the character of the review evidence rather than adding to it, because claimed reviews become
+a third party record instead of a number on the applicant's own page. It is free, and reviews
+are claimed venue by venue. The gap checklist in `vera-eb1-evaluate` already ranks this first
+among remedies. **You.**
 
-7. **Add the individual committee-page URLs.** The four TPC venues and sixteen review venues are named but not individually linked. A reader can find them, and linking them removes the work. This is the highest-leverage batch of links available, and the venue names are already public record.
+**3. Reviewer acknowledgement pages.** Some conferences publish a reviewer list. That is a
+link naming the applicant on somebody else's site, which is the cheapest proof available and
+it cannot be accused of self reporting. Worth checking venue by venue. **You**, with **Me** to
+verify each one.
 
-8. **Add evidence images.** The reference sites carry none, and neither does this one. Screenshots of a TPC listing, a keynote slide, or an award page would make the pages credible at a glance. Keep them out of `docs/` if any contains personal data.
+**4. Console screenshots as page evidence.** Nine are on file, seven from IECON and two from
+iSemantic. One screenshot of a completed review on the conference's own portal carries more
+weight with a reader than any sentence written about it. `[site]` **Me**, subject to the
+withheld rules below.
 
-9. **Add the ORCID record and the LinkedIn profile to /memberships/.** ORCID is linked from the footer and the home page. It belongs on the memberships page too, since that is what an assessor reads alongside the form.
+**5. Eleven papers with no review on file.** CICBA 3, ETECOM 2, ICAITech 1, PlatCon 1, and
+four of INTCEC's five. Until these close, those venues should not be presented as reviewed.
+`[file]` **You.**
 
-10. **Revisit the IET page when the criteria are settled.** It currently names Repute and Insight and Experience as in preparation, and leaves a third criterion open. Nothing on it is a submission yet.
+**6. Six venues with no evidence folder.** SIME, TEMSMET, ARIIA and ICNSBT have none at all.
+CICA and ICTMOD have empty ones. All six currently sit on the resume and the site with
+nothing behind them, which is the largest single gap in the record. `[file]` **You.**
+
+**7. A confirmation is not a review.** Of the 73 files in the Reviews folders, 36 are
+confirmation emails and receipts, 27 are review documents, 9 are console screenshots. A
+confirmation proves a review happened. It does not carry it. Where a venue holds only a
+confirmation, the review needs exporting from the platform. `[file]` **You.**
+
+**8. Certificates and thank you letters.** The folder audit found certificates for AIIoT,
+ICCUBEA, ICDCECE, ICoIAS, MeditCom and NGSME and for no others. Any committee or review role
+without a letter is worth requesting now rather than in October. The audit and thank you
+workflows both cover how to ask. `[file]` **You**, with **Me** to draft the requests.
+
+### Talks and keynotes
+
+**9. The Extract Summit speakers page.** `https://www.extractsummit.io/speakers` was verified
+on 13 September and carries the applicant's name and title in its own HTML. This is the
+strongest single item held, because it is third party and it names the person. It belongs on
+`/talks/` and on the standing page. `[site]` **Me.**
+
+**10. The AIC 2026 keynote list page.** The resume claims the applicant is named on the
+organiser's published keynote list. Only the conference page is held, not that list. A
+conference organiser's own keynote page is third party proof of a keynote. `[site]` **You**,
+with **Me** to verify.
+
+**11. The ICCBI programme page**, if the conference publishes one, for the presented paper.
+`[site]` **You.**
+
+### Publications
+
+**12. The IJCA article URL or DOI.** Still the highest value link on the site. The invention
+page has four claims resting on that paper and all four point at the journal rather than the
+paper, which proves the journal exists and not that the paper does. `[site]` **You.**
+
+**13. The ICCBI paper link**, if IEEE Xplore has it yet. `[site]` **You.**
+
+### Memberships
+
+**14. The IEEE Senior Member register link**, so the grade can be looked up rather than
+believed. `[site]` **Me**, once the register URL is confirmed.
+
+**15. The RSS Fellow verification route**, alongside the SAS verification page already linked.
+`[site]` **You**, with **Me** to verify.
+
+**16. ORCID and LinkedIn on `/memberships/`.** ORCID sits in the footer and on the home page.
+The memberships page is what an assessor reads beside the form, so both belong there too.
+`[site]` **Me.**
+
+### Standing and influence
+
+**17. The Authority Magazine article URL.** Cited on the standing page as an interview and
+currently unlinked. `[site]` **You.**
+
+**18. The HackerNoon ranking page.** The claim that the applicant ranks 7th among AI and ML
+writers should point at HackerNoon's own numbering rather than stand unsourced. `[site]`
+**You.**
+
+**19. The children's AI guide repository.** `github.com/pravin-khandke/safe-ai-for-kids` is
+public and self verifying. `[site]` **Me.**
+
+### Mentoring
+
+**20. The KSU capstone listing, sponsorship letter, or the university's own page.** Two
+mentoring claims currently source to project documentation that is not in hand. `[site]`
+**You.**
+
+### Carried over from the first build
+
+**21. Lock the Capgemini and Cox dates.** The site says account 2004 to 2022 and migration
+2013 to 2022, taken from the live form. The resume, LinkedIn and three earlier notes give
+other values, and there is an unexplained gap from March 2008 to May 2013. The site must
+match whatever the form finally says. Nothing else on the consultancy page should be trusted
+until this is settled.
+
+**22. Confirm the four consultancy recommendations with the supporter.** Every consultancy
+claim on the site sources to client confirmation available through the named supporter. That
+is honest and it is also the weakest sourcing on the site. If the supporter will not attest
+to a specific recommendation, it comes off the page.
+
+**23. Verify the Medium and Hashnode links in a browser.** Both refuse scripted requests, so
+they could not be checked. Open each by hand. The Explainable AI entry points at the profile
+rather than the article, so that one needs the article URL.
+
+**24. Confirm SCRS Fellow from a document.** The Soft Computing Research Society organises
+AIC 2026, the conference whose keynote the standing page cites. That makes the SCRS
+connection more than a line on a form, and a fellowship grade from an IEEE conference
+organiser is worth publishing properly. If confirmed, it belongs in the graded section.
+
+**25. Add evidence images.** Both reference sites carry none and neither does this one.
+Screenshots of a committee listing, a keynote slide or an award page would make the pages
+credible at a glance. Keep any that holds personal data out of `docs/`.
+
+**26. Revisit the IET page when the criteria are settled.** It names Repute and Insight and
+Experience as in preparation and leaves a third criterion open. Nothing on it is a submission
+yet.
 
 ---
 
@@ -221,6 +337,7 @@ Fourteen of the nineteen external URLs return 200. The other five are bot-protec
 
 | Date | Change |
 |---|---|
+| 13 September 2026 | Evidence register added, grouped by peer review and committees, talks, publications, memberships, standing, and mentoring, each item marked as public page or application file and by who supplies it. |
 | 13 September 2026 | Counts reconciled against the evidence folder. 26 venues and 73 papers, each with a review on file. Resume, BCS form and site now agree. Published Authority Magazine bio still says 60+ across 17 and has not been changed. |
 | 13 September 2026 | IECON and IEEE GLOBECOM marked and highlighted as flagship, with a line naming what each is flagship of. Both claims verified against the societies' own published wording rather than asserted. |
 | 13 September 2026 | Peer review list rebuilt from the authoritative venue list. 26 venues, years removed from the names, counts added where more than five papers were reviewed, ordered closest to furthest from the author's own field. |
