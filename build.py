@@ -46,16 +46,16 @@ IDENTIFIERS = """
 FOOTER = """
 <footer class="site-footer">
   <div class="wrap">
-    <p class="foot-line">{name} &middot; {field}</p>
+    <p class="foot-line">{name}, {field}</p>
+    <ul class="foot-links">
+      <li><a href="/memberships/">Memberships</a></li>
+      <li><a href="/publications/">Publications</a></li>
+      <li><a href="/peer-review/">Peer review</a></li>
+      <li><a href="/talks/">Talks</a></li>
+      <li><a href="mailto:{email}">{email}</a></li>
+    </ul>
     <p class="foot-line small">
-      <a href="/memberships/">Memberships</a> &middot;
-      <a href="/publications/">Publications</a> &middot;
-      <a href="/peer-review/">Peer review</a> &middot;
-      <a href="/talks/">Talks</a> &middot;
-      <a href="mailto:{email}">{email}</a>
-    </p>
-    <p class="foot-line small muted">
-      This site is the public record of the work cited in my fellowship applications.
+      This site is the public record of the work cited in my BCS fellowship application.
       It was last reviewed on {updated}. Where a claim rests on a document held by a
       third party, that document is linked rather than reproduced.
     </p>
@@ -65,16 +65,10 @@ FOOTER = """
 
 def nav(current: str) -> str:
     items = [
-        ("", "Home"),
-        ("memberships/", "Memberships"),
-        ("bcs/invention/", "Invention and innovation"),
-        ("bcs/consultancy/", "Consultancy"),
-        ("bcs/mentoring/", "Mentoring and coaching"),
-        ("bcs/standing/", "Public influencer"),
-        ("publications/", "Publications"),
-        ("talks/", "Talks"),
-        ("peer-review/", "Peer review"),
-        ("iet/", "IET"),
+        ("invention/", "Invention"),
+        ("consultancy/", "Consultancy"),
+        ("mentoring/", "Mentoring"),
+        ("standing/", "Public influencer"),
     ]
     out = []
     for href, label in items:
@@ -97,6 +91,9 @@ BASE = """<!DOCTYPE html>
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{base}/{path}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
@@ -165,12 +162,13 @@ ORCID = "https://orcid.org/0009-0004-9693-9334"
 add("index.html",
     "Pravin Khandke | Fellowship evidence record",
     "Public record of the work, recognition and professional service cited in "
-    "Pravin Khandke's BCS and IET fellowship applications.",
+    "Pravin Khandke's BCS fellowship application.",
     """
 <section class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Fellowship evidence record</p>
-    <h1>Every claim I make to an assessing body, checkable</h1>
+  <div class="wrap hero-grid">
+    <div class="hero-main">
+      <p class="kicker">Fellowship evidence record</p>
+      <h1>Every claim I make to an assessing body, checkable</h1>
     <p class="lede">
       I am an applied researcher and systems architect working on human-in-the-loop AI and
       autonomous agent systems for collaborative workflows. This site exists so that an
@@ -195,9 +193,20 @@ add("index.html",
       </li>
     </ul>
     <div class="cta-row">
-      <a class="btn" href="/publications/">Publications</a>
-      <a class="btn ghost" href="/peer-review/">Peer review record</a>
+        <a class="btn" href="/publications/">Publications</a>
+        <a class="btn ghost" href="/peer-review/">Peer review record</a>
+      </div>
     </div>
+    <aside class="about" aria-label="About me">
+      <p class="about-title">About me</p>
+      <p class="about-bio">
+        I have spent 26 years building AI and distributed systems for businesses that
+        cannot afford them to fail. The work began in retail platforms and now serves
+        the automotive and financial sectors. I publish on human-in-the-loop AI and
+        review submissions for international conferences.
+      </p>
+""" + IDENTIFIERS + """
+    </aside>
   </div>
 </section>
 
@@ -209,68 +218,77 @@ add("index.html",
       out the situation and the work I did, then what changed. The supporting source sits
       beside the claim.
     </p>
-    <div class="grid two">
-      <div class="card">
+    <div class="index">
+      <div class="index-row">
         <span class="kicker">Body of work</span>
-        <h3><a class="card-link" href="/bcs/invention/">Invention and innovation</a></h3>
-        <p>A human-in-the-loop pipeline that reconciles customer remittances arriving
-        through four separate channels, and the peer-reviewed publication of the pattern
-        behind it.</p>
+        <div>
+          <h3><a href="/invention/">Invention and innovation</a></h3>
+          <p>A human-in-the-loop pipeline that reconciles customer remittances arriving
+          through four separate channels, and the peer-reviewed publication of the pattern
+          behind it.</p>
+        </div>
       </div>
-      <div class="card">
+      <div class="index-row">
         <span class="kicker">Body of work</span>
-        <h3><a class="card-link" href="/bcs/consultancy/">Consultancy</a></h3>
-        <p>Advisory work on retiring a continental-scale automotive data platform, where a
-        recommended data model became the client organisation's standing integration
-        standard.</p>
+        <div>
+          <h3><a href="/consultancy/">Consultancy</a></h3>
+          <p>Advisory work on retiring a continental-scale automotive data platform, where a
+          recommended data model became the client organisation's standing integration
+          standard.</p>
+        </div>
       </div>
-      <div class="card">
+      <div class="index-row">
         <span class="kicker">Professional impact</span>
-        <h3><a class="card-link" href="/bcs/mentoring/">Mentoring and coaching</a></h3>
-        <p>Structured development of engineers inside my teams, a sponsored university
-        capstone, and an open standard for children's use of AI.</p>
+        <div>
+          <h3><a href="/mentoring/">Mentoring and coaching</a></h3>
+          <p>Structured development of engineers inside my teams, a sponsored university
+          capstone, and an open standard for children's use of AI.</p>
+        </div>
       </div>
-      <div class="card">
+      <div class="index-row">
         <span class="kicker">Standing in the community</span>
-        <h3><a class="card-link" href="/bcs/standing/">Public influencer</a></h3>
-        <p>Keynotes at recognised external events. Technical programme committees at
-        international conferences. A peer review record and sustained written work on
-        digital and IT topics.</p>
+        <div>
+          <h3><a href="/standing/">Public influencer</a></h3>
+          <p>Keynotes at recognised external events. Technical programme committees at
+          international conferences. A peer review record and sustained written work on
+          digital and IT topics.</p>
+        </div>
       </div>
     </div>
 
     <h2>Supporting records</h2>
-    <div class="grid three">
-      <div class="card">
-        <h3><a class="card-link" href="/memberships/">Memberships</a></h3>
-        <p>Grades held, the body that conferred each, and a verification link where one
-        exists.</p>
+    <div class="index">
+      <div class="index-row">
+        <span class="kicker">Grades held</span>
+        <div>
+          <h3><a href="/memberships/">Memberships</a></h3>
+          <p>Grades held, the body that conferred each, and a verification link where one
+          exists.</p>
+        </div>
       </div>
-      <div class="card">
-        <h3><a class="card-link" href="/publications/">Publications</a></h3>
-        <p>Peer-reviewed papers and technical writing, with links to the published
-        record.</p>
+      <div class="index-row">
+        <span class="kicker">Papers and writing</span>
+        <div>
+          <h3><a href="/publications/">Publications</a></h3>
+          <p>Peer-reviewed papers and technical writing, with links to the published
+          record.</p>
+        </div>
       </div>
-      <div class="card">
-        <h3><a class="card-link" href="/talks/">Talks</a></h3>
-        Keynotes and invited talks, with the organiser's own listing where it is public.
-        listing where it is public.</p>
+      <div class="index-row">
+        <span class="kicker">Keynotes and sessions</span>
+        <div>
+          <h3><a href="/talks/">Talks</a></h3>
+          <p>Keynotes and invited talks, with the organiser's own listing where it is
+          public.</p>
+        </div>
       </div>
-      <div class="card">
-        <h3><a class="card-link" href="/peer-review/">Peer review</a></h3>
-        <p>The international venues where I have reviewed submissions, named rather than
-        counted.</p>
-      </div>
-      <div class="card">
-        <h3><a class="card-link" href="/iet/">IET</a></h3>
-        <p>The criteria I am preparing for IET Fellowship, and how that application differs
-        from the BCS one.</p>
-      </div>
-      <div class="card">
-        <span class="kicker">Identifiers</span>
-        <h3>Where to verify me</h3>
-        <p><a href="https://orcid.org/0009-0004-9693-9334">ORCID 0009-0004-9693-9334</a></p>
-        <p><a href="https://www.linkedin.com/in/pravin-khandke">linkedin.com/in/pravin-khandke</a></p>
+      <div class="index-row">
+        <span class="kicker">Review venues</span>
+        <div>
+          <h3><a href="/peer-review/">Peer review</a></h3>
+          <p>The international venues where I have reviewed submissions, named rather than
+          counted.</p>
+        </div>
       </div>
     </div>
 
@@ -281,9 +299,6 @@ add("index.html",
       data appears in the application, not on this site. Nothing here is a scanned
       certificate, because the awarding body's own register is the better source.
     </div>
-
-    <h2>Contact and identifiers</h2>
-""" + IDENTIFIERS + """
   </section>
 </div>
 """)
@@ -298,7 +313,7 @@ add("memberships/index.html",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">Memberships and fellowships</p>
+    <p class="kicker">Memberships and fellowships</p>
     <h1>Grades held, and who conferred them</h1>
     <p class="lede">
       Membership evidence is only worth what the conferring body's own record says. Each
@@ -352,14 +367,14 @@ add("memberships/index.html",
 # ============================================================================
 # BCS — INVENTION AND INNOVATION
 # ============================================================================
-add("bcs/invention/index.html",
+add("invention/index.html",
     "Invention and innovation | Pravin Khandke",
     "A human-in-the-loop pipeline that reconciles customer remittances arriving through "
     "four separate channels, and the peer-reviewed publication of the pattern behind it.",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">BCS Fellowship &middot; Body of work</p>
+    <p class="kicker">BCS Fellowship, Body of work</p>
     <h1>A human-in-the-loop pipeline for remittance reconciliation</h1>
     <p class="lede">
       Customer payments arrive through four channels, and no two channels speak the same
@@ -401,7 +416,7 @@ add("bcs/invention/index.html",
       "alone. That rule follows from the properties of the technology. Language models are "
       "not deterministic, and financial reconciliation demands accuracy, so the design "
       "places a person at the decision point rather than at the end of a queue.",
-      [ext(IJCA, "IJCA 2026, where the pattern is published")]) + "\n" + claim(
+      [ext(IJCA, "IJCA, where the pattern is published")]) + "\n" + claim(
       "Every extracted field carries a confidence score, and handling is tiered by that "
       "score. High confidence assigns the match automatically. The middle band surfaces the "
       "closest candidates and a person chooses. Low confidence goes to manual review.",
@@ -433,9 +448,9 @@ add("bcs/invention/index.html",
       "review model used in the reconciliation pipeline.",
       [ext(IJCA, "IJCA, 2026")]) + "\n" + claim(
       "Scalable Event-Driven Architectures for Distributed Retail Data Collection Using "
-      "ActiveMQ Artemis, IEEE ICCBI 2026. The messaging architecture that moves collected "
+      "ActiveMQ Artemis, IEEE ICCBI. The messaging architecture that moves collected "
       "and reconciled data between systems.",
-      [ext("https://iccbi.com/", "IEEE ICCBI 2026")]) + """
+      [ext("https://iccbi.com/", "IEEE ICCBI")]) + """
     </ul>
 
     <div class="note">
@@ -451,14 +466,14 @@ add("bcs/invention/index.html",
 # ============================================================================
 # BCS — CONSULTANCY
 # ============================================================================
-add("bcs/consultancy/index.html",
+add("consultancy/index.html",
     "Consultancy | Pravin Khandke",
     "Advisory work on retiring a continental-scale automotive data platform, where a "
     "recommended data model became the client organisation's standing integration standard.",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">BCS Fellowship &middot; Body of work</p>
+    <p class="kicker">BCS Fellowship, Body of work</p>
     <h1>Advising on the retirement of a continental-scale automotive data platform</h1>
     <p class="lede">
       A client ran its national dealer network on a legacy mainframe. A single replacement
@@ -550,14 +565,14 @@ add("bcs/consultancy/index.html",
 # ============================================================================
 # BCS — MENTORING AND COACHING
 # ============================================================================
-add("bcs/mentoring/index.html",
+add("mentoring/index.html",
     "Mentoring and coaching | Pravin Khandke",
     "Structured development of engineers inside my teams, a sponsored university capstone, "
     "and an open standard for children's use of AI.",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">BCS Fellowship &middot; Professional impact</p>
+    <p class="kicker">BCS Fellowship, Professional impact</p>
     <h1>Developing engineers, inside my teams and before they enter the industry</h1>
     <p class="lede">
       Graduates leave university knowing how software is supposed to work. They do not\n      know how it behaves under production load or a tight budget. I have spent my career
@@ -640,14 +655,14 @@ add("bcs/mentoring/index.html",
 # ============================================================================
 # BCS — PUBLIC INFLUENCER
 # ============================================================================
-add("bcs/standing/index.html",
+add("standing/index.html",
     "Public influencer | Pravin Khandke",
     "Keynotes at recognised events, technical programme committees at international "
     "conferences, a peer review record, and sustained written work on digital and IT topics.",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">BCS Fellowship &middot; Standing in the community</p>
+    <p class="kicker">BCS Fellowship, Standing in the community</p>
     <h1>Invited to speak, asked to judge, and read beyond my own organisation</h1>
     <p class="lede">
       Standing in a profession shows up as other people asking you to do something. The
@@ -662,14 +677,14 @@ add("bcs/standing/index.html",
     <h2>Keynote and conference speaking</h2>
     <ul class="claims">
 """ + claim(
-      "Keynote speaker at the 2026 IEEE 5th World Conference on Applied Intelligence and "
-      "Computing, held in Jabalpur, India on 29 and 30 August 2026. My talk was The Trust "
+      "Keynote speaker at the IEEE 5th World Conference on Applied Intelligence and "
+      "Computing, held in Jabalpur, India on 29 and 30 August. My talk was The Trust "
       "Gap: Architecting Autonomous AI Systems for Real-World Accountability, It covered how agent "
       "systems fail in production and how to verify them. It also argued that trust should "
       "include the sustainability cost of running them.",
       [ext(AIC_LIST, "Conference programme, where the keynote list is published")]) + "\n" + claim(
-      "Confirmed speaker at Extract Summit 2026, held at Brazos Hall in Austin, Texas on 7 "
-      "and 8 October 2026. My session is The Naive AI Trap: Why Finance-Grade Extraction "
+      "Confirmed speaker at Extract Summit, held at Brazos Hall in Austin, Texas on 7 "
+      "and 8 October. My session is The Naive AI Trap: Why Finance-Grade Extraction "
       "Needs Hybrid Agents, on the second day.",
       [ext("https://www.extractsummit.io/", "Extract Summit programme")]) + """
     </ul>
@@ -681,10 +696,10 @@ add("bcs/standing/index.html",
       is an IEEE workshop rather than a full conference, and I describe it as such.
     </p>
     <ul class="venues">
-      <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT 2026 <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
-      <li><img class="flag" src="/assets/flags/es.png" alt="Spain" width="18" height="12"> BDAA 2026 <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
-      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME 2026 <span class="where">Sousse, Tunisia</span></li>
-      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME 2026 <span class="where">IEEE workshop, Vilamoura, Portugal</span></li>
+      <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
+      <li><img class="flag" src="/assets/flags/es.png" alt="Spain" width="18" height="12"> BDAA <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
+      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME <span class="where">Sousse, Tunisia</span></li>
+      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME <span class="where">IEEE workshop, Vilamoura, Portugal</span></li>
     </ul>
 
     <h2>Peer review</h2>
@@ -717,7 +732,7 @@ add("bcs/standing/index.html",
     <p>
       I have judged student computing projects at Kennesaw State University, most recently
       on the spring 2026 Computing Showcase panel. That sits with the rest of the development
-      work on the <a href="/bcs/mentoring/">mentoring page</a>
+      work on the <a href="/mentoring/">mentoring page</a>
       rather than being counted twice.
     </p>
 
@@ -741,7 +756,7 @@ add("publications/index.html",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">Publications and writing</p>
+    <p class="kicker">Publications and writing</p>
     <h1>Published work, with the record linked</h1>
     <p class="lede">
       Peer-reviewed papers come first. Conference presentations follow, then writing for
@@ -764,26 +779,26 @@ add("publications/index.html",
       "statement of the human-in-the-loop pattern I apply to production systems.",
       [ext(IJCA, "International Journal of Computer Applications")]) + "\n" + claim(
       "<strong>Scalable Event-Driven Architectures for Distributed Retail Data Collection "
-      "Using ActiveMQ Artemis.</strong> IEEE ICCBI 2026, the 5th International Conference "
+      "Using ActiveMQ Artemis.</strong> IEEE ICCBI, the 5th International Conference "
       "on Computer Networks, Big Data and IoT. Examines high-throughput messaging "
       "topologies for multi-site data aggregation, using ActiveMQ Artemis as the backbone "
       "for event propagation across independently governed retail nodes. Presented in "
-      "Dubai in June 2026.",
-      [ext("https://iccbi.com/", "IEEE ICCBI 2026")]) + """
+      "Dubai in June.",
+      [ext("https://iccbi.com/", "IEEE ICCBI")]) + """
     </ul>
 
     <h2>Conference presentations</h2>
     <ul class="claims">
 """ + claim(
       "Presented Scalable Event-Driven Architectures for Distributed Retail Data Collection "
-      "Using ActiveMQ Artemis at IEEE ICCBI 2026, Dubai, June 2026.",
+      "Using ActiveMQ Artemis at IEEE ICCBI, Dubai, June.",
       [ext("https://iccbi.com/", "Conference programme")]) + "\n" + claim(
       "Keynote, The Trust Gap: Architecting Autonomous AI Systems for Real-World "
-      "Accountability, at the 2026 IEEE 5th World Conference on Applied Intelligence and "
-      "Computing, Jabalpur, India, August 2026.",
+      "Accountability, at the IEEE 5th World Conference on Applied Intelligence and "
+      "Computing, Jabalpur, India, August.",
       [ext(AIC_LIST, "Conference programme, keynote list")]) + "\n" + claim(
-      "The Naive AI Trap: Why Finance-Grade Extraction Needs Hybrid Agents, Extract Summit "
-      "2026, Austin, Texas, October 2026. Accepted session title, as it appears in the "
+      "The Naive AI Trap: Why Finance-Grade Extraction Needs Hybrid Agents, Extract Summit, "
+      "Austin, Texas, October. Accepted session title, as it appears in the "
       "programme.",
       [ext("https://www.extractsummit.io/", "Extract Summit programme")]) + """
     </ul>
@@ -835,7 +850,7 @@ add("talks/index.html",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">Talks and keynotes</p>
+    <p class="kicker">Talks and keynotes</p>
     <h1>Speaking, and where the organiser lists it</h1>
     <p class="lede">
       Each entry names the event, the city and the session title. Where the organiser
@@ -851,8 +866,8 @@ add("talks/index.html",
     <ul class="claims">
 """ + claim(
       "<strong>The Trust Gap: Architecting Autonomous AI Systems for Real-World "
-      "Accountability.</strong> Keynote at the 2026 IEEE 5th World Conference on Applied "
-      "Intelligence and Computing, Jabalpur, India, 29 and 30 August 2026. The talk covers how "
+      "Accountability.</strong> Keynote at the IEEE 5th World Conference on Applied "
+      "Intelligence and Computing, Jabalpur, India, 29 and 30 August. The talk covers how "
       "autonomous agent systems fail once they leave a demonstration, and how to verify them "
       "before they are trusted. It also argues that the sustainability cost of running them "
       "belongs in the same conversation as their accuracy.",
@@ -863,14 +878,14 @@ add("talks/index.html",
     <ul class="claims">
 """ + claim(
       "<strong>The Naive AI Trap: Why Finance-Grade Extraction Needs Hybrid Agents.</strong> "
-      "Extract Summit 2026, Brazos Hall, Austin, Texas, 7 and 8 October 2026, on the second "
+      "Extract Summit, Brazos Hall, Austin, Texas, 7 and 8 October, on the second "
       "day. The session covers why extraction that has to be correct, as opposed to merely "
       "plausible, needs hybrid agent designs rather than a single model in a loop.",
       [ext("https://www.extractsummit.io/", "Extract Summit programme")]) + "\n" + claim(
       "<strong>Scalable Event-Driven Architectures for Distributed Retail Data "
-      "Collection.</strong> Presented at IEEE ICCBI 2026, Dubai, June 2026, alongside the "
+      "Collection.</strong> Presented at IEEE ICCBI, Dubai, June, alongside the "
       "published paper.",
-      [ext("https://iccbi.com/", "IEEE ICCBI 2026 programme")]) + """
+      [ext("https://iccbi.com/", "IEEE ICCBI programme")]) + """
     </ul>
 
     <h2>University talks</h2>
@@ -893,7 +908,7 @@ add("peer-review/index.html",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">Peer review and technical programme committees</p>
+    <p class="kicker">Peer review and technical programme committees</p>
     <h1>The venues, named</h1>
     <p class="lede">
       I review submitted papers and serve on technical programme committees across four
@@ -912,10 +927,10 @@ add("peer-review/index.html",
       conference rather than a stand-alone event.
     </p>
     <ul class="venues">
-      <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT 2026 <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
-      <li><img class="flag" src="/assets/flags/es.png" alt="Spain" width="18" height="12"> BDAA 2026 <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
-      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME 2026 <span class="where">Sousse, Tunisia</span></li>
-      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME 2026 <span class="where">IEEE workshop on next-generation multimedia services at the edge, Vilamoura, Portugal</span></li>
+      <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
+      <li><img class="flag" src="/assets/flags/es.png" alt="Spain" width="18" height="12"> BDAA <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
+      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME <span class="where">Sousse, Tunisia</span></li>
+      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME <span class="where">IEEE workshop on next-generation multimedia services at the edge, Vilamoura, Portugal</span></li>
     </ul>
 
     <h2>Peer review for conferences</h2>
@@ -978,83 +993,6 @@ add("peer-review/index.html",
 """)
 
 # ============================================================================
-# IET (in preparation)
-# ============================================================================
-add("iet/index.html",
-    "IET Fellowship preparation | Pravin Khandke",
-    "The criteria being prepared for IET Fellowship, and how that application differs from "
-    "the BCS one.",
-    """
-<section class="hero">
-  <div class="wrap">
-    <p class="eyebrow">In preparation</p>
-    <h1>IET Fellowship, and how it differs from BCS</h1>
-    <p class="lede">
-      IET Fellowship is a separate application to a separate body, with different rules and
-      a different bar. This page records the criteria I am preparing and what each one needs.
-      It is a plan rather than a submission.
-    </p>
-  </div>
-</section>
-
-<div class="wrap">
-  <section>
-    <h2>What IET requires</h2>
-    <table>
-      <caption>Requirements that differ from the BCS application</caption>
-      <thead>
-        <tr><th scope="col">Requirement</th><th scope="col">What it means for me</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Two to three criteria, from a list of nine</td><td>Narrower than BCS. I am preparing Repute and Insight and Experience.</td></tr>
-        <tr><td>Sustained at a high level for five or more years, usually within the last ten</td><td>Requires a continuity timeline before any narrative is written, not after.</td></tr>
-        <tr><td>A CV is not accepted</td><td>The CV content has to be turned into criterion statements. It cannot be attached or repackaged.</td></tr>
-        <tr><td>An organisational chart is mandatory for Leadership and Responsibility</td><td>Neither of those criteria is among the two I am preparing, which is part of why they were not chosen.</td></tr>
-        <tr><td>Two supporters</td><td>One more than BCS requires.</td></tr>
-        <tr><td>Five hundred words per criterion</td><td>More room per criterion than BCS allows, on fewer criteria.</td></tr>
-        <tr><td>Do not send certificates, publication lists, or courses attended</td><td>The IET does not want an evidence dump. Links exist only to validate key evidence.</td></tr>
-      </tbody>
-    </table>
-
-    <h2>Criterion 1: Repute</h2>
-    <p class="pill">In preparation</p>
-    <p>
-      Public recognition at national or international level. The record I am assembling
-      covers IEEE Senior Member and the society fellowship. It also covers service on
-      international conference committees and the invited keynote. The question this criterion turns on is not
-      whether the recognition exists, but whether it is recognised outside my own
-      organisation and outside my own country, which the committee appointments and the
-      keynote answer.
-    </p>
-
-    <h2>Criterion 2: Insight and Experience</h2>
-    <p class="pill">In preparation</p>
-    <p>
-      Recognition as a consultant, technical specialist and subject expert. The material
-      here overlaps the BCS Consultancy section but is written for a different test. The
-      IET asks for sustained achievement at a high level, so the emphasis falls on the
-      continuity of the advisory work and on the decisions taken within it, rather than on
-      a single engagement.
-    </p>
-
-    <h2>What is not decided yet</h2>
-    <ul class="plain">
-      <li>Whether a third criterion is worth adding, and if so which one.</li>
-      <li>Which two supporters to approach, and whether either should be an IET Fellow.</li>
-      <li>Whether the five-year continuity test is met by the current record across the full window, or only across part of it.</li>
-    </ul>
-
-    <div class="note">
-      <strong>On publishing this page.</strong> The IET explicitly discourages sending
-      publication lists and certificates. This page is therefore a statement of which
-      criteria I am preparing and what each requires, not a collection of documents. The
-      evidence itself goes to the IET through its own form.
-    </div>
-  </section>
-</div>
-""")
-
-# ============================================================================
 # 404
 # ============================================================================
 add("404.html",
@@ -1063,7 +1001,7 @@ add("404.html",
     """
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">Not found</p>
+    <p class="kicker">Not found</p>
     <h1>That page does not exist</h1>
     <p class="lede">
       The address you followed does not match anything on this site. The pages that do
@@ -1078,6 +1016,36 @@ add("404.html",
   </div>
 </section>
 """)
+
+# ============================================================================
+# redirects from the pre-2026-09 addresses
+# ============================================================================
+# The criterion pages used to live under /bcs/. Old links, including any an
+# assessor has already saved, keep working through these stubs. The IET page was
+# withdrawn, so it points home.
+REDIRECTS = [
+    ("bcs/invention/index.html", "/invention/"),
+    ("bcs/consultancy/index.html", "/consultancy/"),
+    ("bcs/mentoring/index.html", "/mentoring/"),
+    ("bcs/standing/index.html", "/standing/"),
+    ("iet/index.html", "/"),
+]
+
+def emit_redirects():
+    for old, new in REDIRECTS:
+        doc = (
+            "<!DOCTYPE html>\n"
+            '<html lang="en">\n<head>\n<meta charset="utf-8">\n'
+            '<meta name="robots" content="noindex, nofollow">\n'
+            f'<meta http-equiv="refresh" content="0; url={new}">\n'
+            f'<link rel="canonical" href="{SITE["base"]}{new}">\n'
+            f"<title>Moved to {new}</title>\n</head>\n<body>\n"
+            f'<p>This page has moved. Continue to <a href="{new}">{new}</a>.</p>\n'
+            "</body>\n</html>\n"
+        )
+        target = OUT / old
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(doc, encoding="utf-8")
 
 # ============================================================================
 # robots
@@ -1105,6 +1073,7 @@ def emit_meta():
 
 if __name__ == "__main__":
     emit_meta()
+    emit_redirects()
     total = sum(n for _, n in BUILT)
     print(f"built {len(BUILT)} pages, {total:,} bytes")
     for path, n in BUILT:

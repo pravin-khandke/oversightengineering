@@ -1,22 +1,21 @@
 # oversightengineering.com
 
 Source for `https://oversightengineering.com`, the public record of the work cited in
-Pravin Khandke's BCS and IET fellowship applications.
+Pravin Khandke's BCS fellowship application.
 
 ## Layout
 
     build.py                  site generator. Page content lives here, one add(...) per page
     docs/                     PUBLISHED. GitHub Pages serves this folder and nothing else
-      index.html              overview and evidence map
+      index.html              overview and evidence map, with the About me aside
       memberships/            grades held, conferring body, verification route
-      bcs/invention/          BCS: Body of work, Invention and innovation
-      bcs/consultancy/        BCS: Body of work, Consultancy
-      bcs/mentoring/          BCS: Professional impact, Mentoring and coaching
-      bcs/standing/           BCS: Standing in the community, Public influencer
+      invention/              BCS: Body of work, Invention and innovation
+      consultancy/            BCS: Body of work, Consultancy
+      mentoring/              BCS: Professional impact, Mentoring and coaching
+      standing/               BCS: Standing in the community, Public influencer
       publications/           papers, presentations, technical writing
       talks/                  keynotes and conference sessions
       peer-review/            review venues and committee appointments
-      iet/                    IET criteria in preparation
       assets/css/site.css     styles, including a print stylesheet for assessors
       CNAME                   the custom domain
       .nojekyll               stop GitHub Pages running Jekyll
