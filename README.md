@@ -1,42 +1,56 @@
 # oversightengineering.com
 
 Source for `https://oversightengineering.com`, the public record of the work cited in
-Pravin Khandke's BCS fellowship application.
+Pravin Khandke's fellowship application.
 
 ## Layout
 
     build.py                  site generator. Page content lives here, one add(...) per page
+    probe_links.py            probes every external link in docs/, prints a Verified-on date
     docs/                     PUBLISHED. GitHub Pages serves this folder and nothing else
-      index.html              overview and evidence map, with the About me aside
-      memberships/            grades held, conferring body, verification route
-      invention/              BCS: Body of work, Invention and innovation
-      consultancy/            BCS: Body of work, Consultancy
-      mentoring/              BCS: Professional impact, Mentoring and coaching
-      standing/               BCS: Standing in the community, Public influencer
-      publications/           papers, presentations, technical writing
-      talks/                  keynotes and conference sessions
-      peer-review/            review venues and committee appointments
-      assets/css/site.css     styles, including a print stylesheet for assessors
+      index.html              one scrolling evidence record: hero, about, invention,
+                              leadership, mentoring, standing, recognitions, publications,
+                              education
+      invention/              full record, body of work, invention and innovation
+      consultancy/            full record, body of work, consultancy
+      mentoring/              full record, professional impact, mentoring and coaching
+      standing/               full record, standing in the community
+      bcs/                    redirect stubs. The submitted form carries /bcs/ URLs, so
+                              they keep resolving
+      iet/                    redirect stub to home, for a once-published address
+      memberships/, publications/, talks/, peer-review/
+                              redirect stubs into the home page sections they folded into
+      assets/css/site.css     styles, hand-maintained, including a print stylesheet
+      assets/img/             images, hand-maintained. profile.jpg is the hero photo
       CNAME                   the custom domain
       .nojekyll               stop GitHub Pages running Jekyll
-    EVIDENCE-CHECKLIST.md     what is backed, what is withheld, what is still missing
-    DEPLOY.md                 GitHub Pages and GoDaddy DNS, step by step
+    specs/                    design specs, tracked working documents
+    plans/                    implementation plans, tracked working documents
+    evidence/                 PRIVATE, gitignored, never published. See evidence/README.md
 
 ## Build
 
     python3 build.py
 
-No dependencies. Rewrites `docs/` in place. Do not hand-edit `docs/`.
+No dependencies. Rewrites `docs/` in place. The HTML under `docs/` is machine-written and
+must not be hand-edited. Two exceptions are hand-maintained and survive rebuilds because
+the generator only writes in place: `docs/assets/css/site.css` and `docs/assets/img/`.
+
+## Link checks
+
+    python3 probe_links.py
+
+Extracts every external href from `docs/` and probes each one. Exit 0 means every link
+returned 200 or is a named exception in the script. The venue list on the home page stamps
+the "verified on" date this script prints. Re-run it at filing time.
 
 ## Editing
 
-Page content is in `build.py` near the bottom, one `add(path, title, description, body)`
-call per page. Each claim is written with the `claim(text, sources)` helper, which renders
-the source line underneath it. External links use `ext(url, label)`, which adds the outward
-arrow marker.
-
-Adding a page means adding one `add(...)` call. The navigation is generated from the
-`nav()` function, so a new page needs an entry there as well.
+Page content is in `build.py`, one `add(path, title, description, body)` call per page.
+The home page is assembled from the VENUE_ROWS and COMMITTEE_ROWS lists plus the section
+markup in its one `add(...)` call. Claims use the `claim(text, sources)` helper, external
+links use `ext(url, label)`. Navigation is generated: `nav_home()` for the home page's
+anchors, `nav()` for the detail pages.
 
 ## Writing rules
 
@@ -48,8 +62,11 @@ assessor reads this site alongside the form.
 - No sentence carrying an inline comma list of three or more items
 - No conclusory adjectives, no promotional language
 - Every checkable claim carries a source line
+- No awarding body's name appears in anything under `docs/`. Check with
+  `grep -riwE "bcs|iet" docs/ | grep -v "docs/bcs/" | grep -v "docs/iet/"`
 
-`EVIDENCE-CHECKLIST.md` records the verification state of each URL.
+The evidence register lives at `evidence/EVIDENCE-CHECKLIST.md`, outside the published
+tree and untracked.
 
 ## Adding an image
 

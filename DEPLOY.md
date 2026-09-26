@@ -1,6 +1,6 @@
 # Deploy — oversightengineering.com on GitHub Pages
 
-> ## Current status, 13 September 2026
+> ## Current status, 26 September 2026
 >
 > **Live and working over http.** DNS is done: the apex resolves to all four GitHub
 > addresses and the site serves `Server: GitHub.com`.
@@ -11,10 +11,17 @@
 >     http://oversightengineering.com/bcs/mentoring/  200
 >     http://oversightengineering.com/bcs/standing/   200
 >
-> **HTTPS is not ready.** GitHub is still presenting its `*.github.io` wildcard, which does
-> not match the domain, so `https://` fails the certificate check. Let's Encrypt
-> provisioning usually completes within a few minutes and can take up to 24 hours. Do not
-> tick Enforce HTTPS until `https://oversightengineering.com/` loads without a warning.
+> **HTTPS is still broken.** The certificate is null and enforcement is off, now well past
+> the usual provisioning window. GitHub is still presenting its `*.github.io` wildcard,
+> which does not match the domain, so `https://` fails the certificate check. This is now a
+> user action item, recorded in `evidence/EVIDENCE-CHECKLIST.md`: re-save the custom domain
+> under Settings, Pages, or open a GitHub support thread. Until it is fixed, anyone opening
+> a saved `https://` link lands on a browser warning page. Do not tick Enforce HTTPS until
+> `https://oversightengineering.com/` loads without a warning.
+>
+> **Re-run the link check before any filing.** `python3 probe_links.py` probes every
+> external link the site carries and prints the Verified-on date. The venue list on the
+> home page stamps that date.
 >
 > **The repo name is misspelled.** It is `oversightengineering` with an extra "ing",
 > while the domain is `oversightengineering`. The Pages custom domain is correct, so
@@ -117,14 +124,17 @@ Once DNS has propagated:
     curl -sS -o /dev/null -w "%{http_code}\n" https://oversightengineering.com/
     curl -sS -o /dev/null -w "%{http_code}\n" https://oversightengineering.com/bcs/invention/
 
-All four BCS URL rows need to answer 200, since they go on the form:
+All four form URL rows need to answer 200, since they go on the application form:
 
     https://oversightengineering.com/bcs/invention/
     https://oversightengineering.com/bcs/consultancy/
     https://oversightengineering.com/bcs/mentoring/
     https://oversightengineering.com/bcs/standing/
 
-Then open each in a browser. This matters more than the status codes do, because BCS promises the linked resource is publicly accessible and supports the position. A page that answers 200 while rendering nothing satisfies the letter and fails the intent.
+Each is a meta-refresh stub into the matching full-record page. Open each in a browser and
+follow the redirect. This matters more than the status codes do, because the application
+promises the linked resource is publicly accessible and supports the position. A page that
+answers 200 while rendering nothing satisfies the letter and fails the intent.
 
 ---
 
