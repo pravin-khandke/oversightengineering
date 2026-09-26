@@ -1,0 +1,8 @@
+# private evidence store, never published, never tracked
+evidence/
+
+# scratch
+.superpowers/
+.gstack/
+.bak-*
+.DS_Store
