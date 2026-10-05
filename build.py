@@ -965,7 +965,7 @@ add("standing/index.html",
 # ============================================================================
 add("404.html",
     "Page not found | Pravin Khandke",
-    "That page does not exist on this site.",
+    "That page does not exist on this site. Some sections are still being written and will be published here soon.",
     """
 <section class="hero">
   <div class="wrap">
@@ -980,6 +980,11 @@ add("404.html",
       <a class="btn" href="/">Home</a>
       <a class="btn ghost" href="/#publications">Publications</a>
       <a class="btn ghost" href="/#standing">Standing</a>
+    </div>
+    <div class="note">
+      <strong>On the pages still being written.</strong> Parts of this site are being
+      rebuilt. Sections that are not published yet will appear here soon, and a link you
+      were given will start working once they are. Nothing is linked before it is ready.
     </div>
   </div>
 </section>
