@@ -395,6 +395,63 @@ def committee_rows_html() -> str:
 
 VERIFIED_DATE = "26 September 2026"
 
+HIGHLIGHTS = [
+    # sort key, label, text, [(url, link label)]
+    ("2026-10", "October 2026", "Speaker at Extract Summit, Austin, Texas.",
+     [("https://www.extractsummit.io/", "Extract Summit programme")]),
+    ("2026-08", "August 2026",
+     "Keynote at the IEEE 5th World Conference on Applied Intelligence and Computing, "
+     "Jabalpur, India.",
+     [(AIC_LIST, "Conference programme")]),
+    ("2026-07", "July 2026", "Became a Fellow of the Royal Statistical Society.",
+     [("https://rss.org.uk/", "Royal Statistical Society")]),
+    ("2026-06", "June 2026", "Elevated to IEEE Senior Member.",
+     [("https://www.ieee.org/membership/senior-members.html", "IEEE, Senior Member grade")]),
+    ("2026-06", "June 2026",
+     "Conferred Eminent Fellow Member by The Scholars Academic and Scientific Society.",
+     [(SAS_VERIFY, "Society verification page")]),
+]
+
+
+def highlights_html() -> str:
+    rows = sorted(HIGHLIGHTS, key=lambda h: h[0], reverse=True)
+    out = []
+    for _, label, text, sources in rows:
+        links = " · ".join(ext(u, l) for u, l in sources)
+        out.append(f'      <li class="tl-item"><span class="tl-date">{html.escape(label)}</span>'
+                   f'<span class="tl-text">{html.escape(text)}</span>'
+                   f'<span class="claim-src">Source: {links}</span></li>')
+    return '    <ol class="timeline">\n' + "\n".join(out) + "\n    </ol>"
+
+
+# href, title, text, art variant, art file (decorative, optional)
+HOME_CARDS = [
+    ("/invention/", "Work",
+     "A human-in-the-loop remittance pipeline and advisory work on retiring a mainframe platform.",
+     1, "card-work.jpg"),
+    ("/mentoring/", "Mentoring",
+     "How I develop engineers inside my teams and through a university capstone.",
+     2, "card-mentoring.jpg"),
+    ("/standing/", "Community",
+     "Standing in the community and the grades I hold, each with its public record.",
+     3, "card-community.jpg"),
+    ("/publications/", "Papers and talks",
+     "Two peer-reviewed papers and the talks I have given, linked to the organiser's record.",
+     4, "card-papers.jpg"),
+    ("/peer-review/", "Peer review",
+     "26 review venues and 4 committee appointments, each linked to its public listing where one exists.",
+     5, "card-review.jpg"),
+    ("/writing/", "Writing",
+     "Technical articles for practising engineers on developer platforms.",
+     6, "card-writing.jpg"),
+]
+
+
+def cards_html() -> str:
+    rows = [c for c in HOME_CARDS if c[0] != "/writing/" or ARTICLES]
+    return "\n".join("      " + card(*c) for c in rows)
+
+
 add("index.html",
     "Pravin Khandke | Fellowship evidence record",
     "Public record of the work, recognition and professional service cited in "
@@ -404,7 +461,7 @@ add("index.html",
   <div class="wrap hero-flex">
     <div class="hero-main">
       <p class="kicker">Fellowship evidence record</p>
-      <h1>Pravin <span class="accent">Khandke</span></h1>
+      <h1>Pravin Khandke</h1>
       <p class="lede">Applied researcher and systems architect. 26 years building AI
       and distributed systems for retail, automotive and financial services.</p>
       <div class="badge-row">
@@ -412,11 +469,9 @@ add("index.html",
         <span class="badge-chip">RSS Fellow</span>
         <span class="badge-chip">SEFM Eminent Fellow</span>
       </div>
-      <div class="stat-row">
-        <span class="stat"><span class="stat-n" data-counter="years">26</span><span class="stat-l">Years</span></span>
-        <span class="stat"><span class="stat-n" data-counter="venues">26</span><span class="stat-l">Review venues</span></span>
-        <span class="stat"><span class="stat-n" data-counter="committees">4</span><span class="stat-l">Committees</span></span>
-        <span class="stat"><span class="stat-n" data-counter="publications">2</span><span class="stat-l">Publications</span></span>
+      <div class="cta-row">
+        <a class="btn" href="#record">Read the record</a>
+        <a class="btn ghost" href="/peer-review/">Peer review</a>
       </div>
       <div class="connect-row">
         <a href="https://orcid.org/0009-0004-9693-9334">ORCID 0009-0004-9693-9334</a>
@@ -430,7 +485,30 @@ add("index.html",
   </div>
 </section>
 
+<div class="stats">
+  <div class="wrap">
+    <span class="stat"><span class="stat-n" data-counter="years">26</span><span class="stat-l">Years</span></span>
+    <span class="stat"><span class="stat-n" data-counter="venues">26</span><span class="stat-l">Review venues</span></span>
+    <span class="stat"><span class="stat-n" data-counter="committees">4</span><span class="stat-l">Committees</span></span>
+    <span class="stat"><span class="stat-n" data-counter="publications">2</span><span class="stat-l">Publications</span></span>
+  </div>
+</div>
+
 <div class="wrap">
+
+  <section id="highlights">
+    <h2 class="section-rule">Highlights</h2>
+    <p class="section-intro">Dated items from the record, newest first. Each one links to its source.</p>
+""" + highlights_html() + """
+  </section>
+
+  <section id="record">
+    <h2 class="section-rule">The record, by topic</h2>
+    <p class="section-intro">Each page holds the full evidence for one area, with a source line on every claim.</p>
+    <div class="grid">
+""" + cards_html() + """
+    </div>
+  </section>
 
   <section id="about">
     <h2 class="section-rule">About</h2>
@@ -442,239 +520,8 @@ add("index.html",
     </p>
   </section>
 
-  <section id="invention">
-    <h2 class="section-rule">Invention and innovation</h2>
-    <div class="work-card">
-      <h3>Remittance reconciliation pipeline</h3>
-      <p>
-        Customer payments arrive through four channels that share no common format.
-        The pipeline reads all four and matches them to invoices, with a person at
-        the decision point for every match the model is not sure of. Every validation
-        is written to an audit trail.
-      </p>
-      <div class="tag-row"><span>human-in-the-loop</span><span>financial controls</span></div>
-      <p class="claim-src">Source: <a href="https://www.ijcaonline.org/">IJCA, where the pattern is published</a></p>
-    </div>
-    <div class="work-card">
-      <h3>Event-driven retail backbone</h3>
-      <p>
-        Multi-site retail data collection moves over an ActiveMQ Artemis backbone,
-        designed for high-throughput propagation between independently governed nodes.
-        The architecture was presented at IEEE ICCBI in Dubai.
-      </p>
-      <div class="tag-row"><span>event-driven</span><span>messaging</span></div>
-      <p class="claim-src">Source: <a href="https://iccbi.com/">IEEE ICCBI</a></p>
-    </div>
-    <p><a href="/invention/">The full invention record</a></p>
-  </section>
-
-  <section id="leadership">
-    <h2 class="section-rule">Leadership and consulting</h2>
-    <div class="work-card">
-      <h3>Retiring a continental-scale platform</h3>
-      <p>
-        A client ran its national dealer network on a legacy mainframe that could not
-        scale. I advised a strangler fig migration, service by service, and the
-        programme completed with no interruption to live dealer operations.
-      </p>
-      <div class="tag-row"><span>strangler fig</span><span>no downtime window</span></div>
-    </div>
-    <div class="work-card">
-      <h3>A canonical data model that became the standard</h3>
-      <p>
-        I recommended a canonical data model as the single integration hub for every
-        downstream consumer. The client adopted it, and it remains the standard the
-        organisation builds on.
-      </p>
-      <div class="tag-row"><span>canonical model</span><span>integration hub</span></div>
-    </div>
-    <div class="work-card">
-      <h3>Financial services delivery</h3>
-      <p>
-        Reconciliation and engagement lifecycle work for financial services clients,
-        delivered through distributed teams. Engineering quality was held across
-        teams split between the United States and India.
-      </p>
-      <div class="tag-row"><span>reconciliation</span><span>distributed teams</span></div>
-    </div>
-    <p><a href="/consultancy/">The full consultancy record</a></p>
-  </section>
-
-  <section id="mentoring">
-    <h2 class="section-rule">Mentoring and coaching</h2>
-    <div class="work-card">
-      <h3>Engineers developed inside the teams</h3>
-      <p>
-        Junior engineers were paired on high-skill production work until they could
-        own it without me. Development was a measured part of each project, and the
-        engineers now hold senior and lead positions.
-      </p>
-      <div class="tag-row"><span>pairing</span><span>measured development</span></div>
-    </div>
-    <div class="work-card">
-      <h3>A sponsored university capstone</h3>
-      <p>
-        I sponsored a full-semester capstone in a university Department of Information
-        Technology and authored its specification. The specification called for hybrid
-        search with source citations, token budgeting, and a feasibility study naming
-        where human oversight remains essential.
-      </p>
-      <div class="tag-row"><span>capstone</span><span>cost-aware AI</span></div>
-    </div>
-    <div class="work-card">
-      <h3>An open standard for children's use of AI</h3>
-      <p>
-        I authored an open, age-banded standard for children's use of AI, published as
-        a public repository so a parent or a school can adopt it. It extends the same
-        commitment to the next generation of users.
-      </p>
-      <div class="tag-row"><span>open standard</span><span>age-banded</span></div>
-      <p class="claim-src">Source: <a href="https://github.com/pravin-khandke/safe-ai-for-kids">the repository, publicly available</a></p>
-    </div>
-    <p><a href="/mentoring/">The full mentoring record</a></p>
-  </section>
-
-  <section id="standing">
-    <h2 class="section-rule">Standing in the community</h2>
-
-    <h3>Speaking</h3>
-    <div class="pub-row">
-      <span class="p-title">Keynote, The Trust Gap: Architecting Autonomous AI Systems for Real-World Accountability</span>
-      <span class="p-meta">AIC 2026, Jabalpur <a href="https://scrs.in/conference/aic2026">conference site</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">The Naive AI Trap: Why Finance-Grade Extraction Needs Hybrid Agents</span>
-      <span class="p-meta">Extract Summit, Austin <a href="https://www.extractsummit.io/speakers">speakers</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Scalable Event-Driven Architectures for Distributed Retail Data Collection</span>
-      <span class="p-meta">IEEE ICCBI, Dubai <a href="https://iccbi.com/">conference site</a></span>
-    </div>
-
-    <h3>Committees</h3>
-    <ul class="plain committee-list">
-""" + committee_rows_html() + """
-    </ul>
-
-    <h3>Peer review</h3>
-    <p>
-      I review submitted papers for international conferences across artificial
-      intelligence and distributed systems. The venues are named below, each with its
-      link where a live one exists.
-    </p>
-    <ul class="plain venue-list">
-""" + venue_rows_html() + """
-    </ul>
-    <p class="src-note">
-      26 review venues plus four committee appointments. Links verified on
-      """ + VERIFIED_DATE + """. Eight venues have no live listing to link.
-    </p>
-
-    <h3>Writing</h3>
-    <div class="pub-row">
-      <span class="p-title">Feature Flags That Actually Ship: Lessons from the Trenches</span>
-      <span class="p-meta"><a href="https://dev.to/pravin-khandke/feature-flags-that-actually-ship-lessons-from-the-trenches-b7a">Dev.to</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Messaging in the Age of AI</span>
-      <span class="p-meta"><a href="https://dev.to/pravin-khandke/messaging-in-the-age-of-ai-26h7">Dev.to</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Clean Code at Scale: How Sonar Became Our Silent Reviewer</span>
-      <span class="p-meta"><a href="https://pravin-khandke.hashnode.dev/clean-code-at-scale-how-sonar-became-our-silent-reviewer">Hashnode</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">The Emergence of Explainable AI in Deep Learning</span>
-      <span class="p-meta"><a href="https://pravin-khandke.hashnode.dev/">Hashnode</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Backend Architecture in the Age of AI</span>
-      <span class="p-meta"><a href="https://medium.com/@Pravin-Khandke/backend-architecture-in-the-age-of-ai-e73cc8bbf599">Medium</a></span>
-    </div>
-
-    <h3>Judging</h3>
-    <div class="pub-row">
-      <span class="p-title">Georgia Tech, graduate applicant review</span>
-      <span class="p-meta">evaluator role</span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Kennesaw State University, spring 2026 Computing Showcase panel</span>
-      <span class="p-meta">judge <a href="https://www.kennesaw.edu/">university site</a></span>
-    </div>
-
-    <p><a href="/standing/">The full standing record</a></p>
-  </section>
-
-  <section id="recognitions">
-    <h2 class="section-rule">Recognitions</h2>
-    <div class="verify-grid">
-      <div class="verify-row">
-        <span class="v-name">IEEE Senior Member</span>
-        <span class="v-detail">Elevated June 2026, member 102303821. Senior Member is awarded to those who have demonstrated significant performance over a sustained period, assessed by a panel of peers.</span>
-        <a href="https://www.ieee.org/membership/senior-members.html">IEEE, Senior Member grade</a>
-      </div>
-      <div class="verify-row">
-        <span class="v-name">Eminent Fellow Member (SEFM)</span>
-        <span class="v-detail">Conferred June 2026 as a lifetime honour by The Scholars Academic and Scientific Society.</span>
-        <a href="https://www.sassociety.com/membership-id-sas-sefm-770-2026/">Society verification page</a>
-      </div>
-      <div class="verify-row">
-        <span class="v-name">RSS Fellow</span>
-        <span class="v-detail">Fellow of the Royal Statistical Society since July 2026, membership 263939. The Society is the United Kingdom professional body for statistics, incorporated by Royal Charter.</span>
-        <a href="https://rss.org.uk/">Royal Statistical Society</a>
-      </div>
-      <div class="verify-row">
-        <span class="v-name">AIC 2026 keynote</span>
-        <span class="v-detail">The Trust Gap: Architecting Autonomous AI Systems for Real-World Accountability, IEEE 5th World Conference on Applied Intelligence and Computing, Jabalpur, India, 29 and 30 August.</span>
-        <a href="https://scrs.in/conference/aic2026">conference site</a>
-      </div>
-    </div>
-    <p class="src-note">
-      Recognition is verified against the awarding body's own register rather than a
-      scanned certificate.
-    </p>
-  </section>
-
-  <section id="publications">
-    <h2 class="section-rule">Publications</h2>
-    <div class="pub-row">
-      <span class="p-title">Designing Adaptive Human-in-the-Loop Interfaces for Enhanced Collaborative Incident Management</span>
-      <span class="p-meta">International Journal of Computer Applications, 2026 <a href="https://www.ijcaonline.org/">IJCA</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Scalable Event-Driven Architectures for Distributed Retail Data Collection Using ActiveMQ Artemis</span>
-      <span class="p-meta">IEEE ICCBI, Dubai <a href="https://iccbi.com/">IEEE ICCBI</a></span>
-    </div>
-    <h3>Technical articles</h3>
-    <div class="pub-row">
-      <span class="p-title">Feature Flags That Actually Ship: Lessons from the Trenches</span>
-      <span class="p-meta">Dev.to <a href="https://dev.to/pravin-khandke/feature-flags-that-actually-ship-lessons-from-the-trenches-b7a">read</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Messaging in the Age of AI</span>
-      <span class="p-meta">Dev.to <a href="https://dev.to/pravin-khandke/messaging-in-the-age-of-ai-26h7">read</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Clean Code at Scale: How Sonar Became Our Silent Reviewer</span>
-      <span class="p-meta">Hashnode <a href="https://pravin-khandke.hashnode.dev/clean-code-at-scale-how-sonar-became-our-silent-reviewer">read</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">The Emergence of Explainable AI in Deep Learning</span>
-      <span class="p-meta">Hashnode <a href="https://pravin-khandke.hashnode.dev/">read</a></span>
-    </div>
-    <div class="pub-row">
-      <span class="p-title">Backend Architecture in the Age of AI</span>
-      <span class="p-meta">Medium <a href="https://medium.com/@Pravin-Khandke/backend-architecture-in-the-age-of-ai-e73cc8bbf599">read</a></span>
-    </div>
-    <p class="src-note">
-      Two peer-reviewed papers is the accurate count. No citation total is shown,
-      because a reader who follows a dead link or an empty profile learns more from
-      the absence than from the claim.
-    </p>
-  </section>
-
-  <section id="education">
-    <h2 class="section-rule">Education</h2>
+  <section id="background">
+    <h2 class="section-rule">Background</h2>
     <table class="edu-table">
       <thead><tr><th>Degree</th><th>Institution</th></tr></thead>
       <tbody>
