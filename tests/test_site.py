@@ -47,6 +47,7 @@ STUBS = {
     "bcs/consultancy/index.html": "/consultancy/",
     "bcs/mentoring/index.html": "/mentoring/",
     "bcs/standing/index.html": "/standing/",
+    "inspiring/index.html": "/mentoring/",
     "iet/index.html": "/",
 }
 SIBLINGS = [

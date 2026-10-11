@@ -7,3 +7,6 @@ evidence/
 .bak-*
 .DS_Store
 __pycache__/
+
+# private source documents (resume, LinkedIn snapshots, submitted form). Never publish.
+docs/sync/

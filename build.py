@@ -48,7 +48,7 @@ ARTICLES = [
      "url": "https://pravin-khandke.hashnode.dev/clean-code-at-scale-how-sonar-became-our-silent-reviewer"},
     {"title": "The Emergence of Explainable AI in Deep Learning",
      "platform": "Hashnode",
-     "url": "https://pravin-khandke.hashnode.dev/"},
+     "url": "https://pravin-khandke.hashnode.dev/the-emergence-of-explainable-ai-in-deep-learning-bridging-the-gap-between-model-complexity-and-human-trust"},
     {"title": "Backend Architecture in the Age of AI",
      "platform": "Medium",
      "url": "https://medium.com/@Pravin-Khandke/backend-architecture-in-the-age-of-ai-e73cc8bbf599"},
@@ -537,22 +537,25 @@ add("index.html",
   <section id="background">
     <h2 class="section-rule">Background</h2>
     <table class="edu-table">
-      <thead><tr><th>Degree</th><th>Institution</th></tr></thead>
+      <thead><tr><th>Degree</th><th>Institution</th><th>Year</th></tr></thead>
       <tbody>
-        <tr><td>M.Tech, Software Engineering</td><td>Birla Institute of Technology and Science, Pilani</td></tr>
-        <tr><td>B.E., Computer Engineering</td><td>University of Mumbai</td></tr>
-        <tr><td>Advanced study, AI and Machine Learning</td><td>Massachusetts Institute of Technology Professional Education</td></tr>
-        <tr><td>Advanced study, Data Science</td><td>Georgia Institute of Technology Professional Education</td></tr>
+        <tr><td>Master of Business Administration (Systems)</td><td>Vinayaka Missions Research Foundation</td><td>2010</td></tr>
+        <tr><td>Bachelor of Arts, Social Sciences</td><td>Madurai Kamaraj University</td><td>2003</td></tr>
+        <tr><td>Post Graduate Diploma, Computer Engineering</td><td>PC Point, Pune</td><td>1998</td></tr>
+        <tr><td>Technical Certification</td><td>Center for Electronics Design and Technology of India (CEDT)</td><td>1997</td></tr>
       </tbody>
     </table>
     <h3>Work history</h3>
     <table class="edu-table">
       <thead><tr><th>Role</th><th>Employer</th><th>Period</th></tr></thead>
       <tbody>
-        <tr><td>Senior Engineering Manager</td><td>Insight Global</td><td>October 2022 to present</td></tr>
-        <tr><td>Engineering Manager</td><td>Amadeus</td><td>April 2021 to October 2022</td></tr>
+        <tr><td>Staff Software Engineer</td><td>Insight Global</td><td>October 2022 to present</td></tr>
+        <tr><td>Senior Full Stack Developer</td><td>Amadeus</td><td>April 2021 to October 2022</td></tr>
         <tr><td>Senior Consultant</td><td>Capgemini</td><td>March 2008 to April 2021</td></tr>
-        <tr><td>Software Engineer to Team Lead</td><td>Capgemini</td><td>May 2004 to March 2008</td></tr>
+        <tr><td>Consultant</td><td>Capgemini</td><td>May 2004 to March 2008</td></tr>
+        <tr><td>Developer</td><td>CashTech Solutions</td><td>November 2003 to May 2004</td></tr>
+        <tr><td>Programmer</td><td>Sunrise Systems</td><td>July 2000 to November 2003</td></tr>
+        <tr><td>Junior Software Developer</td><td>Infolution Systems and Services</td><td>December 1999 to July 2000</td></tr>
       </tbody>
     </table>
     <p class="src-note">
@@ -1401,6 +1404,7 @@ REDIRECTS = [
     ("bcs/consultancy/index.html", "/consultancy/"),
     ("bcs/mentoring/index.html", "/mentoring/"),
     ("bcs/standing/index.html", "/standing/"),
+    ("inspiring/index.html", "/mentoring/"),
     ("iet/index.html", "/"),
 ]
 
