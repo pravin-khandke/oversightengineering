@@ -381,8 +381,6 @@ VENUE_ROWS = [
 COMMITTEE_ROWS = [
     ("AIIoT 2026", "IEEE World AI IoT Congress, Seattle, United States",
      "https://worldaiiotcongress.org/technical-committee/"),
-    ("BDAA 2026", "Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain",
-     "https://bdaa-conference.com/"),
     ("SIME 2026", "Sousse, Tunisia", "https://sime-conf.org/committees/"),
     ("NGSME 2026", "IEEE workshop, Vilamoura, Portugal",
      "https://sites.google.com/view/ngmse2026/home"),
@@ -460,7 +458,7 @@ HOME_CARDS = [
      "Three peer-reviewed papers and the talks I have given, linked to the organiser's record.",
      4, "card-papers.jpg"),
     ("/peer-review/", "Peer review",
-     "28 review venues and 4 committee appointments, each linked to its public listing where one exists.",
+     "28 review venues and 3 committee appointments, each linked to its public listing where one exists.",
      5, "card-review.jpg"),
     ("/writing/", "Writing",
      "Technical articles for practising engineers on developer platforms.",
@@ -511,7 +509,7 @@ add("index.html",
   <div class="wrap">
     <span class="stat"><span class="stat-n" data-counter="years">26</span><span class="stat-l">Years</span></span>
     <span class="stat"><span class="stat-n" data-counter="venues">28</span><span class="stat-l">Review venues</span></span>
-    <span class="stat"><span class="stat-n" data-counter="committees">4</span><span class="stat-l">Committees</span></span>
+    <span class="stat"><span class="stat-n" data-counter="committees">3</span><span class="stat-l">Committees</span></span>
     <span class="stat"><span class="stat-n" data-counter="publications">3</span><span class="stat-l">Publications</span></span>
   </div>
 </div>
@@ -1225,13 +1223,12 @@ add("standing/index.html",
 
     <h2>Technical programme committees</h2>
     <p>
-      I serve on the technical programme committees of four international venues, where the
-      work is deciding which submitted research is accepted and presented. One of the four
+      I serve on the technical programme committees of three international venues, where the
+      work is deciding which submitted research is accepted and presented. One of the three
       is an IEEE workshop rather than a full conference, and I describe it as such.
     </p>
     <ul class="venues">
       <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
-      <li><img class="flag" src="/assets/flags/es.png" alt="Spain" width="18" height="12"> BDAA <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
       <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME <span class="where">Sousse, Tunisia</span></li>
       <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME <span class="where">IEEE workshop, Vilamoura, Portugal</span></li>
     </ul>
@@ -1529,7 +1526,7 @@ add("peer-review/index.html",
     <h2>Technical programme committees</h2>
     <p>
       Committee service means deciding which submitted research is accepted and presented.
-      Four appointments, one of which is an IEEE workshop co-located with a larger
+      Three appointments, one of which is an IEEE workshop co-located with a larger
       conference rather than a stand-alone event.
     </p>
     <ul class="plain committee-list">
@@ -1551,7 +1548,7 @@ add("peer-review/index.html",
 """ + venue_rows_html() + """
     </ul>
     <p class="src-note">
-      28 review venues plus four committee appointments. Links verified on
+      28 review venues plus three committee appointments. Links verified on
       """ + VERIFIED_DATE + """. Eight venues have no live listing to link.
     </p>
 

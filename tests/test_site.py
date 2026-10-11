@@ -198,10 +198,10 @@ class Rules(unittest.TestCase):
     def test_counters_agree_everywhere(self):
         got = dict(re.findall(r'data-counter="(\w+)">(\d+)<', read("index.html")))
         self.assertEqual(got, {"years": "26", "venues": "28",
-                               "committees": "4", "publications": "3"})
+                               "committees": "3", "publications": "3"})
         review = read("peer-review/index.html")
         self.assertEqual(review.count('class="venue-row"'), 28)
-        self.assertEqual(review.count('class="committee-row"'), 4)
+        self.assertEqual(review.count('class="committee-row"'), 3)
         self.assertEqual(read("publications/index.html").count('class="pub-entry"'), 3)
 
     def test_no_review_totals(self):

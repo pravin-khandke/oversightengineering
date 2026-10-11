@@ -16,7 +16,7 @@ Pravin Khandke's fellowship application.
       career/                 roles and skills
       standing/, memberships/ standing in the community and the grades held
       publications/, talks/   the three peer-reviewed papers, and the talks given
-      peer-review/            28 venues and 4 committees, each linked where a listing exists
+      peer-review/            28 venues and 3 committees, each linked where a listing exists
       writing/                technical articles. Built only while ARTICLES in build.py has entries
       bcs/                    redirect stubs. The submitted form carries /bcs/ URLs, so
                               they keep resolving
