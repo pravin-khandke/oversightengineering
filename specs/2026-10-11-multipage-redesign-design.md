@@ -76,7 +76,8 @@ reviewing every tab of each. Adapted to the constraints above.
   Each item is one sentence with a source link. The owner confirms the items. Stored as a
   `HIGHLIGHTS` list in `build.py`.
 - Work pages: case-study blocks with a date range, one tag line, bullets, tag chips, a
-  source link and a captioned diagram. A metric badge appears only when its source line
+  source link and a captioned diagram. A case study carries a date range only where a source
+  states one, and in this build only the retirement case study has one. A metric badge appears only when its source line
   exists. No metric is shown without a stated basis.
 - Papers and talks: talks are cards with an optional photo, event name, talk title and a link
   button, grouped by type (Keynote, Conference sessions) because the sources give dates

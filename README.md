@@ -23,7 +23,7 @@ Pravin Khandke's fellowship application.
       assets/img/             images, hand-maintained. profile.jpg is the hero photo
       CNAME                   the custom domain
       .nojekyll               stop GitHub Pages running Jekyll
-    tests/test_site.py        builds the site and checks every rule below
+    tests/test_site.py        builds the site and checks the structural and content rules (navigation, links, images, counters, dashes, awarding-body names, noindex)
     specs/                    design specs, tracked working documents
     plans/                    implementation plans, tracked working documents
     evidence/                 PRIVATE, gitignored, never published. See evidence/README.md
@@ -33,7 +33,7 @@ Pravin Khandke's fellowship application.
     python3 build.py
     python3 -m unittest discover -s tests -v    run the site checks
 
-No dependencies. Rewrites `docs/` in place. The HTML under `docs/` is machine-written and
+build.py needs Python 3.12 or later. No dependencies. Rewrites `docs/` in place. The HTML under `docs/` is machine-written and
 must not be hand-edited. Two exceptions are hand-maintained and survive rebuilds because
 the generator only writes in place: `docs/assets/css/site.css` and `docs/assets/img/`.
 
@@ -42,7 +42,7 @@ the generator only writes in place: `docs/assets/css/site.css` and `docs/assets/
     python3 probe_links.py
 
 Extracts every external href from `docs/` and probes each one. Exit 0 means every link
-returned 200 or is a named exception in the script. The venue list on the home page stamps
+returned 200 or is a named exception in the script. The venue list on the peer-review page stamps
 the "verified on" date this script prints. Re-run it at filing time.
 
 ## Editing
@@ -73,8 +73,9 @@ tree and untracked.
 ## Adding an image
 
 Put the file under `docs/assets/img/` and add its alt text and caption to the `IMAGES`
-table in `build.py`. A file in that folder with no `IMAGES` entry stops the build, so
-nothing publishes without alt text. Check the alt text against the picture. Strip EXIF data
+table in `build.py`. An image the pages reference (through `figure` or `thumb`) with no
+`IMAGES` entry stops the build, so nothing publishes without alt text. An unreferenced file is
+ignored. Check the alt text against the picture. Strip EXIF data
 and keep each file near 200 KB or less.
 
 Expected photo names, all optional. A missing file renders nothing.

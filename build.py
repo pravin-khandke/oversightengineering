@@ -14,6 +14,7 @@ import html
 import os
 import pathlib
 import re
+import shutil
 
 ROOT = pathlib.Path(__file__).parent
 OUT = pathlib.Path(os.environ.get("SITE_OUT") or ROOT / "docs")
@@ -94,13 +95,14 @@ RELATED = {
 }
 
 # Alt text and caption for every image that is not decorative card art, keyed by file
-# name under docs/assets/img/. A file in that folder with no entry here stops the build.
+# name under docs/assets/img/. An image the pages reference (through figure or thumb) with no entry here stops the build.
+# An unreferenced file is ignored.
 IMAGES = {
     "diagram-reconciliation.svg": (
-        "Diagram. Lockbox scans, ACH files, email advice and vendor portals feed one step "
-        "that reads each payment and scores every field. High confidence matches are assigned "
-        "automatically, middle band matches go to a person who chooses, and low confidence "
-        "matches go to manual review. Every check and override is logged.",
+        "Diagram. Payments arrive through four channels and feed one step that reads each "
+        "payment and scores every field. High confidence matches are assigned automatically. "
+        "Middle band matches go to a person who chooses. Low confidence matches go to manual "
+        "review. Every check and override is logged.",
         "How a payment moves through the pipeline. Schematic."),
     "diagram-strangler.svg": (
         "Diagram. Three stages from start to end. The legacy mainframe block shrinks while the "
@@ -187,7 +189,7 @@ def add_sidebar(key: str, body: str) -> str:
         f'<li><a href="/{k}">{PAGE_LABELS[k]}</a></li>'
         for k in RELATED.get(key, []) if k != "writing/" or ARTICLES
     )
-    aside = ('<aside class="side" aria-label="On this page">'
+    aside = ('<aside class="side" aria-label="Page navigation">'
              f'<p class="side-h">On this page</p><ul>{on_page}</ul>'
              f'<p class="side-h">Related</p><ul>{related}</ul></aside>')
     body = body.replace('<div class="wrap">', '<div class="wrap topic">', 1)
@@ -255,7 +257,7 @@ def claim(text: str, sources: list[str]) -> str:
 
 def _image(name: str):
     """(alt, caption) for an image file, or None while the file is absent.
-    A file with no IMAGES entry stops the build, so nothing ships without alt text."""
+    An image the pages reference with no IMAGES entry stops the build, so nothing ships without alt text."""
     if not (OUT / "assets" / "img" / name).exists():
         return None
     if name not in IMAGES:
@@ -1443,6 +1445,8 @@ def emit_meta():
     (OUT / "robots.txt").write_text(ROBOTS, encoding="utf-8")
 
 if __name__ == "__main__":
+    if not ARTICLES:
+        shutil.rmtree(OUT / "writing", ignore_errors=True)
     emit_meta()
     emit_redirects()
     total = sum(n for _, n in BUILT)

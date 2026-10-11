@@ -50,7 +50,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 96px; }
 body {
   margin: 0; background: var(--paper); color: var(--ink);
   font: 400 17px/1.65 var(--serif);
@@ -137,6 +137,11 @@ h1 {
 .btn:hover { background: #e3efe8; border-color: #e3efe8; color: #17251d; }
 .btn.ghost { background: transparent; color: #ffffff; border-color: rgba(255, 255, 255, .7); }
 .btn.ghost:hover { background: rgba(255, 255, 255, .14); color: #ffffff; }
+.hero .btn { color: #245640; }
+.hero .btn.ghost { color: #ffffff; }
+.hero a:hover { color: #ffffff; }
+.hero .btn:hover { color: #17251d; }
+.hero .btn.ghost:hover { color: #ffffff; }
 .connect-row {
   display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 18px;
   font: 400 14px/1.6 var(--sans);
@@ -308,6 +313,7 @@ th { font: 600 13.5px/1.4 var(--sans); color: var(--ink-soft); }
 /* ---------- focus and motion ---------- */
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
 .hero :focus-visible { outline-color: #ffffff; }
+.site-footer :focus-visible { outline-color: var(--foot-ink); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }

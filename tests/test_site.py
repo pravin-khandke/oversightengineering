@@ -117,7 +117,7 @@ class Structure(unittest.TestCase):
     def test_every_page_is_noindex(self):
         for p in all_html():
             with self.subTest(page=p.relative_to(DOCS).as_posix()):
-                self.assertIn("noindex", p.read_text(encoding="utf-8"))
+                self.assertIn('<meta name="robots" content="noindex', p.read_text(encoding="utf-8"))
         self.assertIn("Disallow: /", (DOCS / "robots.txt").read_text())
 
     def test_topic_pages_have_a_sidebar(self):
@@ -158,9 +158,19 @@ class Rules(unittest.TestCase):
     def test_no_dashes_or_semicolons_in_prose(self):
         for p in real_pages():
             text = visible_text(p.read_text(encoding="utf-8"))
-            for bad, name in (("—", "em dash"), ("–", "en dash"), (";", "semicolon")):
+            for bad, name in (("\u2014", "em dash"), ("\u2013", "en dash"), (";", "semicolon")):
                 with self.subTest(page=p.relative_to(DOCS).as_posix(), bad=name):
                     self.assertNotIn(bad, text)
+
+    def test_cases_and_claims_carry_a_source(self):
+        for p in real_pages():
+            raw = p.read_text(encoding="utf-8")
+            blocks = re.findall(r'<article class="case">.*?</article>', raw, re.S)
+            for ul in re.findall(r'<ul class="claims">(.*?)</ul>', raw, re.S):
+                blocks += re.findall(r"<li\b.*?</li>", ul, re.S)
+            for b in blocks:
+                with self.subTest(page=p.relative_to(DOCS).as_posix(), item=visible_text(b).strip()[:60]):
+                    self.assertTrue("Source:" in b or "claim-src" in b, "no source line")
 
     def test_no_awarding_body_names(self):
         pattern = re.compile(r"\b(bcs|iet)\b", re.I)
@@ -221,6 +231,10 @@ class Images(unittest.TestCase):
                     if alt == "":
                         self.assertTrue(src.startswith("/assets/img/card-"),
                                         "only decorative card art may have empty alt text")
+
+    def test_diagrams_are_placed_on_their_pages(self):
+        self.assertIn("/assets/img/diagram-reconciliation.svg", read("invention/index.html"))
+        self.assertIn("/assets/img/diagram-strangler.svg", read("consultancy/index.html"))
 
     def test_alt_text_is_unique_per_image(self):
         seen = {}
