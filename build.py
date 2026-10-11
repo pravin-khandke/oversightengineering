@@ -348,7 +348,7 @@ ORCID = "https://orcid.org/0009-0004-9693-9334"
 # name, location detail, url (None = no link, reason stated in the row)
 VENUE_ROWS = [
     ("IECON 2026", "Doha, Qatar", "https://www.iecon2026.org/"),
-    ("IEEE GLOBECOM 2026", "Macau, China, CISS Symposium", "https://globecom2026.ieee-globecom.org/"),
+    ("IEEE GLOBECOM 2026 CISS Symposium", "Macau, China", "https://globecom2026.ieee-globecom.org/"),
     ("ICCUBEA 2026", "Pune, India", "https://iccubea.pccoepune.com/iccubea.php"),
     ("ICETCI 2026", "Hyderabad, India", "http://www.ietcint.com/"),
     ("ICDCECE 2026", "Karnataka, India", "https://icdcece.in/"),
@@ -874,11 +874,9 @@ add("consultancy/index.html",
       ["Client confirmation available through the named supporter"]) + "\n" + claim(
       "I recommended the Transaction Web Service as the backbone for the Manheim OVE and "
       "Manheim Express marketplaces, and directed the team that built it under "
-      "zero-downtime requirements. It now carries nearly 8 million vehicle transactions a "
-      "year.",
+      "zero-downtime requirements.",
       ["Client confirmation available through the named supporter"]) + "\n" + claim(
-      "Cox Automotive operates in more than 30 countries and supports more than 40,000 "
-      "dealers.",
+      "Cox Automotive operates in more than 30 countries.",
       ["Client confirmation available through the named supporter"]) + """
     </ul>
 
@@ -887,8 +885,8 @@ add("consultancy/index.html",
 """ + claim(
       "At Sunrise Systems, my first lead role, I led a team of five to move the fixed "
       "deposit system of Kirloskar Oil Engines Ltd from COBOL to a Java and Oracle web "
-      "application. Performance tripled, the system became reachable from anywhere on the "
-      "internet, and the manual workload of five staff fell.",
+      "application. Performance tripled and the system became reachable from anywhere on the "
+      "internet. The manual workload of five staff fell.",
       ["Client reference available through the application"]) + "\n" + claim(
       "For Zett Media, a Norwegian software group, I engineered a financial management "
       "platform that handled customers' credit information. It loaded in 2.5 seconds over "
@@ -951,13 +949,13 @@ CASE_STANDARD = case_study(
     "An open, age-banded guide to children's use of AI",
     ["Authored the guide so a parent or a school can adopt it.",
      "Extends the same commitment to the next generation of users."],
-    ["open standard", "age-banded"],
+    ["open guide", "age-banded"],
     [ext(KIDS_REPO, "The repository, publicly available")])
 
 add("mentoring/index.html",
     "Mentoring and coaching | Pravin Khandke",
     "Structured development of engineers inside my teams, a sponsored university capstone, "
-    "and an open standard for children's use of AI.",
+    "and an open guide to children's use of AI.",
     """
 <section class="hero">
   <div class="wrap">
@@ -1050,7 +1048,7 @@ add("mentoring/index.html",
 add("inspiring/index.html",
     "Inspiring others | Pravin Khandke",
     "How Pravin Khandke shares practical guidance on building AI systems, through coaching "
-    "inside organisations, writing, speaking and one to one mentoring.",
+    "and mentoring and through public writing and speaking.",
     """
 <section class="hero">
   <div class="wrap">
@@ -1084,7 +1082,7 @@ add("inspiring/index.html",
        ext("https://iccbi.com/", "IEEE ICCBI")]) + "\n" + claim(
       "The human-in-the-loop pattern behind my reconciliation work is published in a peer-reviewed journal, so engineers beyond my own employer can use it.",
       [ext(IJCA, "International Journal of Computer Applications")]) + "\n" + claim(
-      "I paired junior engineers on the hardest production work and stood behind them while they learned to lead.",
+      "I paired junior engineers on the difficult production work and stood behind them while they learned to lead.",
       ["Named mentees available for confirmation through the application"]) + "\n" + claim(
       "I am guiding an eight-student capstone team at Kennesaw State University, four of them pursuing AI master's degrees, through KnowledgeBridge, a working retrieval-augmented generation platform.",
       [ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards"),
@@ -1095,6 +1093,7 @@ add("inspiring/index.html",
     <p>
       The practices outlasted my time on each project. Cox Automotive adopted the canonical data model as its integration standard and still builds on it. At Insight Global, low-confidence matches now stop for a person before they reach the ledger, and the teams I coached apply the same rule to agentic work. The two engineers I mentored longest now lead others. One is a Senior Solutions Architect and the other a Lead Software Engineer at Cox Automotive.
     </p>
+    <p class="src-note">Source: client confirmation available through the named supporter, and employer confirmation available through the application.</p>
     <div class="note">
       <strong>On names.</strong> The people I mentored are named in my application, where they can confirm the account themselves.
     </div>
@@ -1133,7 +1132,7 @@ add("career/index.html",
        "Modelled the engagement lifecycle as a state machine in PostgreSQL, with an audit trail on every transition from onboarding to termination.",
        "Built a layered authorisation model that enforces permissions at the API gateway and again within each service.",
        "Established consumer-driven contract testing across independently deployable services.",
-       "Built a custom agentic harness since 2025 that stops before any irreversible action, and coached the teams who use it."],
+       "Since 2025, built a custom agentic harness that stops before any irreversible action, and coached the teams who use it."],
       ["financial services", "audit controls", "event-driven"],
       ["Employer confirmation available through the application"],
       dates="October 2022 to present") + case_study(
@@ -1201,7 +1200,7 @@ add("standing/index.html",
     <p class="lede">
       Standing in a profession shows up as other people asking you to do something. The
       invitations on this page came from conference organisers and journal editors. Each
-      one is listed with the organiser's own public record where one exists.
+      one is listed with a public record where one exists.
     </p>
   </div>
 </section>
@@ -1249,7 +1248,7 @@ add("standing/index.html",
     <ul class="claims">
 """ + claim(
       "Three peer-reviewed publications. One is in the International Journal of Computer "
-      "Applications and one is in the proceedings of IEEE ICCBI. The third is a "
+      "Applications and one was accepted and presented at IEEE ICCBI. The third is a "
       "co-authored paper for the IEEE International Workshop on Intelligent Systems on "
       "event-driven dynamic pricing. They cover human-in-the-loop interfaces and "
       "event-driven architectures.",
@@ -1257,7 +1256,7 @@ add("standing/index.html",
       "Sustained technical writing for engineers, published on developer platforms and read "
       "outside my own organisation, The subjects are architecture and "
       "reliability, and the practical failure modes of AI systems in production. I have "
-      "also published on HackerNoon, where one article reached 888 readers.",
+      "also published on HackerNoon, where one article has 888 reads.",
       [ext("https://dev.to/pravin-khandke", "Dev.to"),
        ext("https://pravin-khandke.hashnode.dev/", "Hashnode"),
        "HackerNoon reader count available through the application"]) + "\n" + claim(
@@ -1317,7 +1316,7 @@ PAPERS = [
                 "independently governed retail nodes. Presented in Dubai in June.",
      "url": "https://iccbi.com/", "link": "IEEE ICCBI"},
     {"title": "An Event-Driven Context-Aware Framework for Margin-Preserving Dynamic Pricing in High-Velocity Retail Commerce Systems",
-     "venue": "IEEE International Workshop on Intelligent Systems (IWIS)", "year": "2026",
+     "venue": "IEEE International Workshop on Intelligent Systems (IWIS), accepted paper", "year": "2026",
      "summary": "Co-authored with Jayakumar Ramalingam and Jose Prabhu Michael Singarayan. "
                 "Proposes a context-aware pricing framework that adjusts retail prices in "
                 "real time from streaming demand and inventory signals while preserving "
@@ -1347,7 +1346,7 @@ add("publications/index.html",
     <p class="kicker">Publications</p>
     <h1>Peer-reviewed papers, with the record linked</h1>
     <p class="lede">
-      Three papers have been through peer review. Each entry links to the published version
+      Three papers have been through peer review. Each entry links to the published version or to the record of acceptance
       rather than quoting it. Talks and technical articles have their own pages.
     </p>
   </div>

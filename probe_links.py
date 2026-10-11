@@ -5,7 +5,7 @@ Run:  python3 probe_links.py
 
 Every link is probed. None is skipped. A link falls into one of three groups:
   ok       the server answered 2xx
-  BLOCKED  the server refused a script (403, 429 or 999) and the link is on the
+  BLOCKED  the server refused a script (403, 429, 999 or a 302 redirect loop) and the link is on the
            BOT_BLOCKED list. A person must open it. It is printed on every run.
   FAIL     anything else, including a dead link that is on the BOT_BLOCKED list
 

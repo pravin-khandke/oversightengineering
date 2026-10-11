@@ -167,6 +167,15 @@ class Rules(unittest.TestCase):
                 with self.subTest(page=p.relative_to(DOCS).as_posix(), bad=name):
                     self.assertNotIn(bad, text)
 
+    def test_no_employer_commercial_figures(self):
+        pats = ["8 million", "40,000", "nine billion", "29 per cent", "78 per cent",
+                "500 customers", "5,000 invoice"]
+        for p in real_pages():
+            text = visible_text(p.read_text(encoding="utf-8"))
+            for pat in pats:
+                with self.subTest(page=p.relative_to(DOCS).as_posix(), pattern=pat):
+                    self.assertIsNone(re.search(pat, text, re.I))
+
     def test_cases_and_claims_carry_a_source(self):
         for p in real_pages():
             raw = p.read_text(encoding="utf-8")

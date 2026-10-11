@@ -15,8 +15,8 @@ Pravin Khandke's fellowship application.
       inspiring/              inspiring others: coaching, writing, speaking, mentoring
       career/                 roles and skills
       standing/, memberships/ standing in the community and the grades held
-      publications/, talks/   the two peer-reviewed papers, and the talks given
-      peer-review/            26 venues and 4 committees, each linked where a listing exists
+      publications/, talks/   the three peer-reviewed papers, and the talks given
+      peer-review/            28 venues and 4 committees, each linked where a listing exists
       writing/                technical articles. Built only while ARTICLES in build.py has entries
       bcs/                    redirect stubs. The submitted form carries /bcs/ URLs, so
                               they keep resolving
