@@ -367,12 +367,13 @@ def venue_rows_html() -> str:
 def committee_rows_html() -> str:
     out = []
     for name, where, url in COMMITTEE_ROWS:
+        pill = '<span class="pill">Programme committee</span>'
         if url:
             link = ext(url, "committee page")
-            out.append(f'      <li class="committee-row">{html.escape(name)} '
+            out.append(f'      <li class="committee-row">{html.escape(name)} {pill} '
                        f'<span class="where">{html.escape(where)}</span> {link}</li>')
         else:
-            out.append(f'      <li class="committee-row">{html.escape(name)} '
+            out.append(f'      <li class="committee-row">{html.escape(name)} {pill} '
                        f'<span class="where">{html.escape(where)}</span></li>')
     return '\n'.join(out)
 
@@ -696,6 +697,69 @@ add("index.html",
 # ============================================================================
 # MEMBERSHIPS
 # ============================================================================
+add("memberships/index.html",
+    "Memberships and fellowships | Pravin Khandke",
+    "Professional memberships and fellowship grades held by Pravin Khandke, with the "
+    "conferring body and verification route for each.",
+    """
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Memberships and fellowships</p>
+    <h1>Grades held, and who conferred them</h1>
+    <p class="lede">
+      Membership evidence is only worth what the conferring body's own record says. Each
+      entry below names the body, the grade, the date and, where the body publishes one,
+      the verification route.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+    <h2>IEEE Senior Member</h2>
+    <ul class="claims">
+""" + claim(
+      "Elevated to Senior Member of the Institute of Electrical and Electronics Engineers "
+      "in June 2026, member number 102303821. IEEE describes Senior Member as a grade "
+      "awarded to those who have demonstrated significant performance over a sustained "
+      "period, assessed by a panel of peers, and notes that it is held by a minority of "
+      "the total membership.",
+      [ext("https://www.ieee.org/membership/senior-members.html", "IEEE, Senior Member grade")]) + """
+    </ul>
+
+    <h2>The Scholars Academic and Scientific Society</h2>
+    <ul class="claims">
+""" + claim(
+      "Eminent Fellow Member (SEFM), conferred in June 2026 as a lifetime honour. The "
+      "Society states that its fellowships follow a nomination and recommendation process "
+      "reviewed by its Eminent Fellows.",
+      [ext(SAS_VERIFY, "Society membership verification page")]) + """
+    </ul>
+
+    <h2>Royal Statistical Society</h2>
+    <ul class="claims">
+""" + claim(
+      "Fellow of the Royal Statistical Society, membership number 263939, since July 2026. "
+      "The Society is the United Kingdom professional body for statistics, founded in 1834 "
+      "and incorporated by Royal Charter. It styles its members Fellows, and welcomed me to "
+      "Fellow membership in July 2026.",
+      [ext("https://rss.org.uk/", "Royal Statistical Society")]) + """
+    </ul>
+
+    <p class="src-note">
+      Recognition is verified against the conferring body's own register rather than a
+      scanned certificate.
+    </p>
+
+    <div class="note">
+      <strong>On the grades.</strong> IEEE Senior Member and Eminent Fellow Member of the
+      Society were conferred through assessment. Royal Statistical Society Fellowship is
+      the Society's standard grade, open to those with a sustained interest in statistics.
+    </div>
+  </section>
+</div>
+""")
+
 
 # ============================================================================
 # BCS — INVENTION AND INNOVATION
@@ -1089,6 +1153,71 @@ add("standing/index.html",
 # ============================================================================
 # PEER REVIEW
 # ============================================================================
+add("peer-review/index.html",
+    "Peer review record | Pravin Khandke",
+    "The international conferences where Pravin Khandke has reviewed submitted papers or "
+    "served on a programme committee, each linked to its public listing where one exists.",
+    """
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Peer review and programme committees</p>
+    <h1>The venues, named</h1>
+    <p class="lede">
+      I review submitted papers and serve on technical programme committees across four
+      continents. The venues are listed individually below, because a named venue can be
+      checked against the conference's own committee page and a total cannot.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+    <h2>Technical programme committees</h2>
+    <p>
+      Committee service means deciding which submitted research is accepted and presented.
+      Four appointments, one of which is an IEEE workshop co-located with a larger
+      conference rather than a stand-alone event.
+    </p>
+    <ul class="plain committee-list">
+""" + committee_rows_html() + """
+    </ul>
+
+    <h2>Peer review for conferences</h2>
+    <p>
+      The venues below are where I have reviewed submitted papers. The subject matter
+      spans artificial intelligence and machine learning. It also covers distributed
+      systems and the internet of things, and cloud computing.
+    </p>
+    <p>
+      The list opens with the two flagship conferences. IECON is the flagship annual
+      conference of the IEEE Industrial Electronics Society. IEEE GLOBECOM is one of the
+      two flagship conferences of the IEEE Communications Society.
+    </p>
+    <ul class="plain venue-list">
+""" + venue_rows_html() + """
+    </ul>
+    <p class="src-note">
+      26 review venues plus four committee appointments. Links verified on
+      """ + VERIFIED_DATE + """. Eight venues have no live listing to link.
+    </p>
+
+    <div class="note">
+      <strong>On the count.</strong> No total number of reviews appears on this page. A
+      total is the one figure a reader cannot check for themselves, so the venues are named
+      instead. The authoritative number, with the documents behind it, is stated in my
+      application.
+    </div>
+
+    <h2>Review platforms</h2>
+    <p>
+      Reviews are submitted through the conference management systems the organisers use.
+      Each venue sets its own form and rating scale, which is why the review record is held
+      per conference rather than summarised.
+    </p>
+  </section>
+</div>
+""")
+
 # ============================================================================
 # 404
 # ============================================================================
@@ -1107,8 +1236,8 @@ add("404.html",
     </p>
     <div class="cta-row">
       <a class="btn" href="/">Home</a>
-      <a class="btn ghost" href="/#publications">Publications</a>
-      <a class="btn ghost" href="/#standing">Standing</a>
+      <a class="btn ghost" href="/publications/">Publications</a>
+      <a class="btn ghost" href="/standing/">Standing</a>
     </div>
     <div class="note">
       <strong>On the pages still being written.</strong> Parts of this site are being
@@ -1131,10 +1260,8 @@ REDIRECTS = [
     ("bcs/mentoring/index.html", "/mentoring/"),
     ("bcs/standing/index.html", "/standing/"),
     ("iet/index.html", "/"),
-    ("memberships/index.html", "/#recognitions"),
-    ("publications/index.html", "/#publications"),
+        ("publications/index.html", "/#publications"),
     ("talks/index.html", "/#standing"),
-    ("peer-review/index.html", "/#standing"),
 ]
 
 def emit_redirects():
