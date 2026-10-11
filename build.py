@@ -60,8 +60,9 @@ if os.environ.get("SITE_ARTICLES") == "none":
 # label, landing page, pages that mark the item current
 NAV_GROUPS = [
     ("Home", "", [""]),
+    ("Career", "career/", ["career/"]),
     ("Work", "invention/", ["invention/", "consultancy/"]),
-    ("Mentoring", "mentoring/", ["mentoring/"]),
+    ("Mentoring", "mentoring/", ["mentoring/", "inspiring/"]),
     ("Community", "standing/", ["standing/", "memberships/"]),
     ("Papers and talks", "publications/", ["publications/", "talks/"]),
     ("Peer review", "peer-review/", ["peer-review/"]),
@@ -73,6 +74,8 @@ PAGE_LABELS = {
     "invention/": "Invention",
     "consultancy/": "Consultancy",
     "mentoring/": "Mentoring",
+    "inspiring/": "Inspiring others",
+    "career/": "Career",
     "standing/": "Standing",
     "memberships/": "Memberships",
     "publications/": "Publications",
@@ -85,7 +88,9 @@ PAGE_LABELS = {
 RELATED = {
     "invention/": ["consultancy/", "publications/"],
     "consultancy/": ["invention/", "mentoring/"],
-    "mentoring/": ["standing/", "consultancy/"],
+    "mentoring/": ["inspiring/", "standing/", "consultancy/"],
+    "inspiring/": ["mentoring/", "standing/", "talks/"],
+    "career/": ["consultancy/", "invention/"],
     "standing/": ["talks/", "peer-review/", "memberships/"],
     "memberships/": ["standing/", "publications/"],
     "publications/": ["talks/", "writing/"],
@@ -566,6 +571,7 @@ add("index.html",
       and the resume disagree, the form wins and the difference is recorded in the
       evidence register.
     </p>
+    <p><a href="/career/">The full career record</a></p>
   </section>
 
   <div class="note">
@@ -1039,6 +1045,148 @@ add("mentoring/index.html",
 """)
 
 # ============================================================================
+# INSPIRING OTHERS
+# ============================================================================
+add("inspiring/index.html",
+    "Inspiring others | Pravin Khandke",
+    "How Pravin Khandke shares practical guidance on building AI systems, through coaching "
+    "inside organisations, writing, speaking and one to one mentoring.",
+    """
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Inspiring others</p>
+    <h1>Sharing what works when AI systems reach production</h1>
+    <p class="lede">
+      Most advice on putting large language models into production comes from vendors. I have built systems where a wrong answer moves money, and I share what I learned in three ways. I coach teams inside the organisations I serve. I write and speak in public. I develop individual engineers one to one.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+    <h2>The situation</h2>
+    <p>
+      Few people who have shipped these systems in regulated work say in public what goes wrong. Over 26 years I have built systems where a wrong answer moves money or stalls a dealer network. I have seen teams change how they build only when someone they trust shows them that the safer way works.
+    </p>
+
+    <h2>What I did</h2>
+    <ul class="claims">
+""" + claim(
+      "At Cox Automotive I walked senior architects and technical leads through the reasoning behind major migration decisions until they owned the decisions themselves. I coached their teams through cloud adoption from 2010 to 2020.",
+      ["Client confirmation available through the named supporter"]) + "\n" + claim(
+      "Since 2025 I have built a custom agentic harness at Insight Global that keeps a person in charge and stops short of anything irreversible. I coach the engineers who now run it day to day.",
+      ["Employer confirmation available through the application"]) + "\n" + claim(
+      "I write for other engineers on feature flags and on messaging in the age of AI. Other articles cover code quality with Sonar and explainable AI.",
+      [ext("/writing/", "Writing page, with a link to each article") if ARTICLES
+       else ext("https://pravin-khandke.hashnode.dev/", "Hashnode profile")]) + "\n" + claim(
+      "I gave the keynote at the IEEE 5th World Conference on Applied Intelligence and Computing in Jabalpur, and I presented event-driven architecture at IEEE ICCBI in Dubai.",
+      [ext(AIC_LIST, "Keynote talk page on the conference site"),
+       ext("https://iccbi.com/", "IEEE ICCBI")]) + "\n" + claim(
+      "The human-in-the-loop pattern behind my reconciliation work is published in a peer-reviewed journal, so engineers beyond my own employer can use it.",
+      [ext(IJCA, "International Journal of Computer Applications")]) + "\n" + claim(
+      "I paired junior engineers on the hardest production work and stood behind them while they learned to lead.",
+      ["Named mentees available for confirmation through the application"]) + "\n" + claim(
+      "I am guiding an eight-student capstone team at Kennesaw State University, four of them pursuing AI master's degrees, through KnowledgeBridge, a working retrieval-augmented generation platform.",
+      [ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards"),
+       "Project documentation available through the application"]) + """
+    </ul>
+
+    <h2>What changed</h2>
+    <p>
+      The practices outlasted my time on each project. Cox Automotive adopted the canonical data model as its integration standard and still builds on it. At Insight Global, low-confidence matches now stop for a person before they reach the ledger, and the teams I coached apply the same rule to agentic work. The two engineers I mentored longest now lead others. One is a Senior Solutions Architect and the other a Lead Software Engineer at Cox Automotive.
+    </p>
+    <div class="note">
+      <strong>On names.</strong> The people I mentored are named in my application, where they can confirm the account themselves.
+    </div>
+  </section>
+</div>
+""")
+
+# ============================================================================
+# CAREER
+# ============================================================================
+def skill_row(items):
+    return '<div class="tag-row">' + "".join(f"<span>{html.escape(i)}</span>" for i in items) + "</div>"
+
+add("career/index.html",
+    "Career | Pravin Khandke",
+    "Roles held by Pravin Khandke since 1999, with the work done in each and the skills used.",
+    """
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Career</p>
+    <h1>Twenty-six years of building systems that move money and data</h1>
+    <p class="lede">
+      This page lists each role in turn, newest first. The invention and consultancy pages hold the full account of the two pieces of work that matter most.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+    <h2>Roles</h2>
+""" + case_study(
+      "Staff Software Engineer, Insight Global",
+      "Financial data integration and transaction integrity",
+      ["Designed the customer remittance reconciliation pipeline described on the invention page, which the finance function runs in production.",
+       "Architected a canonical data model that unified several platforms with no shared API contract or data definition, and enabled event-driven synchronisation without changing any source system.",
+       "Modelled the engagement lifecycle as a state machine in PostgreSQL, with an audit trail on every transition from onboarding to termination.",
+       "Built a layered authorisation model that enforces permissions at the API gateway and again within each service.",
+       "Established consumer-driven contract testing across independently deployable services.",
+       "Built a custom agentic harness since 2025 that stops before any irreversible action, and coached the teams who use it."],
+      ["financial services", "audit controls", "event-driven"],
+      ["Employer confirmation available through the application"],
+      dates="October 2022 to present") + case_study(
+      "Senior Full Stack Developer, Amadeus",
+      "Web data collection and retrieval",
+      ["Led the engineering of a web data collection platform that supplied competitive rate intelligence to the company's pricing products.",
+       "Scaled the platform to monitor more than 5,000 hotel booking sites continuously.",
+       "Designed the resource isolation model that let many browser processes run on one host with predictable CPU and memory use.",
+       "Optimised the retrieval layer so partial-match and prefix queries met a tight latency budget for live commercial traffic.",
+       "Consolidated several data products into one customer-facing portal, and applied fault-tolerance patterns so an upstream failure did not take the portal down."],
+      ["data collection", "travel technology"],
+      ["Employer confirmation available through the application"],
+      dates="April 2021 to October 2022") + case_study(
+      "Senior Consultant and Consultant, Capgemini",
+      "Cox Automotive dealer platforms, Pune and Atlanta",
+      ["Built enterprise dealer management platforms for Cox Automotive on J2EE, first from the Pune delivery centre and then from Atlanta.",
+       "Became senior consultant in March 2008, and led the retirement of the legacy mainframe from March 2020 to April 2021.",
+       "Led a distributed delivery team across the United States and India, and mentored engineers as technical manager of the offshore team.",
+       "The full account is on the consultancy page."],
+      ["Java and J2EE", "legacy modernisation"],
+      ["Client confirmation available through the named supporter"],
+      dates="May 2004 to April 2021") + case_study(
+      "Earlier roles",
+      "Banking and enterprise software in Pune",
+      ["Developer at CashTech Solutions, building core banking modules for payment processing and account management for regional banking clients, November 2003 to May 2004.",
+       "Programmer at Sunrise Systems, delivering financial and fixed deposit systems in Java and J2EE, July 2000 to November 2003.",
+       "Junior Software Developer at Infolution Systems and Services, developing software components for client projects, December 1999 to July 2000."],
+      ["Java", "banking software"],
+      ["Employment record available through the application"],
+      dates="December 1999 to May 2004") + """
+    <h2>Technical expertise</h2>
+    <h3>Systems architecture</h3>
+""" + skill_row(["distributed systems", "microservices", "event-driven design", "API integration", "legacy modernisation"]) + """
+    <h3>Data</h3>
+""" + skill_row(["PostgreSQL", "Couchbase", "MongoDB", "Elasticsearch", "Oracle", "DB2", "MySQL", "canonical data modelling"]) + """
+    <h3>Infrastructure</h3>
+""" + skill_row(["Kubernetes", "Docker", "AWS", "CI/CD", "Linux", "cgroups"]) + """
+    <h3>Languages</h3>
+""" + skill_row(["Java", "JavaScript", "SQL"]) + """
+    <h3>Observability</h3>
+""" + skill_row(["Splunk", "New Relic", "DataDog", "PagerDuty"]) + """
+
+    <h2>Community service</h2>
+    <ul class="claims">
+""" + claim(
+      "Volunteer at the Celebration 250 Community Recognition Event run by the Cobb County Sheriff's Office, August 2026.",
+      ["Volunteer record available through the application"]) + """
+    </ul>
+  </section>
+</div>
+""")
+
+# ============================================================================
 # BCS — PUBLIC INFLUENCER
 # ============================================================================
 add("standing/index.html",
@@ -1466,7 +1614,6 @@ REDIRECTS = [
     ("bcs/consultancy/index.html", "/consultancy/"),
     ("bcs/mentoring/index.html", "/mentoring/"),
     ("bcs/standing/index.html", "/standing/"),
-    ("inspiring/index.html", "/mentoring/"),
     ("iet/index.html", "/"),
 ]
 

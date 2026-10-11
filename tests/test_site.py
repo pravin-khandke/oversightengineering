@@ -18,6 +18,7 @@ DOCS = ROOT / "docs"
 
 NAV = [
     ("/", "Home"),
+    ("/career/", "Career"),
     ("/invention/", "Work"),
     ("/mentoring/", "Mentoring"),
     ("/standing/", "Community"),
@@ -30,6 +31,8 @@ CURRENT = {
     "invention/index.html": "Work",
     "consultancy/index.html": "Work",
     "mentoring/index.html": "Mentoring",
+    "inspiring/index.html": "Mentoring",
+    "career/index.html": "Career",
     "standing/index.html": "Community",
     "memberships/index.html": "Community",
     "publications/index.html": "Papers and talks",
@@ -41,19 +44,20 @@ TOPIC_PAGES = [
     "invention/index.html", "consultancy/index.html", "mentoring/index.html",
     "standing/index.html", "memberships/index.html", "publications/index.html",
     "talks/index.html", "peer-review/index.html",
+    "inspiring/index.html", "career/index.html",
 ]
 STUBS = {
     "bcs/invention/index.html": "/invention/",
     "bcs/consultancy/index.html": "/consultancy/",
     "bcs/mentoring/index.html": "/mentoring/",
     "bcs/standing/index.html": "/standing/",
-    "inspiring/index.html": "/mentoring/",
     "iet/index.html": "/",
 }
 SIBLINGS = [
     ("invention/", "consultancy/"),
     ("standing/", "memberships/"),
     ("publications/", "talks/"),
+    ("mentoring/", "inspiring/"),
 ]
 
 
@@ -302,7 +306,7 @@ class WritingPage(unittest.TestCase):
             for page in out.rglob("*.html"):
                 with self.subTest(page=page.relative_to(out).as_posix()):
                     self.assertNotIn("/writing/", page.read_text(encoding="utf-8"))
-            self.assertEqual(len(nav_items((out / "index.html").read_text(encoding="utf-8"))), 6)
+            self.assertEqual(len(nav_items((out / "index.html").read_text(encoding="utf-8"))), 7)
 
     def test_photo_without_alt_text_stops_the_build(self):
         with tempfile.TemporaryDirectory() as tmp:

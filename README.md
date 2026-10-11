@@ -12,6 +12,8 @@ Pravin Khandke's fellowship application.
       invention/, consultancy/
                               work pages, with case-study blocks and a diagram each
       mentoring/              mentoring and coaching, with case-study blocks
+      inspiring/              inspiring others: coaching, writing, speaking, mentoring
+      career/                 roles and skills
       standing/, memberships/ standing in the community and the grades held
       publications/, talks/   the two peer-reviewed papers, and the talks given
       peer-review/            26 venues and 4 committees, each linked where a listing exists
