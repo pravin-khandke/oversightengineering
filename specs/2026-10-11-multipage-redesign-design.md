@@ -42,7 +42,7 @@ Decisions made in brainstorming:
 
 ## Site map
 
-Top navigation has six items. The brand name links home.
+Top navigation has six items, and a seventh appears when there are articles. The brand name links home.
 
 | Nav item | URL | Contents |
 |---|---|---|
@@ -53,11 +53,43 @@ Top navigation has six items. The brand name links home.
 | Papers and talks | `/publications/` and `/talks/` | Two restored pages |
 | Peer review | `/peer-review/` | Restored page with 26 linked venues and 4 committees |
 
+A seventh item, Writing at `/writing/`, is built but hidden. `build.py` holds an `ARTICLES`
+list that starts empty. The nav item and the page are generated only when the list has at
+least one entry with a public URL. Each entry renders as a card with a thumbnail, title,
+platform label and a "Read on <platform>" link. No entry is invented. The owner adds a line
+when something is published.
+
 Redirect stubs `docs/bcs/*` and `docs/iet/` stay unchanged. The four `REDIRECTS` entries for
 memberships, publications, talks and peer-review are removed so the real pages are served.
 
 The home page stops being the long scrolling record. Its sections move onto the topic pages.
 Counters and claims on topic pages must agree with the home page.
+
+## Page patterns
+
+Borrowed from rahvis.github.io, bala-kumaran.com and balajithadagamkandavel.com after
+reviewing every tab of each. Adapted to the constraints above.
+
+- Home hero: two buttons next to the grade chips. "Read the record" and "Peer review".
+- Home Highlights: a reverse-chronological list of 5 to 8 dated items under the counters.
+  Each item is one sentence with a source link. The owner confirms the items. Stored as a
+  `HIGHLIGHTS` list in `build.py`.
+- Work pages: case-study blocks with a date range, one tag line, bullets, tag chips, a
+  source link and a captioned diagram. A metric badge appears only when its source line
+  exists. No metric is shown without a stated basis.
+- Papers and talks: talks are cards with a photo or logo, event name, talk title and a link
+  button, grouped by year, with a video link where one exists. Publications are grouped by
+  type, with the title in bold, the venue in italics, the year and a DOI link. The ORCID
+  link covers the full list.
+- Mentoring: stacked sections, one per program, each with a photo and a short claim.
+  Numbers appear only with a source line.
+- Peer review and Community: text badges such as "Technical Program Committee" beside the
+  linked rows.
+- Recognitions: image cards using event photos, logos and links to public registers. No
+  scanned certificates.
+- Image hygiene: one file per image and unique descriptive alt text on each. No reused
+  files and no copied labels.
+- Contact: ORCID, LinkedIn and email only. No phone number.
 
 ## Visual system
 
@@ -130,5 +162,6 @@ may arrive after the first push, and the gradient slots cover the gap.
 
 ## Open items
 
+- The owner confirms the Highlights items and their source links.
 - The owner supplies the photos. Which events and which pages get a photo is decided when the
   photos arrive.
