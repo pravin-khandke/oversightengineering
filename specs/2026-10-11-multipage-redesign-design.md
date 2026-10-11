@@ -42,7 +42,7 @@ Decisions made in brainstorming:
 
 ## Site map
 
-Top navigation has six items, and a seventh appears when there are articles. The brand name links home.
+Top navigation has seven items (six when `ARTICLES` is empty). The brand name links home.
 
 | Nav item | URL | Contents |
 |---|---|---|
@@ -53,11 +53,12 @@ Top navigation has six items, and a seventh appears when there are articles. The
 | Papers and talks | `/publications/` and `/talks/` | Two restored pages |
 | Peer review | `/peer-review/` | Restored page with 26 linked venues and 4 committees |
 
-A seventh item, Writing at `/writing/`, is built but hidden. `build.py` holds an `ARTICLES`
-list that starts empty. The nav item and the page are generated only when the list has at
-least one entry with a public URL. Each entry renders as a card with a thumbnail, title,
-platform label and a "Read on <platform>" link. No entry is invented. The owner adds a line
-when something is published.
+A seventh item, Writing at `/writing/`, is driven by an `ARTICLES` list in `build.py`. The
+nav item, the page, the home card and the related links are generated only when the list has
+at least one entry with a public URL. The list is seeded with the five articles the home page
+already links on Dev.to, Hashnode and Medium, so the tab is live. Each entry renders as a card
+with a platform tile, title and a "Read on <platform>" link. The Authority Magazine interview
+sits on the same page under a Coverage heading. No entry is invented.
 
 Redirect stubs `docs/bcs/*` and `docs/iet/` stay unchanged. The four `REDIRECTS` entries for
 memberships, publications, talks and peer-review are removed so the real pages are served.
@@ -77,10 +78,11 @@ reviewing every tab of each. Adapted to the constraints above.
 - Work pages: case-study blocks with a date range, one tag line, bullets, tag chips, a
   source link and a captioned diagram. A metric badge appears only when its source line
   exists. No metric is shown without a stated basis.
-- Papers and talks: talks are cards with a photo or logo, event name, talk title and a link
-  button, grouped by year, with a video link where one exists. Publications are grouped by
-  type, with the title in bold, the venue in italics, the year and a DOI link. The ORCID
-  link covers the full list.
+- Papers and talks: talks are cards with an optional photo, event name, talk title and a link
+  button, grouped by type (Keynote, Conference sessions) because the sources give dates
+  without a year for one event. Publications list the two peer-reviewed papers with the title
+  in bold, the venue in italics, the year where known and a source link. Technical articles
+  move to the Writing page so nothing is listed twice.
 - Mentoring: stacked sections, one per program, each with a photo and a short claim.
   Numbers appear only with a source line.
 - Peer review and Community: text badges such as "Technical Program Committee" beside the
@@ -114,8 +116,13 @@ The approved mockup is saved at
   and community events on the matching pages. Placed by the owner or sent to the assistant.
 - Diagrams: generated architecture and timeline graphics for Work and the home banner. No
   people.
-- Until photos arrive, each slot renders a green gradient block, so the site builds and reads
-  correctly without them.
+- Until photos arrive, home cards render a green gradient tile in the image slot. Body
+  figures and talk thumbnails render nothing when their file is missing, so no page shows an
+  empty box or a broken image. A photo appears once its file is in `docs/assets/img/` and its
+  alt text and caption are in the `IMAGES` table in `build.py`.
+- Diagrams are hand-written SVG files in `docs/assets/img/`, drawn only from facts already on
+  the site. They carry no figures that are not already sourced.
+- The banner is a CSS gradient on every page. Only the home banner carries a photo.
 - Files live in `docs/assets/img/`, are referenced as `/assets/img/name.ext`, carry
   descriptive alt text, are compressed to roughly 200 KB or less, and use `loading="lazy"`
   below the fold.
@@ -130,9 +137,14 @@ All inside `build.py` and `docs/assets/css/site.css`.
    history (`git show 45dfc89:build.py`). Strip any awarding body names. Replace the
    peer-review page's unlinked venue list with `venue_rows_html()` and
    `committee_rows_html()`.
-4. Replace `nav_home()` and `nav()` with one six-item nav that marks the current page.
-5. Rewrite `site.css` for theme C, including responsive and print rules.
-6. Update `README.md` layout and editing sections to match.
+4. Replace `nav_home()` and `nav()` with one nav built from a single group table that marks
+   the current page, adds a sub-tab strip inside the Work, Community and Papers and talks
+   groups, and adds the Writing item when `ARTICLES` has entries.
+5. Add `tests/test_site.py`, run with `python3 -m unittest discover -s tests`. It builds the
+   site and checks the verification rules below, so each rule is enforced rather than
+   remembered. `build.py` reads `SITE_OUT` so a test can build to a temporary folder.
+6. Rewrite `site.css` for theme C, including responsive and print rules.
+7. Update `README.md` layout and editing sections to match.
 
 ## Verification
 
@@ -162,6 +174,13 @@ may arrive after the first push, and the gradient slots cover the gap.
 
 ## Open items
 
-- The owner confirms the Highlights items and their source links.
+- The owner confirms the Highlights items and their source links. They are seeded from facts
+  already on the site (IEEE Senior Member, SEFM, RSS Fellow, the AIC 2026 keynote and the
+  Extract Summit session).
+- The owner confirms the Writing page should show the five existing articles. The earlier
+  answer about publishing on X was ambiguous.
+- Two home sections have no home of their own and move as follows: Recognitions folds into
+  Highlights and the Memberships page, and Education and work history stay on the home page
+  under a short Background section.
 - The owner supplies the photos. Which events and which pages get a photo is decided when the
   photos arrive.
