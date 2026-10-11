@@ -218,6 +218,28 @@ class Rules(unittest.TestCase):
         self.assertTrue(hrefs[1].startswith("https://www.linkedin.com/"))
         self.assertTrue(hrefs[2].startswith("mailto:"))
 
+    def test_canonical_urls_are_clean(self):
+        for p in real_pages():
+            raw = p.read_text(encoding="utf-8")
+            with self.subTest(page=p.relative_to(DOCS).as_posix()):
+                canon = re.search(r'<link rel="canonical" href="([^"]+)"', raw).group(1)
+                self.assertNotIn("index.html", canon)
+                self.assertTrue(canon.startswith("https://oversightengineering.com/"))
+                self.assertIn(f'<meta property="og:url" content="{canon}">', raw)
+
+    def test_every_page_links_a_favicon_that_exists(self):
+        self.assertTrue((DOCS / "favicon.svg").exists())
+        for p in real_pages():
+            with self.subTest(page=p.relative_to(DOCS).as_posix()):
+                self.assertIn('<link rel="icon" href="/favicon.svg"', p.read_text(encoding="utf-8"))
+
+    def test_publications_page_links_scholar_and_three_open_source_repos(self):
+        raw = read("publications/index.html")
+        self.assertIn("scholar.google.com/citations?user=e8zPvu8AAAAJ", raw)
+        section = raw.split('<h2 id="open-source">')[1]
+        for repo in ("hitl-manager", "scalable-event-driven-retail", "safe-ai-for-kids"):
+            self.assertIn(f"github.com/pravin-khandke/{repo}", section)
+
     def test_no_phone_links(self):
         for p in all_html():
             with self.subTest(page=p.relative_to(DOCS).as_posix()):

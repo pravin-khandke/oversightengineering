@@ -211,16 +211,17 @@ BASE = """<!DOCTYPE html>
 <meta name="description" content="{desc}">
 <meta name="author" content="{name}">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<link rel="canonical" href="{base}/{path}">
+<link rel="canonical" href="{base}/{canon}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
-<meta property="og:url" content="{base}/{path}">
+<meta property="og:url" content="{base}/{canon}">
 <meta property="og:image" content="https://oversightengineering.com/assets/img/profile.jpg">
 <meta property="og:image:alt" content="Pravin Khandke, headshot">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
@@ -320,7 +321,7 @@ def page(path, title, desc, body):
         body = add_sidebar(key, body)
     doc = BASE.format(
         title=title, desc=desc, name=SITE["name"], base=SITE["base"],
-        tagline=SITE["tagline"], path=path,
+        tagline=SITE["tagline"], path=path, canon=key,
         nav=nav(key), subtabs=subtabs(key),
         body=body.strip(),
         footer=FOOTER.format(**SITE),
@@ -900,6 +901,7 @@ add("consultancy/index.html",
       the foundation the organisation builds on. Colleagues who stayed on the account have
       confirmed that it still runs on the architecture set at the time.
     </p>
+    <p class="claim-src">Source: Client confirmation available through the named supporter</p>
 
     <div class="note">
       <strong>On the client test.</strong> The consultancy criterion asks for
@@ -1296,6 +1298,8 @@ add("standing/index.html",
 # ============================================================================
 # PUBLICATIONS
 # ============================================================================
+SCHOLAR = "https://scholar.google.com/citations?user=e8zPvu8AAAAJ&hl=en"
+
 PAPERS = [
     {"title": "Designing Adaptive Human-in-the-Loop Interfaces for Enhanced Collaborative Incident Management",
      "venue": "International Journal of Computer Applications", "year": "2026",
@@ -1318,8 +1322,7 @@ PAPERS = [
                 "Proposes a context-aware pricing framework that adjusts retail prices in "
                 "real time from streaming demand and inventory signals while preserving "
                 "margin targets.",
-     "url": "https://www.linkedin.com/in/pravin-khandke/details/publications/",
-     "link": "LinkedIn publications listing"},
+     "url": SCHOLAR, "link": "Google Scholar profile"},
 ]
 
 
@@ -1353,6 +1356,22 @@ add("publications/index.html",
   <section>
     <h2>Peer-reviewed papers</h2>
 """ + "\n".join(pub_entry(p) for p in PAPERS) + """
+    <p>Google Scholar lists all three papers. """ + ext(SCHOLAR, "Google Scholar profile") + """</p>
+
+    <h2>Open source</h2>
+    <p>Two of the papers have a companion repository. The children's guide is the third public repository.</p>
+    <ul class="claims">
+""" + claim(
+      "Reference implementation that accompanies the paper on adaptive human-in-the-loop interfaces "
+      "for incident management. It is a Spring Boot application with a dashboard and an incident simulator.",
+      [ext("https://github.com/pravin-khandke/hitl-manager", "hitl-manager repository")]) + "\n" + claim(
+      "Companion implementation of the IEEE ICCBI paper on event-driven retail data collection with "
+      "ActiveMQ Artemis. It simulates retail events from 50 virtual store locations.",
+      [ext("https://github.com/pravin-khandke/scalable-event-driven-retail", "scalable-event-driven-retail repository")]) + "\n" + claim(
+      "Using AI at Home and School, an open, age-banded guide to children's use of AI.",
+      [ext(KIDS_REPO, "safe-ai-for-kids repository")]) + """
+    </ul>
+
     <p>See also the """ + SEE_ALSO + """.</p>
 
     <div class="note">

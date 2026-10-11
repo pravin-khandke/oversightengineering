@@ -12,7 +12,7 @@ Every link is probed. None is skipped. A link falls into one of three groups:
 Exit 0 when every link is ok. Exit 2 when the only open items are BLOCKED links that
 need a manual check. Exit 1 when any link fails.
 """
-import pathlib, re, sys, urllib.request, urllib.error, datetime
+import html, pathlib, re, sys, urllib.request, urllib.error, datetime
 
 ROOT = pathlib.Path(__file__).parent
 OUT = ROOT / "docs"
@@ -25,7 +25,6 @@ BOT_BLOCKED = {
     "https://medium.com/@Pravin-Khandke/backend-architecture-in-the-age-of-ai-e73cc8bbf599",
     "https://medium.com/authority-magazine/c-suite-perspectives-on-ai-pravin-khandke-on-where-to-use-ai-and-where-to-rely-only-on-humans-854b733e03a1",
     "https://www.linkedin.com/in/pravin-khandke",
-    "https://www.linkedin.com/in/pravin-khandke/details/publications/",
     "https://www.linkedin.com/in/pravin-khandke/details/honors/",
     # Redirects Python clients in a loop (302), answers curl with 200. A person must open it.
     "https://www.domain-b.com/companies-organisations/firms-companies/zett-media-sets-up-indian-subsidiary",
@@ -41,7 +40,7 @@ OWN_PREFIX = "https://oversightengineering.com"
 def links():
     text = "\n".join(p.read_text(encoding="utf-8", errors="ignore")
                      for p in OUT.rglob("*.html"))
-    for href in re.findall(r'href="(https?://[^"]+)"', text):
+    for href in (html.unescape(h) for h in re.findall(r'href="(https?://[^"]+)"', text)):
         if href.startswith(OWN_PREFIX) or href in NOT_LINKS:
             continue
         yield href

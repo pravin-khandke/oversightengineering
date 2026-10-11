@@ -21,6 +21,7 @@ Pravin Khandke's fellowship application.
       bcs/                    redirect stubs. The submitted form carries /bcs/ URLs, so
                               they keep resolving
       iet/                    redirect stub to home, for a once-published address
+      favicon.svg             tab icon, hand-maintained
       assets/css/site.css     styles, hand-maintained, including dark and print rules
       assets/img/             images, hand-maintained. profile.jpg is the hero photo
       CNAME                   the custom domain
@@ -38,6 +39,12 @@ Pravin Khandke's fellowship application.
 build.py needs Python 3.12 or later. No dependencies. Rewrites `docs/` in place. The HTML under `docs/` is machine-written and
 must not be hand-edited. Two exceptions are hand-maintained and survive rebuilds because
 the generator only writes in place: `docs/assets/css/site.css` and `docs/assets/img/`.
+
+## Checks on GitHub
+
+`.github/workflows/check.yml` builds the site, fails if the built pages differ from the committed
+pages, runs the tests, and probes the links. The probe step reports and does not block, because
+third-party sites sometimes refuse a CI runner. It also runs every Monday.
 
 ## Link checks
 
