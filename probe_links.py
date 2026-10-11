@@ -25,8 +25,12 @@ BOT_BLOCKED = {
     "https://medium.com/@Pravin-Khandke/backend-architecture-in-the-age-of-ai-e73cc8bbf599",
     "https://medium.com/authority-magazine/c-suite-perspectives-on-ai-pravin-khandke-on-where-to-use-ai-and-where-to-rely-only-on-humans-854b733e03a1",
     "https://www.linkedin.com/in/pravin-khandke",
+    "https://www.linkedin.com/in/pravin-khandke/details/publications/",
+    "https://www.linkedin.com/in/pravin-khandke/details/honors/",
+    # Redirects Python clients in a loop (302), answers curl with 200. A person must open it.
+    "https://www.domain-b.com/companies-organisations/firms-companies/zett-media-sets-up-indian-subsidiary",
 }
-BLOCK_STATUSES = {403, 429, 999}
+BLOCK_STATUSES = {302, 403, 429, 999}
 # Connection hints in the page head, not links a reader follows.
 NOT_LINKS = {"https://fonts.googleapis.com", "https://fonts.gstatic.com"}
 # The site's own pages: probing them here fails while HTTPS is broken, and

@@ -343,7 +343,7 @@ ORCID = "https://orcid.org/0009-0004-9693-9334"
 # name, location detail, url (None = no link, reason stated in the row)
 VENUE_ROWS = [
     ("IECON 2026", "Doha, Qatar", "https://www.iecon2026.org/"),
-    ("IEEE GLOBECOM 2026", "Macau, China", "https://globecom2026.ieee-globecom.org/"),
+    ("IEEE GLOBECOM 2026", "Macau, China, CISS Symposium", "https://globecom2026.ieee-globecom.org/"),
     ("ICCUBEA 2026", "Pune, India", "https://iccubea.pccoepune.com/iccubea.php"),
     ("ICETCI 2026", "Hyderabad, India", "http://www.ietcint.com/"),
     ("ICDCECE 2026", "Karnataka, India", "https://icdcece.in/"),
@@ -360,6 +360,8 @@ VENUE_ROWS = [
     ("ICTMOD 2026", "Paris, France", "https://ictmod-conference.com/"),
     ("ETECOM 2026", "Chennai, India", "https://ieee-etecom.org/"),
     ("SIME 2026", "Sousse, Tunisia", "https://sime-conf.org/committees/"),
+    ("FOAN 2026", "Pisa, Italy", "https://foan.info/"),
+    ("AI e-Health Workshop 2026", "New York, United States", "https://healthcom2026.ieee-healthcom.org/"),
     ("ICETM 2026", "New Jersey, United States", None),   # venue site returns 404
     ("CICBA 2026", "Malda, India", None),                # venue domain no longer resolves
     ("TEMSMET 2026", "", None),                          # no public listing in any record
@@ -407,7 +409,7 @@ def committee_rows_html() -> str:
                        f'<span class="where">{html.escape(where)}</span></li>')
     return '\n'.join(out)
 
-VERIFIED_DATE = "26 September 2026"
+VERIFIED_DATE = "11 October 2026"
 
 HIGHLIGHTS = [
     # sort key, label, text, [(url, link label)]
@@ -450,10 +452,10 @@ HOME_CARDS = [
      "Standing in the community and the grades I hold, each with its public record.",
      3, "card-community.jpg"),
     ("/publications/", "Papers and talks",
-     "Two peer-reviewed papers and the talks I have given, linked to the organiser's record.",
+     "Three peer-reviewed papers and the talks I have given, linked to the organiser's record.",
      4, "card-papers.jpg"),
     ("/peer-review/", "Peer review",
-     "26 review venues and 4 committee appointments, each linked to its public listing where one exists.",
+     "28 review venues and 4 committee appointments, each linked to its public listing where one exists.",
      5, "card-review.jpg"),
     ("/writing/", "Writing",
      "Technical articles for practising engineers on developer platforms.",
@@ -482,6 +484,7 @@ add("index.html",
         <span class="badge-chip">IEEE Senior Member</span>
         <span class="badge-chip">RSS Fellow</span>
         <span class="badge-chip">SEFM Eminent Fellow</span>
+        <span class="badge-chip">SCRS Fellow</span>
       </div>
       <div class="cta-row">
         <a class="btn" href="#record">Read the record</a>
@@ -502,9 +505,9 @@ add("index.html",
 <div class="stats">
   <div class="wrap">
     <span class="stat"><span class="stat-n" data-counter="years">26</span><span class="stat-l">Years</span></span>
-    <span class="stat"><span class="stat-n" data-counter="venues">26</span><span class="stat-l">Review venues</span></span>
+    <span class="stat"><span class="stat-n" data-counter="venues">28</span><span class="stat-l">Review venues</span></span>
     <span class="stat"><span class="stat-n" data-counter="committees">4</span><span class="stat-l">Committees</span></span>
-    <span class="stat"><span class="stat-n" data-counter="publications">2</span><span class="stat-l">Publications</span></span>
+    <span class="stat"><span class="stat-n" data-counter="publications">3</span><span class="stat-l">Publications</span></span>
   </div>
 </div>
 
@@ -624,6 +627,15 @@ add("memberships/index.html",
       "and incorporated by Royal Charter. It styles its members Fellows, and welcomed me to "
       "Fellow membership in July 2026.",
       [ext("https://rss.org.uk/", "Royal Statistical Society")]) + """
+    </ul>
+
+    <h2>Soft Computing Research Society</h2>
+    <ul class="claims">
+""" + claim(
+      "Fellow of the Soft Computing Research Society, Fellow Certificate number "
+      "SCRS/Fellow/2360. The Society is an international professional society for "
+      "researchers and practitioners in soft computing and its applications.",
+      [ext("https://scrs.in/", "Soft Computing Research Society")]) + """
     </ul>
 
     <p class="src-note">
@@ -824,7 +836,7 @@ add("consultancy/index.html",
     <p>
       Retiring the platform without interrupting live dealer operations. Designing the
       distributed replacement and sequencing a multi-year migration. Holding engineering
-      quality across a distributed team split between the United States and India. Keeping
+      quality across a distributed team of ten split between the United States and India. Keeping
       client stakeholders confident through every phase.
     </p>
 
@@ -850,10 +862,32 @@ add("consultancy/index.html",
       "whole estate. That held integration correctness across a phasing which ran for "
       "years.",
       ["Client confirmation available through the named supporter"]) + "\n" + claim(
-      "I advised on the delivery through a distributed team split between the United States "
+      "I advised on the delivery through a distributed team of ten split between the United States "
       "and India, and the platform was handed to the client's own engineers at the end of "
       "the engagement. Handing over was the objective. The client runs it without us.",
+      ["Client confirmation available through the named supporter"]) + "\n" + claim(
+      "I recommended the Transaction Web Service as the backbone for the Manheim OVE and "
+      "Manheim Express marketplaces, and directed the team that built it under "
+      "zero-downtime requirements. It now carries nearly 8 million vehicle transactions a "
+      "year.",
+      ["Client confirmation available through the named supporter"]) + "\n" + claim(
+      "Cox Automotive operates in more than 30 countries and supports more than 40,000 "
+      "dealers.",
       ["Client confirmation available through the named supporter"]) + """
+    </ul>
+
+    <h2>Before Cox Automotive</h2>
+    <ul class="claims">
+""" + claim(
+      "At Sunrise Systems, my first lead role, I led a team of five to move the fixed "
+      "deposit system of Kirloskar Oil Engines Ltd from COBOL to a Java and Oracle web "
+      "application. Performance tripled, the system became reachable from anywhere on the "
+      "internet, and the manual workload of five staff fell.",
+      ["Client reference available through the application"]) + "\n" + claim(
+      "For Zett Media, a Norwegian software group, I engineered a financial management "
+      "platform that handled customers' credit information. It loaded in 2.5 seconds over "
+      "56kbps connections and met strict security requirements.",
+      [ext("https://www.domain-b.com/companies-organisations/firms-companies/zett-media-sets-up-indian-subsidiary", "Published article naming Sunrise Systems of Pune as the software provider")]) + """
     </ul>
 
     <h2>What changed</h2>
@@ -899,6 +933,7 @@ CASE_CAPSTONE = case_study(
     "A sponsored university capstone",
     "A full-semester project in a Department of Information Technology",
     ["Sponsored the capstone and authored its specification.",
+     "Guided a team of eight students, four of them pursuing AI master's degrees, through KnowledgeBridge, a working retrieval-augmented generation platform.",
      "The specification called for hybrid search with source citations and token budgeting.",
      "It also required a feasibility study naming where human oversight remains essential."],
     ["capstone", "cost-aware AI"],
@@ -906,9 +941,9 @@ CASE_CAPSTONE = case_study(
     art=figure("mentoring-capstone.jpg"))
 
 CASE_STANDARD = case_study(
-    "An open standard for children's use of AI",
-    "Age-banded and published as a public repository",
-    ["Authored the standard so a parent or a school can adopt it.",
+    "Using AI at Home and School",
+    "An open, age-banded guide to children's use of AI",
+    ["Authored the guide so a parent or a school can adopt it.",
      "Extends the same commitment to the next generation of users."],
     ["open standard", "age-banded"],
     [ext(KIDS_REPO, "The repository, publicly available")])
@@ -957,8 +992,9 @@ add("mentoring/index.html",
       "delivery.",
       ["Named mentees available for confirmation through the application"]) + "\n" + claim(
       "I sponsored a full-semester capstone in a university Department of Information "
-      "Technology, guiding an undergraduate team through the design and delivery of an AI "
-      "knowledge management platform. I sponsored the work rather than merely advising on "
+      "Technology, guiding a student team of eight, four of them pursuing AI master's degrees, "
+      "through the design and delivery of KnowledgeBridge, a working retrieval-augmented "
+      "generation platform. I sponsored the work rather than merely advising on "
       "it, which meant the students had a route to it being built.",
       ["Project documentation available through the application"]) + "\n" + claim(
       "I authored the capstone specification so the students met the hard parts of real "
@@ -974,7 +1010,7 @@ add("mentoring/index.html",
       "direct feedback on them.",
       [ext("https://www.kennesaw.edu/", "Kennesaw State University"),
        ext("https://www.linkedin.com/in/pravin-khandke", "Announcement and certificate of appreciation, LinkedIn")]) + "\n" + claim(
-      "I authored an open, age-banded standard for children's use of AI, published as a "
+      "I authored an open, age-banded guide called Using AI at Home and School, published as a "
       "public repository, so that a parent or a school can adopt it. It extends the "
       "same commitment beyond engineers to the next generation of users, who meet these "
       "systems with no training at all.",
@@ -1031,8 +1067,9 @@ add("standing/index.html",
       "Computing, held in Jabalpur, India on 29 and 30 August. My talk was The Trust "
       "Gap: Architecting Autonomous AI Systems for Real-World Accountability, It covered how agent "
       "systems fail in production and how to verify them. It also argued that trust should "
-      "include the sustainability cost of running them.",
-      [ext(AIC_LIST, "Conference programme, where the keynote list is published")]) + "\n" + claim(
+      "include the sustainability cost of running them. The audience numbered 57.",
+      [ext(AIC_LIST, "Conference programme, where the keynote list is published"),
+       "Audience figure available through the application"]) + "\n" + claim(
       "Confirmed speaker at Extract Summit, held at Brazos Hall in Austin, Texas on 7 "
       "and 8 October. My session is The Naive AI Trap: Why Finance-Grade Extraction "
       "Needs Hybrid Agents, on the second day.",
@@ -1063,15 +1100,22 @@ add("standing/index.html",
     <h2>Written work</h2>
     <ul class="claims">
 """ + claim(
-      "Two peer-reviewed publications, one in the International Journal of Computer "
-      "Applications and one in the proceedings of an IEEE-sponsored conference, covering "
-      "human-in-the-loop interfaces and event-driven architectures.",
+      "Three peer-reviewed publications. One is in the International Journal of Computer "
+      "Applications and one is in the proceedings of IEEE ICCBI. The third is a "
+      "co-authored paper for the IEEE International Workshop on Intelligent Systems on "
+      "event-driven dynamic pricing. They cover human-in-the-loop interfaces and "
+      "event-driven architectures.",
       [ext("/publications/", "Publications, with a link to each paper")]) + "\n" + claim(
       "Sustained technical writing for engineers, published on developer platforms and read "
       "outside my own organisation, The subjects are architecture and "
-      "reliability, and the practical failure modes of AI systems in production.",
+      "reliability, and the practical failure modes of AI systems in production. I have "
+      "also published on HackerNoon, where one article reached 888 readers.",
       [ext("https://dev.to/pravin-khandke", "Dev.to"),
-       ext("https://pravin-khandke.hashnode.dev/", "Hashnode")]) + "\n" + claim(
+       ext("https://pravin-khandke.hashnode.dev/", "Hashnode"),
+       "HackerNoon reader count available through the application"]) + "\n" + claim(
+      "Author of Using AI at Home and School, an open, age-banded guide to children's use "
+      "of AI, published as a public repository.",
+      [ext(KIDS_REPO, "The repository, publicly available")]) + "\n" + claim(
       "Interviewed by Authority Magazine for its C-Suite Perspectives series, on where to "
       "use AI and where to rely only on humans. This is third-party editorial coverage "
       "rather than writing of my own, which is why I list it separately.",
@@ -1081,12 +1125,18 @@ add("standing/index.html",
     </ul>
 
     <h2>Universities</h2>
-    <p>
-      I have judged student computing projects at Kennesaw State University, most recently
-      on the spring 2026 Computing Showcase panel. That sits with the rest of the development
-      work on the <a href="/mentoring/">mentoring page</a>
-      rather than being counted twice.
-    </p>
+    <ul class="claims">
+""" + claim(
+      "Judge at the Georgia Institute of Technology Capstone Design Expo.",
+      [ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards")]) + "\n" + claim(
+      "Judge at Kennesaw State University, most recently on the spring 2026 Computing "
+      "Showcase panel.",
+      [ext("https://www.kennesaw.edu/", "Kennesaw State University"),
+       ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards")]) + "\n" + claim(
+      "Guest speaker at Kennesaw State University on Building AI Responsibly, to 32 "
+      "students.",
+      [ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards")]) + """
+    </ul>
 
     <div class="note">
       <strong>Why everything here is linked.</strong> An assessing body asks for evidence
@@ -1118,6 +1168,14 @@ PAPERS = [
                 "using ActiveMQ Artemis as the backbone for event propagation across "
                 "independently governed retail nodes. Presented in Dubai in June.",
      "url": "https://iccbi.com/", "link": "IEEE ICCBI"},
+    {"title": "An Event-Driven Context-Aware Framework for Margin-Preserving Dynamic Pricing in High-Velocity Retail Commerce Systems",
+     "venue": "IEEE International Workshop on Intelligent Systems (IWIS)", "year": "2026",
+     "summary": "Co-authored with Jayakumar Ramalingam and Jose Prabhu Michael Singarayan. "
+                "Proposes a context-aware pricing framework that adjusts retail prices in "
+                "real time from streaming demand and inventory signals while preserving "
+                "margin targets.",
+     "url": "https://www.linkedin.com/in/pravin-khandke/details/publications/",
+     "link": "LinkedIn publications listing"},
 ]
 
 
@@ -1141,7 +1199,7 @@ add("publications/index.html",
     <p class="kicker">Publications</p>
     <h1>Peer-reviewed papers, with the record linked</h1>
     <p class="lede">
-      Two papers have been through peer review. Each entry links to the published version
+      Three papers have been through peer review. Each entry links to the published version
       rather than quoting it. Talks and technical articles have their own pages.
     </p>
   </div>
@@ -1154,7 +1212,7 @@ add("publications/index.html",
     <p>See also the """ + SEE_ALSO + """.</p>
 
     <div class="note">
-      <strong>On the publication record.</strong> I list two peer-reviewed papers, which is
+      <strong>On the publication record.</strong> I list three peer-reviewed papers, which is
       the accurate count. I do not list work in draft, work under review, or a citation
       total, because a reader who follows a dead link or an empty profile learns more from
       the absence than from the claim.
@@ -1346,7 +1404,7 @@ add("peer-review/index.html",
 """ + venue_rows_html() + """
     </ul>
     <p class="src-note">
-      26 review venues plus four committee appointments. Links verified on
+      28 review venues plus four committee appointments. Links verified on
       """ + VERIFIED_DATE + """. Eight venues have no live listing to link.
     </p>
 
