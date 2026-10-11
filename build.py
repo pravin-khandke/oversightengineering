@@ -95,7 +95,19 @@ RELATED = {
 
 # Alt text and caption for every image that is not decorative card art, keyed by file
 # name under docs/assets/img/. A file in that folder with no entry here stops the build.
-IMAGES = {}
+IMAGES = {
+    "diagram-reconciliation.svg": (
+        "Diagram. Lockbox scans, ACH files, email advice and vendor portals feed one step "
+        "that reads each payment and scores every field. High confidence matches are assigned "
+        "automatically, middle band matches go to a person who chooses, and low confidence "
+        "matches go to manual review. Every check and override is logged.",
+        "How a payment moves through the pipeline. Schematic."),
+    "diagram-strangler.svg": (
+        "Diagram. Three stages from start to end. The legacy mainframe block shrinks while the "
+        "block of new services grows, and a band underneath states that dealer operations "
+        "continue throughout.",
+        "Retiring the platform service by service. Schematic, not to scale."),
+}
 
 # ----------------------------------------------------------------------------
 # shared fragments
@@ -627,6 +639,25 @@ add("memberships/index.html",
 # ============================================================================
 # BCS — INVENTION AND INNOVATION
 # ============================================================================
+CASE_RECON = case_study(
+    "Remittance reconciliation pipeline",
+    "Human-in-the-loop AI for financial controls",
+    ["Reads remittance detail from four channels that share no common format.",
+     "Matches payments to invoices, with a person at the decision point for every match the model is not sure of.",
+     "Writes every validation and override to an audit trail."],
+    ["human-in-the-loop", "financial controls"],
+    [ext(IJCA, "IJCA, where the pattern is published")],
+    art=figure("diagram-reconciliation.svg"))
+
+CASE_BACKBONE = case_study(
+    "Event-driven retail backbone",
+    "Messaging between independently governed nodes",
+    ["Moves multi-site retail data collection over an ActiveMQ Artemis backbone.",
+     "Designed for high-throughput propagation between independently governed nodes.",
+     "Presented at IEEE ICCBI in Dubai."],
+    ["event-driven", "messaging"],
+    [ext("https://iccbi.com/", "IEEE ICCBI")])
+
 add("invention/index.html",
     "Invention and innovation | Pravin Khandke",
     "A human-in-the-loop pipeline that reconciles customer remittances arriving through "
@@ -647,6 +678,8 @@ add("invention/index.html",
 
 <div class="wrap">
   <section>
+    <h2>In brief</h2>
+""" + CASE_RECON + CASE_BACKBONE + """
     <h2>The situation</h2>
     <p>
       Customer remittances reach a finance function through channels that each carry a
@@ -726,6 +759,27 @@ add("invention/index.html",
 # ============================================================================
 # BCS — CONSULTANCY
 # ============================================================================
+CASE_RETIRE = case_study(
+    "Retiring a continental-scale platform",
+    "Strangler fig migration with no downtime window",
+    ["Advised retiring a legacy mainframe service by service.",
+     "Old and new systems ran in parallel throughout.",
+     "The programme completed with no interruption to live dealer operations."],
+    ["strangler fig", "no downtime window"],
+    [ext("https://martinfowler.com/bliki/StranglerFigApplication.html",
+         "The strangler fig pattern, described by Martin Fowler"),
+     "Client confirmation available through the named supporter"],
+    dates="March 2020 to April 2021",
+    art=figure("diagram-strangler.svg"))
+
+CASE_MODEL = case_study(
+    "A canonical data model that became the standard",
+    "One integration hub for every downstream consumer",
+    ["Recommended a canonical data model as the single integration hub.",
+     "The client adopted it, and it remains the standard the organisation builds on."],
+    ["canonical model", "integration hub"],
+    ["Client confirmation available through the named supporter"])
+
 add("consultancy/index.html",
     "Consultancy | Pravin Khandke",
     "Advisory work on retiring a continental-scale automotive data platform, where a "
@@ -745,6 +799,8 @@ add("consultancy/index.html",
 
 <div class="wrap">
   <section>
+    <h2>In brief</h2>
+""" + CASE_RETIRE + CASE_MODEL + """
     <h2>The situation</h2>
     <p>
       Cox Automotive, a global automotive technology and digital commerce business
@@ -825,6 +881,33 @@ add("consultancy/index.html",
 # ============================================================================
 # BCS — MENTORING AND COACHING
 # ============================================================================
+CASE_TEAMS = case_study(
+    "Engineers developed inside the teams",
+    "Pairing on production work",
+    ["Junior engineers were paired on high-skill production work until they could own it without me.",
+     "Development was a measured part of each project.",
+     "The engineers now hold senior and lead positions."],
+    ["pairing", "measured development"],
+    ["Named mentees available for confirmation through the application"])
+
+CASE_CAPSTONE = case_study(
+    "A sponsored university capstone",
+    "A full-semester project in a Department of Information Technology",
+    ["Sponsored the capstone and authored its specification.",
+     "The specification called for hybrid search with source citations and token budgeting.",
+     "It also required a feasibility study naming where human oversight remains essential."],
+    ["capstone", "cost-aware AI"],
+    ["Project documentation available through the application"],
+    art=figure("mentoring-capstone.jpg"))
+
+CASE_STANDARD = case_study(
+    "An open standard for children's use of AI",
+    "Age-banded and published as a public repository",
+    ["Authored the standard so a parent or a school can adopt it.",
+     "Extends the same commitment to the next generation of users."],
+    ["open standard", "age-banded"],
+    [ext(KIDS_REPO, "The repository, publicly available")])
+
 add("mentoring/index.html",
     "Mentoring and coaching | Pravin Khandke",
     "Structured development of engineers inside my teams, a sponsored university capstone, "
@@ -844,6 +927,8 @@ add("mentoring/index.html",
 
 <div class="wrap">
   <section>
+    <h2>In brief</h2>
+""" + CASE_TEAMS + CASE_CAPSTONE + CASE_STANDARD + """
     <h2>The situation</h2>
     <p>
       The IT profession has a persistent gap. University teaches the theory of software and
