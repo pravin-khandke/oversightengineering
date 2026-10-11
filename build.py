@@ -16,7 +16,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).parent
-OUT = ROOT / "docs"
+OUT = pathlib.Path(os.environ.get("SITE_OUT") or ROOT / "docs")
 
 SITE = {
     "domain": "oversightengineering.com",
@@ -31,6 +31,55 @@ SITE = {
     "photo_w": "370",
     "photo_h": "480",
 }
+
+# Articles shown on the Writing page. The page, the nav item, the home card and the
+# related links exist only while this list has entries. SITE_ARTICLES=none empties it,
+# which the tests use to prove the page stays hidden.
+ARTICLES = []
+if os.environ.get("SITE_ARTICLES") == "none":
+    ARTICLES = []
+
+# One table drives the nav, the sub-tab strip and the "current page" marker.
+# label, landing page, pages that mark the item current
+NAV_GROUPS = [
+    ("Home", "", [""]),
+    ("Work", "invention/", ["invention/", "consultancy/"]),
+    ("Mentoring", "mentoring/", ["mentoring/"]),
+    ("Community", "standing/", ["standing/", "memberships/"]),
+    ("Papers and talks", "publications/", ["publications/", "talks/"]),
+    ("Peer review", "peer-review/", ["peer-review/"]),
+]
+if ARTICLES:
+    NAV_GROUPS.append(("Writing", "writing/", ["writing/"]))
+
+PAGE_LABELS = {
+    "invention/": "Invention",
+    "consultancy/": "Consultancy",
+    "mentoring/": "Mentoring",
+    "standing/": "Standing",
+    "memberships/": "Memberships",
+    "publications/": "Publications",
+    "talks/": "Talks",
+    "peer-review/": "Peer review",
+    "writing/": "Writing",
+}
+
+# Pages offered under "Related" in each page's sidebar.
+RELATED = {
+    "invention/": ["consultancy/", "publications/"],
+    "consultancy/": ["invention/", "mentoring/"],
+    "mentoring/": ["standing/", "consultancy/"],
+    "standing/": ["talks/", "peer-review/", "memberships/"],
+    "memberships/": ["standing/", "publications/"],
+    "publications/": ["talks/", "writing/"],
+    "talks/": ["publications/", "standing/"],
+    "peer-review/": ["standing/", "memberships/"],
+    "writing/": ["publications/", "talks/"],
+}
+
+# Alt text and caption for every image that is not decorative card art, keyed by file
+# name under docs/assets/img/. A file in that folder with no entry here stops the build.
+IMAGES = {}
 
 # ----------------------------------------------------------------------------
 # shared fragments
@@ -50,10 +99,8 @@ FOOTER = """
   <div class="wrap">
     <p class="foot-line">{name}, {field}</p>
     <ul class="foot-links">
-      <li><a href="/#recognitions">Recognitions</a></li>
-      <li><a href="/#publications">Publications</a></li>
-      <li><a href="/#standing">Standing</a></li>
-      <li><a href="/#about">About</a></li>
+      <li><a href="https://orcid.org/0009-0004-9693-9334">ORCID</a></li>
+      <li><a href="https://www.linkedin.com/in/pravin-khandke">LinkedIn</a></li>
       <li><a href="mailto:{email}">{email}</a></li>
     </ul>
     <p class="foot-line small">
@@ -65,34 +112,59 @@ FOOTER = """
 </footer>
 """
 
-def nav(current: str) -> str:
-    items = [
-        ("invention/", "Invention"),
-        ("consultancy/", "Consultancy"),
-        ("mentoring/", "Mentoring"),
-        ("standing/", "Standing"),
-    ]
+def page_key(path: str) -> str:
+    return path[:-len("index.html")] if path.endswith("index.html") else path
+
+
+def nav(key: str) -> str:
     out = []
-    for href, label in items:
-        cur = ' aria-current="page"' if href == current else ""
-        out.append(f'      <li><a href="/{href}"{cur}>{label}</a></li>')
+    for label, landing, members in NAV_GROUPS:
+        cur = ' aria-current="page"' if key in members else ""
+        out.append(f'      <li><a href="/{landing}"{cur}>{label}</a></li>')
     return '<ul class="nav-list">\n' + "\n".join(out) + "\n    </ul>"
 
 
-def nav_home() -> str:
-    """Home page nav: the single scrolling document's own anchors."""
-    items = [
-        ("#about", "About"),
-        ("#invention", "Invention"),
-        ("#leadership", "Leadership"),
-        ("#mentoring", "Mentoring"),
-        ("#standing", "Standing"),
-        ("#recognitions", "Recognitions"),
-        ("#publications", "Publications"),
-        ("#education", "Education"),
-    ]
-    out = [f'      <li><a href="{href}">{label}</a></li>' for href, label in items]
-    return '<ul class="nav-list">\n' + "\n".join(out) + "\n    </ul>"
+def subtabs(key: str) -> str:
+    """A tab strip under the header for pages that share a nav item with a sibling."""
+    for _, _, members in NAV_GROUPS:
+        if key in members and len(members) > 1:
+            items = []
+            for m in members:
+                cur = ' aria-current="page"' if m == key else ""
+                items.append(f'<li><a href="/{m}"{cur}>{PAGE_LABELS[m]}</a></li>')
+            return ('<nav class="subtabs" aria-label="In this section"><div class="wrap">'
+                    "<ul>" + "".join(items) + "</ul></div></nav>")
+    return ""
+
+
+def add_sidebar(key: str, body: str) -> str:
+    """Give each h2 an id and add an 'On this page' and 'Related' sidebar to the wrap."""
+    if '<div class="wrap">' not in body:
+        return body
+    heads, used = [], set()
+
+    def tag(m):
+        text = re.sub(r"<[^>]+>", "", m.group(1)).strip()
+        base = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-") or "section"
+        slug, n = base, 2
+        while slug in used:
+            slug, n = f"{base}-{n}", n + 1
+        used.add(slug)
+        heads.append((slug, text))
+        return f'<h2 id="{slug}">{m.group(1)}</h2>'
+
+    body = re.sub(r"<h2>(.*?)</h2>", tag, body, flags=re.S)
+    on_page = "".join(f'<li><a href="#{s}">{html.escape(t)}</a></li>' for s, t in heads)
+    related = "".join(
+        f'<li><a href="/{k}">{PAGE_LABELS[k]}</a></li>'
+        for k in RELATED.get(key, []) if k != "writing/" or ARTICLES
+    )
+    aside = ('<aside class="side" aria-label="On this page">'
+             f'<p class="side-h">On this page</p><ul>{on_page}</ul>'
+             f'<p class="side-h">Related</p><ul>{related}</ul></aside>')
+    body = body.replace('<div class="wrap">', '<div class="wrap topic">', 1)
+    end = body.rfind("</div>")
+    return body[:end] + aside + "\n" + body[end:]
 
 
 BASE = """<!DOCTYPE html>
@@ -130,6 +202,7 @@ BASE = """<!DOCTYPE html>
   </div>
 </header>
 <main id="main">
+{subtabs}
 {body}
 </main>
 {footer}
@@ -152,12 +225,68 @@ def claim(text: str, sources: list[str]) -> str:
     return (f'<li><span class="claim-text">{text}</span>\n'
             f'      <span class="claim-src">Source: {" \u00b7 ".join(sources)}</span></li>')
 
+def _image(name: str):
+    """(alt, caption) for an image file, or None while the file is absent.
+    A file with no IMAGES entry stops the build, so nothing ships without alt text."""
+    if not (OUT / "assets" / "img" / name).exists():
+        return None
+    if name not in IMAGES:
+        raise SystemExit(f"{name} is in docs/assets/img but has no entry in IMAGES. "
+                         "Add its alt text and caption to IMAGES in build.py, then rebuild.")
+    return IMAGES[name]
+
+
+def figure(name: str) -> str:
+    """A captioned image. Renders nothing until the file exists."""
+    meta = _image(name)
+    if meta is None:
+        return ""
+    alt, caption = meta
+    return (f'<figure class="figure"><img src="/assets/img/{name}" '
+            f'alt="{html.escape(alt, quote=True)}" loading="lazy">'
+            f'<figcaption>{html.escape(caption)}</figcaption></figure>')
+
+
+def thumb(name: str) -> str:
+    """A small image for a talk card. Renders nothing until the file exists."""
+    meta = _image(name)
+    if meta is None:
+        return ""
+    return (f'<img class="talk-img" src="/assets/img/{name}" '
+            f'alt="{html.escape(meta[0], quote=True)}" loading="lazy">')
+
+
+def card(href: str, title: str, text: str, variant: int, art=None) -> str:
+    """A home page card. The art is decorative, so its alt text is empty."""
+    inner = ""
+    if art and (OUT / "assets" / "img" / art).exists():
+        inner = f'<img src="/assets/img/{art}" alt="" width="640" height="360" loading="lazy">'
+    return (f'<a class="card" href="{href}">'
+            f'<span class="card-art art-{variant}">{inner}</span>'
+            f'<span class="card-body"><span class="card-title">{html.escape(title)}</span>'
+            f'<span class="card-text">{html.escape(text)}</span>'
+            f'<span class="more">Read more</span></span></a>')
+
+
+def case_study(title, tagline, bullets, tags, sources, dates=None, art="") -> str:
+    """A case-study block. Sources are already-built link strings from ext()."""
+    when = f'<p class="case-dates">{html.escape(dates)}</p>' if dates else ""
+    items = "".join(f"<li>{html.escape(b)}</li>" for b in bullets)
+    chips = "".join(f"<span>{html.escape(t)}</span>" for t in tags)
+    src = (f'<p class="claim-src">Source: {" · ".join(sources)}</p>' if sources else "")
+    return (f'<article class="case">{when}<h3>{html.escape(title)}</h3>'
+            f'<p class="case-tag">{html.escape(tagline)}</p><ul>{items}</ul>'
+            f'<div class="tag-row">{chips}</div>{src}{art}</article>')
+
+
 def page(path, title, desc, body):
-    navkey = path[:-len("index.html")] if path.endswith("index.html") else path
+    key = page_key(path)
+    if key in PAGE_LABELS:
+        body = add_sidebar(key, body)
     doc = BASE.format(
         title=title, desc=desc, name=SITE["name"], base=SITE["base"],
         tagline=SITE["tagline"], path=path,
-        nav=nav_home() if navkey == "" else nav(navkey),
+        nav=nav(key), subtabs=subtabs(key),
         body=body.strip(),
         footer=FOOTER.format(**SITE),
     )
