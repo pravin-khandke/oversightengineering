@@ -41,9 +41,13 @@ the generator only writes in place: `docs/assets/css/site.css` and `docs/assets/
 
     python3 probe_links.py
 
-Extracts every external href from `docs/` and probes each one. Exit 0 means every link
-returned 200 or is a named exception in the script. The venue list on the peer-review page stamps
-the "verified on" date this script prints. Re-run it at filing time.
+Extracts every external href from `docs/` and probes each one. No link is skipped.
+Exit 0 means every link answered 2xx. Exit 2 means the only open items are links on the
+`BOT_BLOCKED` list (Hashnode, Medium and LinkedIn answer scripts and headless browsers with a
+challenge or login wall). The script prints those on every run, and a person must open each
+one and confirm it loads the right page. Exit 1 means a link failed, including a listed link
+that has gone dead. The venue list on the peer-review page stamps the "verified on" date this
+script prints. Re-run it at filing time and do the manual check.
 
 ## Editing
 
