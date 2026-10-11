@@ -23,7 +23,7 @@ BOT_BLOCKED = {
     "https://pravin-khandke.hashnode.dev/clean-code-at-scale-how-sonar-became-our-silent-reviewer",
     "https://pravin-khandke.hashnode.dev/the-emergence-of-explainable-ai-in-deep-learning-bridging-the-gap-between-model-complexity-and-human-trust",
     "https://medium.com/@Pravin-Khandke/backend-architecture-in-the-age-of-ai-e73cc8bbf599",
-    "https://medium.com/authority-magazine",
+    "https://medium.com/authority-magazine/c-suite-perspectives-on-ai-pravin-khandke-on-where-to-use-ai-and-where-to-rely-only-on-humans-854b733e03a1",
     "https://www.linkedin.com/in/pravin-khandke",
 }
 BLOCK_STATUSES = {403, 429, 999}

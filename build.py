@@ -1075,7 +1075,9 @@ add("standing/index.html",
       "Interviewed by Authority Magazine for its C-Suite Perspectives series, on where to "
       "use AI and where to rely only on humans. This is third-party editorial coverage "
       "rather than writing of my own, which is why I list it separately.",
-      [ext("https://medium.com/authority-magazine", "Authority Magazine")]) + """
+      [ext(
+        "https://medium.com/authority-magazine/c-suite-perspectives-on-ai-pravin-khandke-on-where-to-use-ai-and-where-to-rely-only-on-humans-854b733e03a1",
+        "Authority Magazine interview")]) + """
     </ul>
 
     <h2>Universities</h2>
@@ -1289,7 +1291,9 @@ if ARTICLES:
           "Interviewed by Authority Magazine for its C-Suite Perspectives on AI series, on "
           "where to use AI and where to rely only on humans. This is editorial coverage "
           "written by a third party about my work, rather than something I wrote.",
-          [ext("https://medium.com/authority-magazine", "Authority Magazine")]) + """
+          [ext(
+        "https://medium.com/authority-magazine/c-suite-perspectives-on-ai-pravin-khandke-on-where-to-use-ai-and-where-to-rely-only-on-humans-854b733e03a1",
+        "Authority Magazine interview")]) + """
     </ul>
   </section>
 </div>
