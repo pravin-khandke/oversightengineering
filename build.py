@@ -332,7 +332,7 @@ def add(path, title, desc, body):
 
 IJCA = "https://www.ijcaonline.org/"
 SAS_VERIFY = "https://www.sassociety.com/membership-id-sas-sefm-770-2026/"
-AIC_LIST = "https://scrs.in/conference/aic2026"
+AIC_LIST = "https://scrs.in/conference/aic2026/speaker/talk/23186"
 KIDS_REPO = "https://github.com/pravin-khandke/safe-ai-for-kids"
 ORCID = "https://orcid.org/0009-0004-9693-9334"
 
@@ -418,7 +418,7 @@ HIGHLIGHTS = [
     ("2026-08", "August 2026",
      "Keynote at the IEEE 5th World Conference on Applied Intelligence and Computing, "
      "Jabalpur, India.",
-     [(AIC_LIST, "Conference programme")]),
+     [(AIC_LIST, "Keynote talk page on the conference site")]),
     ("2026-07", "July 2026", "Became a Fellow of the Royal Statistical Society.",
      [("https://rss.org.uk/", "Royal Statistical Society")]),
     ("2026-06", "June 2026", "Elevated to IEEE Senior Member.",
@@ -1068,7 +1068,7 @@ add("standing/index.html",
       "Gap: Architecting Autonomous AI Systems for Real-World Accountability, It covered how agent "
       "systems fail in production and how to verify them. It also argued that trust should "
       "include the sustainability cost of running them. The audience numbered 57.",
-      [ext(AIC_LIST, "Conference programme, where the keynote list is published"),
+      [ext(AIC_LIST, "Keynote talk page on the conference site"),
        "Audience figure available through the application"]) + "\n" + claim(
       "Confirmed speaker at Extract Summit, held at Brazos Hall in Austin, Texas on 7 "
       "and 8 October. My session is The Naive AI Trap: Why Finance-Grade Extraction "
@@ -1233,7 +1233,7 @@ TALKS = [
                 "to verify them before they are trusted. The talk also argues that the "
                 "sustainability cost of running them belongs in the same conversation as "
                 "their accuracy.",
-     "url": AIC_LIST, "link": "Conference programme and keynote list",
+     "url": AIC_LIST, "link": "Keynote talk page on the conference site",
      "photo": "talk-aic-keynote.jpg"},
     {"group": "Conference sessions",
      "event": "Extract Summit",
