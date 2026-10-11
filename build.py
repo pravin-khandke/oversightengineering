@@ -35,7 +35,23 @@ SITE = {
 # Articles shown on the Writing page. The page, the nav item, the home card and the
 # related links exist only while this list has entries. SITE_ARTICLES=none empties it,
 # which the tests use to prove the page stays hidden.
-ARTICLES = []
+ARTICLES = [
+    {"title": "Feature Flags That Actually Ship: Lessons from the Trenches",
+     "platform": "Dev.to",
+     "url": "https://dev.to/pravin-khandke/feature-flags-that-actually-ship-lessons-from-the-trenches-b7a"},
+    {"title": "Messaging in the Age of AI",
+     "platform": "Dev.to",
+     "url": "https://dev.to/pravin-khandke/messaging-in-the-age-of-ai-26h7"},
+    {"title": "Clean Code at Scale: How Sonar Became Our Silent Reviewer",
+     "platform": "Hashnode",
+     "url": "https://pravin-khandke.hashnode.dev/clean-code-at-scale-how-sonar-became-our-silent-reviewer"},
+    {"title": "The Emergence of Explainable AI in Deep Learning",
+     "platform": "Hashnode",
+     "url": "https://pravin-khandke.hashnode.dev/"},
+    {"title": "Backend Architecture in the Age of AI",
+     "platform": "Medium",
+     "url": "https://medium.com/@Pravin-Khandke/backend-architecture-in-the-age-of-ai-e73cc8bbf599"},
+]
 if os.environ.get("SITE_ARTICLES") == "none":
     ARTICLES = []
 
@@ -1147,9 +1163,201 @@ add("standing/index.html",
 # ============================================================================
 # PUBLICATIONS
 # ============================================================================
+PAPERS = [
+    {"title": "Designing Adaptive Human-in-the-Loop Interfaces for Enhanced Collaborative Incident Management",
+     "venue": "International Journal of Computer Applications", "year": "2026",
+     "summary": "Examines interface architectures in which human operators and AI systems "
+                "jointly manage complex incident workflows, with cognitive task allocation "
+                "shifting according to the operator's state and the system's own confidence. "
+                "It is the published statement of the human-in-the-loop pattern I apply to "
+                "production systems.",
+     "url": IJCA, "link": "International Journal of Computer Applications"},
+    {"title": "Scalable Event-Driven Architectures for Distributed Retail Data Collection Using ActiveMQ Artemis",
+     "venue": "IEEE ICCBI, the 5th International Conference on Computer Networks, Big Data and IoT",
+     "year": None,
+     "summary": "Examines high-throughput messaging topologies for multi-site data aggregation, "
+                "using ActiveMQ Artemis as the backbone for event propagation across "
+                "independently governed retail nodes. Presented in Dubai in June.",
+     "url": "https://iccbi.com/", "link": "IEEE ICCBI"},
+]
+
+
+def pub_entry(p) -> str:
+    year = f", {html.escape(p['year'])}" if p["year"] else ""
+    return (f'<article class="pub-entry"><h3 class="pub-title">{html.escape(p["title"])}</h3>'
+            f'<p class="pub-venue"><em>{html.escape(p["venue"])}</em>{year}</p>'
+            f'<p>{html.escape(p["summary"])}</p>'
+            f'<p class="claim-src">Source: {ext(p["url"], p["link"])}</p></article>')
+
+
+SEE_ALSO = ('<a href="/talks/">talks</a>'
+            + (' and the <a href="/writing/">technical articles</a>' if ARTICLES else ""))
+
+add("publications/index.html",
+    "Publications | Pravin Khandke",
+    "Peer-reviewed papers by Pravin Khandke, with a link to each published record.",
+    """
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Publications</p>
+    <h1>Peer-reviewed papers, with the record linked</h1>
+    <p class="lede">
+      Two papers have been through peer review. Each entry links to the published version
+      rather than quoting it. Talks and technical articles have their own pages.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+    <h2>Peer-reviewed papers</h2>
+""" + "\n".join(pub_entry(p) for p in PAPERS) + """
+    <p>See also the """ + SEE_ALSO + """.</p>
+
+    <div class="note">
+      <strong>On the publication record.</strong> I list two peer-reviewed papers, which is
+      the accurate count. I do not list work in draft, work under review, or a citation
+      total, because a reader who follows a dead link or an empty profile learns more from
+      the absence than from the claim.
+    </div>
+  </section>
+</div>
+""")
+
 # ============================================================================
 # TALKS
 # ============================================================================
+TALKS = [
+    {"group": "Keynote",
+     "event": "IEEE 5th World Conference on Applied Intelligence and Computing",
+     "place": "Jabalpur, India", "when": "29 and 30 August",
+     "title": "The Trust Gap: Architecting Autonomous AI Systems for Real-World Accountability",
+     "summary": "How autonomous agent systems fail once they leave a demonstration, and how "
+                "to verify them before they are trusted. The talk also argues that the "
+                "sustainability cost of running them belongs in the same conversation as "
+                "their accuracy.",
+     "url": AIC_LIST, "link": "Conference programme and keynote list",
+     "photo": "talk-aic-keynote.jpg"},
+    {"group": "Conference sessions",
+     "event": "Extract Summit",
+     "place": "Brazos Hall, Austin, Texas", "when": "7 and 8 October",
+     "title": "The Naive AI Trap: Why Finance-Grade Extraction Needs Hybrid Agents",
+     "summary": "Why extraction that has to be correct, as opposed to merely plausible, needs "
+                "hybrid agent designs rather than a single model in a loop. The session is "
+                "on the second day.",
+     "url": "https://www.extractsummit.io/", "link": "Extract Summit programme",
+     "photo": "talk-extract-summit.jpg"},
+    {"group": "Conference sessions",
+     "event": "IEEE ICCBI, the 5th International Conference on Computer Networks, Big Data and IoT",
+     "place": "Dubai", "when": "June",
+     "title": "Scalable Event-Driven Architectures for Distributed Retail Data Collection",
+     "summary": "Presented alongside the published paper.",
+     "url": "https://iccbi.com/", "link": "IEEE ICCBI programme",
+     "photo": "talk-iccbi.jpg"},
+]
+
+
+def talk_card(t) -> str:
+    return (f'<article class="talk">{thumb(t["photo"])}<div class="talk-body">'
+            f'<p class="talk-when">{html.escape(t["when"])}, {html.escape(t["place"])}</p>'
+            f'<h3>{html.escape(t["title"])}</h3>'
+            f'<p class="talk-event">{html.escape(t["event"])}</p>'
+            f'<p>{html.escape(t["summary"])}</p>'
+            f'<a class="linkbtn src" href="{html.escape(t["url"])}" rel="noopener">'
+            f'{html.escape(t["link"])}<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a>'
+            f'</div></article>')
+
+
+def talk_groups_html() -> str:
+    out = []
+    for group in ("Keynote", "Conference sessions"):
+        items = [t for t in TALKS if t["group"] == group]
+        if items:
+            out.append(f"    <h2>{group}</h2>\n" + "\n".join(talk_card(t) for t in items))
+    return "\n".join(out)
+
+
+add("talks/index.html",
+    "Talks and keynotes | Pravin Khandke",
+    "Keynote and conference speaking, with the organiser's own published record where it "
+    "exists.",
+    """
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Talks and keynotes</p>
+    <h1>Speaking, and where the organiser lists it</h1>
+    <p class="lede">
+      Each entry names the event, the city and the session title. Where the organiser
+      publishes a speaker list or programme, that page is the source, because an
+      organiser's record is stronger evidence than a speaker's own account.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+""" + talk_groups_html() + """
+
+    <h2>University talks</h2>
+    <p>
+      I speak to students about cybersecurity and applied AI. These sessions are arranged
+      directly with the institutions rather than through a published programme, so details
+      are provided in my application rather than claimed here as public events.
+    </p>
+  </section>
+</div>
+""")
+
+# ============================================================================
+# WRITING
+# ============================================================================
+def article_card(a) -> str:
+    plat = html.escape(a["platform"])
+    return (f'<a class="article" href="{html.escape(a["url"])}" rel="noopener">'
+            f'<span class="article-thumb">{plat}</span>'
+            f'<span class="article-body">'
+            f'<span class="article-title">{html.escape(a["title"])}</span>'
+            f'<span class="article-meta">{plat}</span>'
+            f'<span class="more">Read on {plat}</span></span></a>')
+
+
+if ARTICLES:
+    add("writing/index.html",
+        "Writing | Pravin Khandke",
+        "Technical articles by Pravin Khandke for practising engineers, with a link to each "
+        "published article.",
+        """
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Writing</p>
+    <h1>Technical articles, linked to where they were published</h1>
+    <p class="lede">
+      Alongside the peer-reviewed work I write about architecture and reliability, and about
+      the practical failure modes of AI systems in production, for readers who build systems
+      rather than study them.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+    <h2>Technical articles</h2>
+    <div class="articles">
+""" + "\n".join(article_card(a) for a in ARTICLES) + """
+    </div>
+
+    <h2>Coverage</h2>
+    <ul class="claims">
+""" + claim(
+          "Interviewed by Authority Magazine for its C-Suite Perspectives on AI series, on "
+          "where to use AI and where to rely only on humans. This is editorial coverage "
+          "written by a third party about my work, rather than something I wrote.",
+          [ext("https://medium.com/authority-magazine", "Authority Magazine")]) + """
+    </ul>
+  </section>
+</div>
+""")
+
 # ============================================================================
 # PEER REVIEW
 # ============================================================================
@@ -1260,8 +1468,6 @@ REDIRECTS = [
     ("bcs/mentoring/index.html", "/mentoring/"),
     ("bcs/standing/index.html", "/standing/"),
     ("iet/index.html", "/"),
-        ("publications/index.html", "/#publications"),
-    ("talks/index.html", "/#standing"),
 ]
 
 def emit_redirects():
