@@ -24,6 +24,8 @@ Pravin Khandke's fellowship application.
       favicon.svg             tab icon, hand-maintained
       assets/css/site.css     styles, hand-maintained, including dark and print rules
       assets/img/             images, hand-maintained. profile.jpg is the hero photo
+      assets/docs/            reviewer certificates and the university letter, as PDFs.
+                              build.py stops if a row in CERTIFICATE_ROWS has no file
       CNAME                   the custom domain
       .nojekyll               stop GitHub Pages running Jekyll
     tests/test_site.py        builds the site and checks the structural and content rules (navigation, links, images, counters, dashes, awarding-body names, noindex)

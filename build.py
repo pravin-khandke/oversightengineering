@@ -28,7 +28,7 @@ SITE = {
     "email": "pravin.khandke@ieee.org",
     "orcid": "https://orcid.org/0009-0004-9693-9334",
     "orcid_id": "0009-0004-9693-9334",
-    "updated": "26 September 2026",
+    "updated": "18 October 2026",
     "photo_w": "370",
     "photo_h": "480",
 }
@@ -386,6 +386,40 @@ COMMITTEE_ROWS = [
     ("NGSME 2026", "IEEE workshop, Vilamoura, Portugal",
      "https://sites.google.com/view/ngmse2026/home"),
 ]
+
+# Reviewer certificates held on file. A conference that issues one has put its name to
+# the review, so each row links the document itself rather than describing it.
+# name in the venue row, what the certificate states, file under docs/assets/docs/
+CERTIFICATE_ROWS = [
+    ("IEEE SIME 2026", "Certificate of Recognition, technical reviewer. Sousse, Tunisia.",
+     "reviewer-certificate-sime-2026.pdf"),
+    ("IEEE TEMSMET 2026", "Certificate of Appreciation, reviewer. Hyderabad, India.",
+     "reviewer-certificate-temsmet-2026.pdf"),
+    ("ICETCI 2026", "Certificate of Appreciation, peer reviewer. Hyderabad, India.",
+     "reviewer-certificate-icetci-2026.pdf"),
+    ("ICDCECE 2026", "Certificate of Appreciation, reviewer. Ballari, India.",
+     "reviewer-certificate-icdcece-2026.pdf"),
+    ("ICNSBT 2026", "Certificate of Appreciation, paper reviewer. Kolkata, India.",
+     "reviewer-certificate-icnsbt-2026.pdf"),
+    ("INCOSST 2026", "Reviewer certificate. Cirebon, Indonesia.",
+     "reviewer-certificate-incosst-2026.pdf"),
+    ("AMLDS 2026", "Reviewer certificate. Osaka, Japan.",
+     "reviewer-certificate-amlds-2026.pdf"),
+]
+
+
+def certificate_rows_html() -> str:
+    """A row per certificate. A missing file stops the build, so no row links to nothing."""
+    out = []
+    for name, what, fname in CERTIFICATE_ROWS:
+        if not (ROOT / "docs" / "assets" / "docs" / fname).exists():
+            raise SystemExit(f"docs/assets/docs/{fname} is missing. Put the certificate "
+                             "in place, or drop its row from CERTIFICATE_ROWS, then rebuild.")
+        out.append(f'      <li class="cert-row">{html.escape(name)} '
+                   f'<span class="where">{html.escape(what)}</span> '
+                   f'<a class="src" href="/assets/docs/{fname}">certificate (PDF)</a></li>')
+    return '\n'.join(out)
+
 
 def venue_rows_html() -> str:
     out = []
@@ -1461,9 +1495,22 @@ add("talks/index.html",
     <h2>University talks</h2>
     <p>
       I speak to students about cybersecurity and applied AI. These sessions are arranged
-      directly with the institutions rather than through a published programme, so details
-      are provided in my application rather than claimed here as public events.
+      directly with the institution rather than through a published programme, so the record
+      is the letter the university sent afterwards rather than a programme page.
     </p>
+    <article class="talk">
+      <div class="talk-body">
+        <p class="talk-when">17 September 2026, Kennesaw State University</p>
+        <h3>Adversarial Resilience: Building AI Systems That Survive Hostile Environments</h3>
+        <p class="talk-event">Invited external industry speaker, Center for Cybersecurity Education</p>
+        <p>
+          A hybrid session for the university community. Eight people attended in person and
+          twenty four joined online, and a recording is kept in the university's own media
+          library. The letter below is written for the record rather than for me.
+        </p>
+        <a class="linkbtn src" href="/assets/docs/ksu-cybersecurity-talk-letter-2026.pdf">The university letter on the session (PDF)</a>
+      </div>
+    </article>
   </section>
 </div>
 """)
@@ -1526,7 +1573,8 @@ if ARTICLES:
 add("peer-review/index.html",
     "Peer review record | Pravin Khandke",
     "The international conferences where Pravin Khandke has reviewed submitted papers or "
-    "served on a programme committee, each linked to its public listing where one exists.",
+    "served on a programme committee, each linked to its public listing where one exists, "
+    "with the reviewer certificate where the conference issued one.",
     """
 <section class="hero">
   <div class="wrap">
@@ -1574,9 +1622,24 @@ add("peer-review/index.html",
     <div class="note">
       <strong>On the count.</strong> No total number of reviews appears on this page. A
       total is the one figure a reader cannot check for themselves, so the venues are named
-      instead. The authoritative number, with the documents behind it, is stated in my
-      application.
+      instead. The authoritative number is stated in my application, which holds the review
+      record conference by conference.
     </div>
+
+    <h2>Reviewer certificates</h2>
+    <p>
+      A conference that issues a certificate has put its own name to the review, which is
+      why these links open the document itself rather than describe it. Each one is signed
+      by the chair of the conference that sent it.
+    </p>
+    <ul class="plain venue-list">
+""" + certificate_rows_html() + """
+    </ul>
+    <p class="src-note">
+      Reproduced as received, with the file size reduced for the web and the wording left
+      untouched. A conference that has not issued a certificate is listed above and is not
+      listed here.
+    </p>
 
     <h2>Review platforms</h2>
     <p>
