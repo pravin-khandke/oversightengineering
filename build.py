@@ -257,6 +257,11 @@ def ext(href: str, label=None, note=None) -> str:
     return (f'<a class="src" href="{html.escape(href)}" rel="noopener">{lab}'
             f'<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a>{tail}')
 
+def doc(href: str, label: str) -> str:
+    """A link to a document this site serves itself. No outbound marker, because the
+    reader stays on the site."""
+    return f'<a class="src" href="{html.escape(href)}">{html.escape(label)}</a>'
+
 def claim(text: str, sources: list[str]) -> str:
     return (f'<li><span class="claim-text">{text}</span>\n'
             f'      <span class="claim-src">Source: {" \u00b7 ".join(sources)}</span></li>')
@@ -1313,9 +1318,13 @@ add("standing/index.html",
       "Showcase panel.",
       [ext("https://www.kennesaw.edu/", "Kennesaw State University"),
        ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards")]) + "\n" + claim(
-      "Guest speaker at Kennesaw State University on Building AI Responsibly, to 32 "
-      "students.",
-      [ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards")]) + """
+      "Guest speaker at Kennesaw State University, giving the Center for Cybersecurity "
+      "Education session on adversarial resilience in AI systems on 17 September 2026. "
+      "Eight people attended in the room and 24 joined online.",
+      [doc("/assets/docs/ksu-cybersecurity-talk-letter-2026.pdf",
+           "letter from the university (PDF)"),
+       ext("https://www.linkedin.com/in/pravin-khandke/details/honors/",
+           "LinkedIn honors and awards")]) + """
     </ul>
 
     <div class="note">
