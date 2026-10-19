@@ -314,13 +314,20 @@ class Home(unittest.TestCase):
         for want in ("/invention/", "/mentoring/", "/standing/", "/publications/", "/peer-review/"):
             self.assertIn(want, hrefs)
 
-    def test_highlights_are_dated_and_sourced(self):
-        items = re.findall(r'<li class="tl-item">(.*?)</li>', read("index.html"), re.S)
+    def test_highlights_are_sourced_and_carry_no_dates(self):
+        section = re.search(r'<section id="highlights">(.*?)</section>', read("index.html"), re.S)
+        self.assertIsNotNone(section, "home page has no highlights section")
+        body = section.group(1)
+        items = re.findall(r"<li>(.*?)</li>", body, re.S)
         self.assertTrue(5 <= len(items) <= 8, f"{len(items)} highlights")
         for item in items:
             with self.subTest(item=item[:40]):
                 self.assertIn("Source:", item)
-                self.assertRegex(item, r"(January|February|March|April|May|June|July|August|September|October|November|December) 20\d\d")
+        months = ("January|February|March|April|May|June|July|August|September|October|"
+                  "November|December")
+        visible = re.sub(r"<[^>]+>", " ", body)  # drop tags, so hrefs cannot trip this
+        self.assertNotRegex(visible, rf"\b({months})\b", "a highlight names a month")
+        self.assertNotRegex(visible, r"\b20\d\d\b", "a highlight names a year")
 
 
 class WritingPage(unittest.TestCase):

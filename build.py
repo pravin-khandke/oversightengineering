@@ -455,32 +455,32 @@ def committee_rows_html() -> str:
 VERIFIED_DATE = "11 October 2026"
 
 HIGHLIGHTS = [
-    # sort key, label, text, [(url, link label)]
-    ("2026-10", "October 2026", "Speaker at Extract Summit, Austin, Texas.",
+    # sort key (internal, never printed), text, [(url, link label)]
+    ("2026-10", "Speaker at Extract Summit, Austin, Texas.",
      [("https://www.extractsummit.io/", "Extract Summit programme")]),
-    ("2026-08", "August 2026",
+    ("2026-08",
      "Keynote at the IEEE 5th World Conference on Applied Intelligence and Computing, "
      "Jabalpur, India.",
      [(AIC_LIST, "Keynote talk page on the conference site")]),
-    ("2026-07", "July 2026", "Became a Fellow of the Royal Statistical Society.",
+    ("2026-07", "Became a Fellow of the Royal Statistical Society.",
      [("https://rss.org.uk/", "Royal Statistical Society")]),
-    ("2026-06", "June 2026", "Elevated to IEEE Senior Member.",
+    ("2026-06", "Elevated to IEEE Senior Member.",
      [("https://www.ieee.org/membership/senior-members.html", "IEEE, Senior Member grade")]),
-    ("2026-06", "June 2026",
+    ("2026-06",
      "Conferred Eminent Fellow Member by The Scholars Academic and Scientific Society.",
      [(SAS_VERIFY, "Society verification page")]),
 ]
 
 
 def highlights_html() -> str:
+    """The sort key orders the list. No date is printed, so no timeline is implied."""
     rows = sorted(HIGHLIGHTS, key=lambda h: h[0], reverse=True)
     out = []
-    for _, label, text, sources in rows:
+    for _, text, sources in rows:
         links = " · ".join(ext(u, l) for u, l in sources)
-        out.append(f'      <li class="tl-item"><span class="tl-date">{html.escape(label)}</span>'
-                   f'<span class="tl-text">{html.escape(text)}</span>'
+        out.append(f'<li><span class="claim-text">{html.escape(text)}</span>'
                    f'<span class="claim-src">Source: {links}</span></li>')
-    return '    <ol class="timeline">\n' + "\n".join(out) + "\n    </ol>"
+    return '    <ul class="claims">\n' + "\n".join(out) + "\n    </ul>"
 
 
 # href, title, text, art variant, art file (decorative, optional)
@@ -558,7 +558,7 @@ add("index.html",
 
   <section id="highlights">
     <h2 class="section-rule">Highlights</h2>
-    <p class="section-intro">Dated items from the record, newest first. Each one links to its source.</p>
+    <p class="section-intro">Items from the record. Each one links to its source.</p>
 """ + highlights_html() + """
   </section>
 
