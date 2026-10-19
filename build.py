@@ -37,6 +37,9 @@ SITE = {
 # related links exist only while this list has entries. SITE_ARTICLES=none empties it,
 # which the tests use to prove the page stays hidden.
 ARTICLES = [
+    {"title": "What the First AI Plugin Standard Reveals About AI's Future",
+     "platform": "HackerNoon",
+     "url": "https://hackernoon.com/what-the-first-ai-plugin-standard-reveals-about-ais-future"},
     {"title": "Feature Flags That Actually Ship: Lessons from the Trenches",
      "platform": "Dev.to",
      "url": "https://dev.to/pravin-khandke/feature-flags-that-actually-ship-lessons-from-the-trenches-b7a"},
