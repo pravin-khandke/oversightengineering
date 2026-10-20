@@ -365,3 +365,132 @@ th { font: 600 13.5px/1.4 var(--sans); color: var(--ink-soft); }
   .note { background: none; border-left: 2px solid #000; }
   .ext { display: none; }
 }
+
+/* ---------- proof viewer ----------
+   A certificate or letter opens on top of the page, with Back and Close in a bar
+   across the top. The dark surround closes it too, and Escape closes it. */
+a.proof { cursor: zoom-in; border-bottom: 1px dotted currentColor; }
+
+.pub-doi { font: 400 13px/1.6 var(--sans); color: var(--muted); margin: 6px 0 4px; }
+.pub-doi a { color: var(--ink-soft); }
+.pub-doi a:hover { color: var(--green-deep); }
+
+body.viewer-open { overflow: hidden; }
+
+.viewer {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; grid-template-rows: auto minmax(0, 1fr);
+  background: rgba(9, 18, 13, .9);
+}
+.viewer[hidden] { display: none; }
+.viewer-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 12px 20px; background: var(--foot-bg); color: var(--foot-ink);
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+.viewer-title { margin: 0; font: 500 14.5px/1.35 var(--sans); color: var(--foot-ink); }
+.viewer-acts { display: flex; align-items: center; gap: 8px; flex: none; }
+.viewer-btn {
+  display: inline-block; padding: 9px 14px; border-radius: 6px; cursor: pointer;
+  font: 600 13.5px/1 var(--sans); text-decoration: none;
+  background: transparent; color: var(--foot-ink);
+  border: 1px solid rgba(255, 255, 255, .35);
+}
+.viewer-btn:hover, .viewer-btn:focus-visible {
+  background: rgba(255, 255, 255, .16); color: #ffffff; outline: none;
+}
+.viewer-btn:focus-visible { box-shadow: 0 0 0 2px rgba(255, 255, 255, .55); }
+.viewer-x { font-size: 19px; line-height: .8; padding: 7px 12px 9px; }
+.viewer-stage {
+  overflow: auto; padding: 26px 20px 40px;
+  display: flex; align-items: flex-start; justify-content: center;
+}
+.viewer-stage img {
+  max-width: 100%; height: auto; background: #ffffff;
+  border-radius: 3px; box-shadow: 0 14px 50px rgba(0, 0, 0, .5);
+}
+@media (max-width: 560px) {
+  .viewer-bar { flex-wrap: wrap; gap: 10px; }
+  .viewer-title { font-size: 13.5px; }
+  .viewer-stage { padding: 14px 10px 30px; }
+}
+@media print { .viewer { display: none !important; } }
+
+/* ---------- evidence thumbnails ----------
+   A preview of the document itself, so a reader can see there is a certificate or a
+   letter behind a claim before following it. */
+.ev-label { font: 600 11.5px/1.4 var(--sans); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); margin: 20px 0 9px; }
+
+ul.evidence { list-style: none; margin: 0 0 10px; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+ul.evidence li { margin: 0; }
+
+.ev-card {
+  display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 9px; overflow: hidden;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.ev-card:hover, .ev-card:focus-visible {
+  border-color: var(--green); transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(23, 37, 29, .13);
+}
+/* a.proof carries a dotted underline for text links; a card is already a border */
+.ev-card.proof { border-bottom: 1px solid var(--line); }
+
+.ev-thumb { display: block; aspect-ratio: 4 / 3; background: #f6f8f7;
+  border-bottom: 1px solid var(--line-soft); overflow: hidden; }
+.ev-thumb img { width: 100%; height: 100%; object-fit: contain; object-position: top center;
+  display: block; padding: 7px; }
+
+.ev-body { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px 12px; }
+.ev-title { font: 600 13px/1.3 var(--sans); color: var(--ink); }
+.ev-note { font: 400 11.5px/1.4 var(--sans); color: var(--muted); }
+.ev-kind { font: 600 10px/1 var(--sans); letter-spacing: .07em; text-transform: uppercase;
+  color: var(--green); margin-top: 2px; }
+
+@media (max-width: 560px) {
+  ul.evidence { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ev-title { font-size: 12px; }
+}
+
+/* ---------- programme committees, featured ----------
+   The one section on the Peer review page that leads with the flag rather than the
+   acronym, because committee service is the strongest of the claims on it. */
+.committee-feature {
+  margin: 30px 0 38px; padding: 28px 28px 24px;
+  background: var(--tint); border: 1px solid var(--line);
+  border-left: 6px solid var(--green); border-radius: 12px;
+}
+.committee-kicker { margin: 0 0 7px; font: 600 11px/1 var(--sans); letter-spacing: .12em;
+  text-transform: uppercase; color: var(--green); }
+.committee-feature h2 { margin: 0 0 10px; font-size: clamp(25px, 3.2vw, 34px); line-height: 1.15; }
+.committee-intro { margin: 0; max-width: 62ch; font-size: 16.5px; color: var(--ink-soft); }
+
+ul.committee-grid { list-style: none; margin: 22px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+.committee-card { margin: 0; }
+.committee-card > a, .committee-card > .cc-inner {
+  display: flex; align-items: center; gap: 16px; height: 100%;
+  padding: 16px 18px; background: var(--paper);
+  border: 1px solid var(--line); border-radius: 10px;
+  text-decoration: none; color: inherit;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.committee-card > a:hover, .committee-card > a:focus-visible {
+  border-color: var(--green); transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(23, 37, 29, .13);
+}
+.cc-flag { flex: none; width: 56px; height: 38px; object-fit: contain; border-radius: 4px;
+  background: #ffffff; box-shadow: 0 0 0 1px rgba(23, 37, 29, .16); }
+.cc-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cc-name { font: 600 17px/1.2 var(--sans); color: var(--ink); }
+.cc-full { font: 400 13px/1.45 var(--sans); color: var(--muted); }
+.cc-go { font: 600 10.5px/1 var(--sans); letter-spacing: .07em; text-transform: uppercase;
+  color: var(--green); margin-top: 3px; }
+
+@media (max-width: 560px) {
+  .committee-feature { padding: 20px 16px 18px; margin: 22px 0 28px; }
+  ul.committee-grid { grid-template-columns: 1fr; }
+  .cc-flag { width: 44px; height: 30px; }
+}

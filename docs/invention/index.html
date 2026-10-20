@@ -60,7 +60,7 @@
 <div class="wrap">
   <section>
     <h2 id="in-brief">In brief</h2>
-<article class="case"><h3>Remittance reconciliation pipeline</h3><p class="case-tag">Human-in-the-loop AI for financial controls</p><ul><li>Reads remittance detail from four channels that share no common format.</li><li>Matches payments to invoices, with a person at the decision point for every match the model is not sure of.</li><li>Writes every validation and override to an audit trail.</li></ul><div class="tag-row"><span>human-in-the-loop</span><span>financial controls</span></div><p class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">IJCA, where the pattern is published<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></p><figure class="figure"><img src="/assets/img/diagram-reconciliation.svg" alt="Diagram. Payments arrive through four channels and feed one step that reads each payment and scores every field. High confidence matches are assigned automatically. Middle band matches go to a person who chooses. Low confidence matches go to manual review. Every check and override is logged." loading="lazy"><figcaption>How a payment moves through the pipeline. Schematic.</figcaption></figure></article><article class="case"><h3>Event-driven retail backbone</h3><p class="case-tag">Messaging between independently governed nodes</p><ul><li>Moves multi-site retail data collection over an ActiveMQ Artemis backbone.</li><li>Designed for high-throughput propagation between independently governed nodes.</li><li>Presented at IEEE ICCBI in Dubai.</li></ul><div class="tag-row"><span>event-driven</span><span>messaging</span></div><p class="claim-src">Source: <a class="src" href="https://iccbi.com/" rel="noopener">IEEE ICCBI<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></p></article>
+<article class="case"><h3>Remittance reconciliation pipeline</h3><p class="case-tag">Human-in-the-loop AI for financial controls</p><ul><li>Reads remittance detail from four channels that share no common format.</li><li>Matches payments to invoices, with a person at the decision point for every match the model is not sure of.</li><li>Writes every validation and override to an audit trail.</li></ul><div class="tag-row"><span>human-in-the-loop</span><span>financial controls</span></div><p class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/archives/volume187/number118/designing-adaptive-human-in-the-loop-interfaces-for-enhanced-collaborative-incident-management/" target="_blank" rel="noopener noreferrer">IJCA, where the pattern is published<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></p><figure class="figure"><img src="/assets/img/diagram-reconciliation.svg" alt="Diagram. Payments arrive through four channels and feed one step that reads each payment and scores every field. High confidence matches are assigned automatically. Middle band matches go to a person who chooses. Low confidence matches go to manual review. Every check and override is logged." loading="lazy"><figcaption>How a payment moves through the pipeline. Schematic.</figcaption></figure></article><article class="case"><h3>Event-driven retail backbone</h3><p class="case-tag">Messaging between independently governed nodes</p><ul><li>Moves multi-site retail data collection over an ActiveMQ Artemis backbone.</li><li>Designed for high-throughput propagation between independently governed nodes.</li><li>Presented at IEEE ICCBI in Dubai.</li></ul><div class="tag-row"><span>event-driven</span><span>messaging</span></div><p class="claim-src">Source: <a class="src" href="https://ieeexplore.ieee.org/document/11619835" target="_blank" rel="noopener noreferrer">IEEE Xplore record<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></p></article>
     <h2 id="the-situation">The situation</h2>
     <p>
       Customer remittances reach a finance function through channels that each carry a
@@ -86,13 +86,13 @@
     <h2 id="what-i-designed-and-built">What I designed and built</h2>
     <ul class="claims">
 <li><span class="claim-text">The pipeline rests on one rule. The model reads, and it never closes the books alone. That rule follows from the properties of the technology. Language models are not deterministic, and financial reconciliation demands accuracy, so the design places a person at the decision point rather than at the end of a queue.</span>
-      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">IJCA, where the pattern is published<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/archives/volume187/number118/designing-adaptive-human-in-the-loop-interfaces-for-enhanced-collaborative-incident-management/" target="_blank" rel="noopener noreferrer">IJCA, where the pattern is published<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
 <li><span class="claim-text">Every extracted field carries a confidence score, and handling is tiered by that score. High confidence assigns the match automatically. The middle band surfaces the closest candidates and a person chooses. Low confidence goes to manual review.</span>
-      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">Published description of the confidence model<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/archives/volume187/number118/designing-adaptive-human-in-the-loop-interfaces-for-enhanced-collaborative-incident-management/" target="_blank" rel="noopener noreferrer">Published description of the confidence model<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
 <li><span class="claim-text">Customer identification runs as a cascade rather than a single rule. It falls through from name matching to bank account details to invoice numbers, so a payment can still be placed when the first signal is missing.</span>
-      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">Published description of the matching cascade<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/archives/volume187/number118/designing-adaptive-human-in-the-loop-interfaces-for-enhanced-collaborative-incident-management/" target="_blank" rel="noopener noreferrer">Published description of the matching cascade<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
 <li><span class="claim-text">A validation layer checks each proposed match against that customer's own history before it posts, and flags an unusual result with the reason attached. Every validation and every override is written to an audit trail that cannot be altered, which is what the financial reporting controls require.</span>
-      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">Published description of the validation and audit layer<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/archives/volume187/number118/designing-adaptive-human-in-the-loop-interfaces-for-enhanced-collaborative-incident-management/" target="_blank" rel="noopener noreferrer">Published description of the validation and audit layer<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
     </ul>
 
     <h2 id="why-it-reaches-beyond-one-employer">Why it reaches beyond one employer</h2>
@@ -105,9 +105,9 @@
     </p>
     <ul class="claims">
 <li><span class="claim-text">Designing Adaptive Human-in-the-Loop Interfaces for Enhanced Collaborative Incident Management, International Journal of Computer Applications, 2026. The human-in-the-loop pattern applied to operational workflows, including the confidence-tiered review model used in the reconciliation pipeline.</span>
-      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/" rel="noopener">IJCA, 2026<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
-<li><span class="claim-text">Scalable Event-Driven Architectures for Distributed Retail Data Collection Using ActiveMQ Artemis, IEEE ICCBI. The messaging architecture that moves collected and reconciled data between systems.</span>
-      <span class="claim-src">Source: <a class="src" href="https://iccbi.com/" rel="noopener">IEEE ICCBI<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+      <span class="claim-src">Source: <a class="src" href="https://www.ijcaonline.org/archives/volume187/number118/designing-adaptive-human-in-the-loop-interfaces-for-enhanced-collaborative-incident-management/" target="_blank" rel="noopener noreferrer">IJCA, 2026<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
+<li><span class="claim-text">Scalable Event-Driven Architectures for Distributed Retail Data Collection using ActiveMQ Artemis, IEEE ICCBI. The messaging architecture that moves collected and reconciled data between systems.</span>
+      <span class="claim-src">Source: <a class="src" href="https://ieeexplore.ieee.org/document/11619835" target="_blank" rel="noopener noreferrer">IEEE Xplore record<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a></span></li>
     </ul>
 
     <div class="note">
@@ -127,15 +127,10 @@
     <ul class="foot-links">
       <li><a href="https://orcid.org/0009-0004-9693-9334">ORCID</a></li>
       <li><a href="https://www.linkedin.com/in/pravin-khandke">LinkedIn</a></li>
-      <li><a href="mailto:pravin.khandke@ieee.org">pravin.khandke@ieee.org</a></li>
     </ul>
-    <p class="foot-line small">
-      This site is the public record of the work cited in my fellowship application.
-      It was last reviewed on 18 October 2026. Where a claim rests on a document held by a
-      third party, that document is linked rather than reproduced.
-    </p>
   </div>
 </footer>
 
+<script src="/assets/js/viewer.js" defer></script>
 </body>
 </html>

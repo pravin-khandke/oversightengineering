@@ -28,7 +28,7 @@ SITE = {
     "email": "pravin.khandke@ieee.org",
     "orcid": "https://orcid.org/0009-0004-9693-9334",
     "orcid_id": "0009-0004-9693-9334",
-    "updated": "18 October 2026",
+    "updated": "19 October 2026",
     "photo_w": "370",
     "photo_h": "480",
 }
@@ -126,7 +126,6 @@ IMAGES = {
 IDENTIFIERS = """
 <ul class="ids">
   <li><span class="k">ORCID</span> <a href="https://orcid.org/0009-0004-9693-9334">0009-0004-9693-9334</a></li>
-  <li><span class="k">Email</span> <a href="mailto:pravin.khandke@ieee.org">pravin.khandke@ieee.org</a></li>
   <li><span class="k">IEEE</span> Senior Member #102303821</li>
   <li><span class="k">LinkedIn</span> <a href="https://www.linkedin.com/in/pravin-khandke">linkedin.com/in/pravin-khandke</a></li>
 </ul>
@@ -139,13 +138,7 @@ FOOTER = """
     <ul class="foot-links">
       <li><a href="https://orcid.org/0009-0004-9693-9334">ORCID</a></li>
       <li><a href="https://www.linkedin.com/in/pravin-khandke">LinkedIn</a></li>
-      <li><a href="mailto:{email}">{email}</a></li>
     </ul>
-    <p class="foot-line small">
-      This site is the public record of the work cited in my fellowship application.
-      It was last reviewed on {updated}. Where a claim rests on a document held by a
-      third party, that document is linked rather than reproduced.
-    </p>
   </div>
 </footer>
 """
@@ -245,6 +238,7 @@ BASE = """<!DOCTYPE html>
 {body}
 </main>
 {footer}
+<script src="/assets/js/viewer.js" defer></script>
 </body>
 </html>
 """
@@ -257,13 +251,60 @@ def ext(href: str, label=None, note=None) -> str:
     """External evidence link with a visible marker so a reader can see the source."""
     lab = html.escape(label or href)
     tail = f' <span class="src-note">{html.escape(note)}</span>' if note else ""
-    return (f'<a class="src" href="{html.escape(href)}" rel="noopener">{lab}'
+    # Third-party pages open in their own tab, so this site stays open behind them and
+    # the reader closes the tab to come back. Internal links stay in the same tab.
+    away = (target_blank(href) if href.startswith("http") else 'rel="noopener"')
+    return (f'<a class="src" href="{html.escape(href)}" {away}>{lab}'
             f'<span class="ext" aria-hidden="true">&nbsp;&#8599;</span></a>{tail}')
 
 def doc(href: str, label: str) -> str:
     """A link to a document this site serves itself. No outbound marker, because the
     reader stays on the site."""
     return f'<a class="src" href="{html.escape(href)}">{html.escape(label)}</a>'
+
+def target_blank(href: str) -> str:
+    return 'target="_blank" rel="noopener noreferrer"'
+
+
+def proof(href: str, label: str) -> str:
+    """A document this site serves itself, opened in the viewer with Back and Close.
+
+    The href is left in place, so the image still opens on its own if scripts are off.
+    """
+    return (f'<a class="src proof" href="{html.escape(href)}" '
+            f'data-proof="{html.escape(href)}" data-title="{html.escape(label)}">'
+            f'{html.escape(label)}</a>')
+
+
+THUMBS = "/assets/thumbs"   # 420px previews of every attached document
+
+
+def evidence_strip(items: list[tuple], label: str = "") -> str:
+    """A row of document previews.
+
+    Each item is (href, thumb stem, title, kind, is_image[, note]). An image proof keeps
+    the viewer's data attributes so it opens in place. A PDF opens in its own tab.
+    """
+    cards = []
+    for item in items:
+        href, stem, title, kind, is_image = item[:5]
+        note = item[5] if len(item) > 5 else ""
+        if is_image:
+            attrs = (f'class="ev-card proof" data-proof="{href}" '
+                     f'data-title="{html.escape(title)}"')
+        else:
+            attrs = 'class="ev-card" target="_blank" rel="noopener noreferrer"'
+        note_html = (f'<span class="ev-note">{html.escape(note)}</span>' if note else "")
+        cards.append(
+            f'<li><a {attrs} href="{href}">'
+            f'<span class="ev-thumb"><img src="{THUMBS}/{stem}.jpg" '
+            f'alt="{html.escape(title)}" loading="lazy" decoding="async"></span>'
+            f'<span class="ev-body"><span class="ev-title">{html.escape(title)}</span>'
+            f'{note_html}<span class="ev-kind">{html.escape(kind)}</span></span></a></li>'
+        )
+    head = f'<p class="ev-label">{html.escape(label)}</p>\n' if label else ""
+    return (head + '<ul class="evidence">\n      ' + "\n      ".join(cards) + '\n    </ul>')
+
 
 def claim(text: str, sources: list[str]) -> str:
     return (f'<li><span class="claim-text">{text}</span>\n'
@@ -312,7 +353,7 @@ def card(href: str, title: str, text: str, variant: int, art=None) -> str:
             f'<span class="more">Read more</span></span></a>')
 
 
-def case_study(title, tagline, bullets, tags, sources, dates=None, art="") -> str:
+def case_study(title, tagline, bullets, tags, sources, dates=None, art="", evidence="") -> str:
     """A case-study block. Sources are already-built link strings from ext()."""
     when = f'<p class="case-dates">{html.escape(dates)}</p>' if dates else ""
     items = "".join(f"<li>{html.escape(b)}</li>" for b in bullets)
@@ -320,7 +361,7 @@ def case_study(title, tagline, bullets, tags, sources, dates=None, art="") -> st
     src = (f'<p class="claim-src">Source: {" · ".join(sources)}</p>' if sources else "")
     return (f'<article class="case">{when}<h3>{html.escape(title)}</h3>'
             f'<p class="case-tag">{html.escape(tagline)}</p><ul>{items}</ul>'
-            f'<div class="tag-row">{chips}</div>{src}{art}</article>')
+            f'<div class="tag-row">{chips}</div>{src}{evidence}{art}</article>')
 
 
 def page(path, title, desc, body):
@@ -344,7 +385,24 @@ def add(path, title, desc, body):
     n = page(path, title, desc, body)
     BUILT.append((path, n))
 
-IJCA = "https://www.ijcaonline.org/"
+# Published records. Every paper link points at the paper itself rather than at the
+# journal or conference home page, so a reader lands on the title, the authors and the DOI.
+IJCAPAPER = ("https://www.ijcaonline.org/archives/volume187/number118/"
+             "designing-adaptive-human-in-the-loop-interfaces-for-enhanced-"
+             "collaborative-incident-management/")
+ICCBIPAPER = "https://ieeexplore.ieee.org/document/11619835"
+IWISPAPER = "https://ieeexplore.ieee.org/document/11667738"
+IJCA = IJCAPAPER
+
+# Proof documents served from docs/assets/proof/. They open in the viewer, which
+# carries a Back and a Close button, rather than navigating the reader away.
+PROOF_IEEE = "/assets/proof/ieee-senior-member-certificate.png"
+PROOF_SEFM = "/assets/proof/sefm-eminent-fellow-certificate.png"
+PROOF_SCRS = "/assets/proof/scrs-fellow-certificate.png"
+PROOF_RSS_EMAIL = "/assets/proof/rss-fellowship-email.png"
+PROOF_RSS_LETTER = "/assets/proof/rss-fellowship-letter.png"
+PROOF_KSU_AGREEMENT = "/assets/proof/ksu-capstone-master-agreement-email.png"
+PROOF_KSU_ORDER = "/assets/proof/ksu-capstone-project-order-email.png"
 SAS_VERIFY = "https://www.sassociety.com/membership-id-sas-sefm-770-2026/"
 AIC_LIST = "https://scrs.in/conference/aic2026/speaker/talk/23186"
 KIDS_REPO = "https://github.com/pravin-khandke/safe-ai-for-kids"
@@ -356,122 +414,148 @@ ORCID = "https://orcid.org/0009-0004-9693-9334"
 
 # name, location detail, url (None = no link, reason stated in the row)
 VENUE_ROWS = [
-    ("IECON 2026", "Doha, Qatar", "https://www.iecon2026.org/"),
-    ("IEEE GLOBECOM 2026 CISS Symposium", "Macau, China", "https://globecom2026.ieee-globecom.org/"),
-    ("ICCUBEA 2026", "Pune, India", "https://iccubea.pccoepune.com/iccubea.php"),
-    ("ICETCI 2026", "Hyderabad, India", "http://www.ietcint.com/"),
-    ("ICDCECE 2026", "Karnataka, India", "https://icdcece.in/"),
-    ("AMLDS 2026", "Osaka, Japan", "https://amlds.site/"),
-    ("NGSME 2026", "Vilamoura, Portugal", "https://sites.google.com/view/ngmse2026/home"),
-    ("CAISAIS 2026", "Ajman, United Arab Emirates", "https://caisais26.ajman.ac.ae"),
-    ("AIIoT 2026", "Seattle, United States", "https://worldaiiotcongress.org/technical-committee/"),
-    ("CEECT 2026", "Bangkok, Thailand", "https://www.ceect.org/"),
-    ("MeditCom 2026", "Cagliari, Italy", "https://meditcom2026.ieee-meditcom.org/"),
-    ("ICoIAS 2026", "Qinhuangdao, China", "https://www.icias.org/index.html"),
-    ("iSemantic 2026", "Semarang, Indonesia", "https://isemantic.dinus.ac.id/2026/"),
-    ("INCOSST 2026", "Cirebon, Indonesia", "https://incosst.polteksci.ac.id/"),
-    ("INTCEC 2026", "Kathmandu, Nepal", "https://intcec.org/"),
-    ("ICTMOD 2026", "Paris, France", "https://ictmod-conference.com/"),
-    ("ETECOM 2026", "Chennai, India", "https://ieee-etecom.org/"),
-    ("SIME 2026", "Sousse, Tunisia", "https://sime-conf.org/committees/"),
-    ("FOAN 2026", "Pisa, Italy", "https://foan.info/"),
-    ("AI e-Health Workshop 2026", "New York, United States", "https://healthcom2026.ieee-healthcom.org/"),
-    ("ICETM 2026", "New Jersey, United States", None),   # venue site returns 404
-    ("CICBA 2026", "Malda, India", None),                # venue domain no longer resolves
-    ("TEMSMET 2026", "", None),                          # no public listing in any record
-    ("ARIIA 2026", "", None),
-    ("ICNSBT 2026", "", None),
-    ("CICA 2026", "", None),                             # reviewed as a book chapter
-    ("ICAITech 2026", "", None),
-    ("PlatCon 2026", "", None),
+    # name, full conference name, place, url, flag stem, country for the alt text
+    ("IECON", "52nd Annual Conference of the IEEE Industrial Electronics Society", "Doha, Qatar", "https://www.iecon2026.org/", "qa", "Qatar"),
+    ("IEEE GLOBECOM", "IEEE Global Communications Conference, CISS Symposium", "Macau, China", "https://globecom2026.ieee-globecom.org/", "cn", "China"),
+    ("ICCUBEA", "10th IEEE International Conference on Computing, Communication, Control and Automation", "Pune, India", "https://iccubea.pccoepune.com/iccubea.php", "in", "India"),
+    ("ICETCI", "Emerging Techniques in Computational Intelligence", "Hyderabad, India", "http://www.ietcint.com/", "in", "India"),
+    ("ICDCECE", "5th International Conference on Distributed Computing and Electrical-Electronic Circuits", "Karnataka, India", "https://icdcece.in/", "in", "India"),
+    ("AMLDS", "International Conference on Advanced Machine Learning and Data Science", "Osaka, Japan", "https://amlds.site/", "jp", "Japan"),
+    ("NGSME", "Next-Generation Multimedia Services at the Edge", "Vilamoura, Portugal", "https://sites.google.com/view/ngmse2026/home", "pt", "Portugal"),
+    ("CAISAIS", "International Conference on Artificial Intelligence Science and Applications in Industry and Society", "Ajman, United Arab Emirates", "https://caisais26.ajman.ac.ae", "ae", "United Arab Emirates"),
+    ("AIIoT", "IEEE World AI IoT Congress", "Seattle, United States", "https://worldaiiotcongress.org/technical-committee/", "us", "United States"),
+    ("CEECT", "2nd International Conference on Advances in Computer Science, Electrical, Electronics, and Communication Technologies", "Bangkok, Thailand", "https://www.ceect.org/", "th", "Thailand"),
+    ("MeditCom", "IEEE International Mediterranean Conference on Communications and Networking", "Cagliari, Italy", "https://meditcom2026.ieee-meditcom.org/", "it", "Italy"),
+    ("ICoIAS", "8th International Conference on Intelligent Autonomous Systems", "Qinhuangdao, China", "https://www.icias.org/index.html", "cn", "China"),
+    ("iSemantic", "International Seminar on Application for Technology of Information and Communication", "Semarang, Indonesia", "https://isemantic.dinus.ac.id/2026/", "id", "Indonesia"),
+    ("INCOSST", "3rd International Conference on Smart Science and Technology", "Cirebon, Indonesia", "https://incosst.polteksci.ac.id/", "id", "Indonesia"),
+    ("INTCEC", "6th Interdisciplinary Conference on Electrics and Computer", "Kathmandu, Nepal", "https://intcec.org/", "np", "Nepal"),
+    ("ICTMOD", "IEEE Technology Management, Operations and Decisions", "Paris, France", "https://ictmod-conference.com/", "fr", "France"),
+    ("ETECOM", "Emerging Trends in Engineering and Computing", "Chennai, India", "https://ieee-etecom.org/", "in", "India"),
+    ("SIME", "International Conference on Smart Innovations for Medicine and Engineering", "Sousse, Tunisia", "https://sime-conf.org/committees/", "tn", "Tunisia"),
+    ("FOAN", "International Workshop on Fiber Optics in Access Networks", "Pisa, Italy", "https://foan.info/", "it", "Italy"),
+    ("AI e-Health Workshop", "AI-Driven e-Health Systems, an IEEE HealthCom workshop", "New York, United States", "https://healthcom2026.ieee-healthcom.org/", "us", "United States"),
+    ("ICETM", "2nd International Conference on Engineering, Technology and Management", "New Jersey, United States", None, "us", "United States"),
+    ("CICBA", "International Conference on Computational Intelligence and Big Data Analytics", "Malda, India", None, "in", "India"),
+    ("TEMSMET", "5th IEEE International Conference on Technology, Engineering, Management for Societal Impact using Marketing, Entrepreneurship and Talent", "Hyderabad, India", None, "in", "India"),
+    ("ARIIA", "2nd International Conference on Augmented Reality, Intelligent Systems and Industrial Automation", "Bengaluru, India", None, "in", "India"),
+    ("ICNSBT", "International Conference on Network Security and Blockchain Technology", "Kolkata, India", None, "in", "India"),
+    ("CICA", "Computational Intelligence for Climate Action: Scaling, Ethics and Governance", "", None, None, ""),
+    ("ICAITech", "2nd International Conference on Artificial Intelligence and Technological Solutions", "Palembang, Indonesia", None, "id", "Indonesia"),
+    ("PlatCon", "International Conference on Platform Technology and Service", "Jeju, Korea", None, "kr", "South Korea"),
 ]
 
-# committee name, venue detail, url (None = no link held)
+# name, venue detail, url (None = no link held), flag file stem, country for the alt text
 COMMITTEE_ROWS = [
-    ("AIIoT 2026", "IEEE World AI IoT Congress, Seattle, United States",
-     "https://worldaiiotcongress.org/technical-committee/"),
-    ("SIME 2026", "Sousse, Tunisia", "https://sime-conf.org/committees/"),
-    ("NGSME 2026", "IEEE workshop, Vilamoura, Portugal",
-     "https://sites.google.com/view/ngmse2026/home"),
+    ("AIIoT", "IEEE World AI IoT Congress, Seattle, United States",
+     "https://worldaiiotcongress.org/technical-committee/", "us", "United States"),
+    ("SIME",
+     "International Conference on Smart Innovations for Medicine and Engineering, "
+     "Sousse, Tunisia", "https://sime-conf.org/committees/", "tn", "Tunisia"),
+    ("NGSME", "Next-Generation Multimedia Services at the Edge, IEEE workshop, "
+     "Vilamoura, Portugal", "https://sites.google.com/view/ngmse2026/home", "pt", "Portugal"),
+    ("BDAA", "2nd International Conference on Big Data Analytics and Applications, "
+     "Las Palmas de Gran Canaria, Spain", "https://www.bdaa-conference.com", "es", "Spain"),
 ]
 
 # Reviewer certificates held on file. A conference that issues one has put its name to
 # the review, so each row links the document itself rather than describing it.
 # name in the venue row, what the certificate states, file under docs/assets/docs/
 CERTIFICATE_ROWS = [
-    ("IEEE SIME 2026", "Certificate of Recognition, technical reviewer. Sousse, Tunisia.",
-     "reviewer-certificate-sime-2026.pdf"),
-    ("IEEE TEMSMET 2026", "Certificate of Appreciation, reviewer. Hyderabad, India.",
-     "reviewer-certificate-temsmet-2026.pdf"),
-    ("ICETCI 2026", "Certificate of Appreciation, peer reviewer. Hyderabad, India.",
-     "reviewer-certificate-icetci-2026.pdf"),
-    ("ICDCECE 2026", "Certificate of Appreciation, reviewer. Ballari, India.",
+    ("IEEE SIME", "International Conference on Smart Innovations for Medicine and Engineering",
+     "Certificate of Recognition, technical reviewer", "reviewer-certificate-sime-2026.pdf"),
+    ("IEEE TEMSMET", "5th IEEE International Conference on Technology, Engineering, "
+     "Management for Societal Impact using Marketing, Entrepreneurship and Talent",
+     "Certificate of Appreciation, reviewer", "reviewer-certificate-temsmet-2026.pdf"),
+    ("ICETCI", "Emerging Techniques in Computational Intelligence",
+     "Certificate of Appreciation, peer reviewer", "reviewer-certificate-icetci-2026.pdf"),
+    ("ICDCECE", "5th International Conference on Distributed Computing and "
+     "Electrical-Electronic Circuits", "Certificate of Appreciation, reviewer",
      "reviewer-certificate-icdcece-2026.pdf"),
-    ("ICNSBT 2026", "Certificate of Appreciation, paper reviewer. Kolkata, India.",
-     "reviewer-certificate-icnsbt-2026.pdf"),
-    ("INCOSST 2026", "Reviewer certificate. Cirebon, Indonesia.",
-     "reviewer-certificate-incosst-2026.pdf"),
-    ("AMLDS 2026", "Reviewer certificate. Osaka, Japan.",
-     "reviewer-certificate-amlds-2026.pdf"),
+    ("ICNSBT", "International Conference on Network Security and Blockchain Technology",
+     "Certificate of Appreciation, paper reviewer", "reviewer-certificate-icnsbt-2026.pdf"),
+    ("INCOSST", "3rd International Conference on Smart Science and Technology",
+     "Reviewer certificate", "reviewer-certificate-incosst-2026.pdf"),
+    ("AMLDS", "International Conference on Advanced Machine Learning and Data Science",
+     "Reviewer certificate", "reviewer-certificate-amlds-2026.pdf"),
 ]
 
 
 def certificate_rows_html() -> str:
-    """A row per certificate. A missing file stops the build, so no row links to nothing."""
-    out = []
-    for name, what, fname in CERTIFICATE_ROWS:
-        if not (ROOT / "docs" / "assets" / "docs" / fname).exists():
+    """A card per certificate, with a thumbnail of its first page.
+
+    A missing file stops the build, and so does a missing thumbnail, so no card is ever
+    a blank rectangle.
+    """
+    items = []
+    for name, full, cert, fname in CERTIFICATE_ROWS:
+        pdf = ROOT / "docs" / "assets" / "docs" / fname
+        if not pdf.exists():
             raise SystemExit(f"docs/assets/docs/{fname} is missing. Put the certificate "
                              "in place, or drop its row from CERTIFICATE_ROWS, then rebuild.")
-        out.append(f'      <li class="cert-row">{html.escape(name)} '
-                   f'<span class="where">{html.escape(what)}</span> '
-                   f'<a class="src" href="/assets/docs/{fname}">certificate (PDF)</a></li>')
-    return '\n'.join(out)
+        stem = fname[:-4]
+        if not (ROOT / "docs" / "assets" / "thumbs" / f"{stem}.jpg").exists():
+            raise SystemExit(f"docs/assets/thumbs/{stem}.jpg is missing. Re-run the "
+                             "thumbnail build, then rebuild.")
+        items.append((f"/assets/docs/{fname}", stem, name, f"{cert}, PDF", False, full))
+    return evidence_strip(items)
 
 
 def venue_rows_html() -> str:
     out = []
-    for name, where, url in VENUE_ROWS:
+    for name, full, where, url, flag, country in VENUE_ROWS:
+        mark = (f'<img class="flag" src="/assets/flags/{flag}.png" '
+                f'alt="{html.escape(country)}" width="18" height="12"> '
+                if flag else '')
+        place = f", {html.escape(where)}" if where else ""
+        detail = f'<span class="where">{html.escape(full)}{place}</span>'
         if url:
-            link = ext(url, "venue site")
-            where_html = f' <span class="where">{html.escape(where)}</span>' if where else ""
-            out.append(f'      <li class="venue-row">{html.escape(name)}{where_html} {link}</li>')
+            out.append(f'      <li class="venue-row">{mark}{html.escape(name)} {detail} '
+                       f'{ext(url, "venue site")}</li>')
         else:
-            reason = "no live listing" if not where else f'no live listing ({html.escape(where)})'
-            out.append(f'      <li class="venue-row">{html.escape(name)} '
-                       f'<span class="no-link">no link, {reason}</span></li>')
+            out.append(f'      <li class="venue-row">{mark}{html.escape(name)} {detail} '
+                       f'<span class="no-link">no link, no live listing</span></li>')
     return '\n'.join(out)
 
 def committee_rows_html() -> str:
+    """A card per committee, with the flag large enough to carry the section."""
     out = []
-    for name, where, url in COMMITTEE_ROWS:
-        pill = '<span class="pill">Programme committee</span>'
+    for name, where, url, flag, country in COMMITTEE_ROWS:
+        inner = (f'<img class="cc-flag" src="/assets/flags/{flag}.png" '
+                 f'alt="{html.escape(country)}" width="56" height="38" loading="lazy">'
+                 f'<span class="cc-body"><span class="cc-name">{html.escape(name)}</span>'
+                 f'<span class="cc-full">{html.escape(where)}</span>'
+                 f'<span class="cc-go">committee page &#8599;</span></span>')
         if url:
-            link = ext(url, "committee page")
-            out.append(f'      <li class="committee-row">{html.escape(name)} {pill} '
-                       f'<span class="where">{html.escape(where)}</span> {link}</li>')
+            out.append(f'      <li class="committee-card">'
+                       f'<a href="{html.escape(url)}" target="_blank" '
+                       f'rel="noopener noreferrer">{inner}</a></li>')
         else:
-            out.append(f'      <li class="committee-row">{html.escape(name)} {pill} '
-                       f'<span class="where">{html.escape(where)}</span></li>')
+            out.append(f'      <li class="committee-card">'
+                       f'<span class="cc-inner">{inner}</span></li>')
     return '\n'.join(out)
 
 VERIFIED_DATE = "11 October 2026"
 
 HIGHLIGHTS = [
-    # sort key (internal, never printed), text, [(url, link label)]
+    # sort key (internal, never printed), text, sources. A source is either a
+    # (url, link label) pair, or a built proof() link.
     ("2026-10", "Speaker at Extract Summit, Austin, Texas.",
-     [("https://www.extractsummit.io/", "Extract Summit programme")]),
+     [("https://www.extractsummit.io/speakers", "Extract Summit speakers")]),
     ("2026-08",
      "Keynote at the IEEE 5th World Conference on Applied Intelligence and Computing, "
      "Jabalpur, India.",
      [(AIC_LIST, "Keynote talk page on the conference site")]),
     ("2026-07", "Became a Fellow of the Royal Statistical Society.",
-     [("https://rss.org.uk/", "Royal Statistical Society")]),
+     [proof(PROOF_RSS_EMAIL, "Membership email (image)"),
+      ("https://rss.org.uk/", "Royal Statistical Society")]),
     ("2026-06", "Elevated to IEEE Senior Member.",
-     [("https://www.ieee.org/membership/senior-members.html", "IEEE, Senior Member grade")]),
+     [proof(PROOF_IEEE, "Senior Member certificate (image)"),
+      ("https://www.ieee.org/membership/senior-members.html", "IEEE, Senior Member grade")]),
     ("2026-06",
      "Conferred Eminent Fellow Member by The Scholars Academic and Scientific Society.",
-     [(SAS_VERIFY, "Society verification page")]),
+     [proof(PROOF_SEFM, "Certificate (image)"),
+      (SAS_VERIFY, "Society verification page")]),
 ]
 
 
@@ -480,10 +564,20 @@ def highlights_html() -> str:
     rows = sorted(HIGHLIGHTS, key=lambda h: h[0], reverse=True)
     out = []
     for _, text, sources in rows:
-        links = " · ".join(ext(u, l) for u, l in sources)
+        links = " · ".join(s if isinstance(s, str) else ext(*s) for s in sources)
         out.append(f'<li><span class="claim-text">{html.escape(text)}</span>'
                    f'<span class="claim-src">Source: {links}</span></li>')
-    return '    <ul class="claims">\n' + "\n".join(out) + "\n    </ul>"
+    strip = evidence_strip(
+        [(PROOF_IEEE, "ieee-senior-member-certificate",
+          "IEEE Senior Member certificate", "Certificate, image", True),
+         (PROOF_SEFM, "sefm-eminent-fellow-certificate",
+          "Eminent Fellow Member certificate", "Certificate, image", True),
+         (PROOF_RSS_EMAIL, "rss-fellowship-email",
+          "RSS welcome email", "Email, image", True),
+         (PROOF_RSS_LETTER, "rss-fellowship-letter",
+          "RSS confirmation letter", "Letter, image", True)],
+        label="Documents behind these claims")
+    return ('    <ul class="claims">\n' + "\n".join(out) + "\n    </ul>\n" + strip)
 
 
 # href, title, text, art variant, art file (decorative, optional)
@@ -501,7 +595,7 @@ HOME_CARDS = [
      "Three peer-reviewed papers and the talks I have given, linked to the organiser's record.",
      4, "card-papers.jpg"),
     ("/peer-review/", "Peer review",
-     "28 review venues and 3 committee appointments, each linked to its public listing where one exists.",
+     "28 review venues and 4 committee appointments, each linked to its public listing where one exists.",
      5, "card-review.jpg"),
     ("/writing/", "Writing",
      "Technical articles for practising engineers on developer platforms.",
@@ -539,7 +633,6 @@ add("index.html",
       <div class="connect-row">
         <a href="https://orcid.org/0009-0004-9693-9334">ORCID 0009-0004-9693-9334</a>
         <a href="https://www.linkedin.com/in/pravin-khandke">linkedin.com/in/pravin-khandke</a>
-        <a href="mailto:pravin.khandke@ieee.org">pravin.khandke@ieee.org</a>
       </div>
     </div>
     <div class="hero-photo">
@@ -552,7 +645,7 @@ add("index.html",
   <div class="wrap">
     <span class="stat"><span class="stat-n" data-counter="years">26</span><span class="stat-l">Years</span></span>
     <span class="stat"><span class="stat-n" data-counter="venues">28</span><span class="stat-l">Review venues</span></span>
-    <span class="stat"><span class="stat-n" data-counter="committees">3</span><span class="stat-l">Committees</span></span>
+    <span class="stat"><span class="stat-n" data-counter="committees">4</span><span class="stat-l">Committees</span></span>
     <span class="stat"><span class="stat-n" data-counter="publications">3</span><span class="stat-l">Publications</span></span>
   </div>
 </div>
@@ -654,8 +747,13 @@ add("memberships/index.html",
       "awarded to those who have demonstrated significant performance over a sustained "
       "period, assessed by a panel of peers, and notes that it is held by a minority of "
       "the total membership.",
-      [ext("https://www.ieee.org/membership/senior-members.html", "IEEE, Senior Member grade")]) + """
+      [proof(PROOF_IEEE, "Senior Member certificate (image)"),
+       ext("https://www.ieee.org/membership/senior-members.html", "IEEE, Senior Member grade")]) + """
     </ul>
+""" + evidence_strip(
+        [(PROOF_IEEE, "ieee-senior-member-certificate",
+          "Senior Member certificate", "Certificate, image", True)],
+        label="The document") + """
 
     <h2>The Scholars Academic and Scientific Society</h2>
     <ul class="claims">
@@ -663,8 +761,13 @@ add("memberships/index.html",
       "Eminent Fellow Member (SEFM), conferred in June 2026 as a lifetime honour. The "
       "Society states that its fellowships follow a nomination and recommendation process "
       "reviewed by its Eminent Fellows.",
-      [ext(SAS_VERIFY, "Society membership verification page")]) + """
+      [proof(PROOF_SEFM, "Certificate (image)"),
+       ext(SAS_VERIFY, "Society membership verification page")]) + """
     </ul>
+""" + evidence_strip(
+        [(PROOF_SEFM, "sefm-eminent-fellow-certificate",
+          "Eminent Fellow Member certificate", "Certificate, image", True)],
+        label="The document") + """
 
     <h2>Royal Statistical Society</h2>
     <ul class="claims">
@@ -673,8 +776,16 @@ add("memberships/index.html",
       "The Society is the United Kingdom professional body for statistics, founded in 1834 "
       "and incorporated by Royal Charter. It styles its members Fellows, and welcomed me to "
       "Fellow membership in July 2026.",
-      [ext("https://rss.org.uk/", "Royal Statistical Society")]) + """
+      [proof(PROOF_RSS_EMAIL, "Membership email (image)"),
+       proof(PROOF_RSS_LETTER, "Confirmation letter (image)"),
+       ext("https://rss.org.uk/", "Royal Statistical Society")]) + """
     </ul>
+""" + evidence_strip(
+        [(PROOF_RSS_EMAIL, "rss-fellowship-email",
+          "Welcome email, 20 July 2026", "Email, image", True),
+         (PROOF_RSS_LETTER, "rss-fellowship-letter",
+          "Confirmation letter, 28 July 2026", "Letter, image", True)],
+        label="The documents") + """
 
     <h2>Soft Computing Research Society</h2>
     <ul class="claims">
@@ -682,12 +793,17 @@ add("memberships/index.html",
       "Fellow of the Soft Computing Research Society, Fellow Certificate number "
       "SCRS/Fellow/2360. The Society is an international professional society for "
       "researchers and practitioners in soft computing and its applications.",
-      [ext("https://scrs.in/", "Soft Computing Research Society")]) + """
+      [proof(PROOF_SCRS, "Fellow certificate (image)"),
+       ext("https://scrs.in/", "Soft Computing Research Society")]) + """
     </ul>
+""" + evidence_strip(
+        [(PROOF_SCRS, "scrs-fellow-certificate",
+          "Fellow certificate", "Certificate, image", True)],
+        label="The document") + """
 
     <p class="src-note">
-      Recognition is verified against the conferring body's own register rather than a
-      scanned certificate.
+      Each recognition carries the conferring body's own record, and, where the body
+      issued one, a copy of the document it sent me.
     </p>
 
     <div class="note">
@@ -720,7 +836,7 @@ CASE_BACKBONE = case_study(
      "Designed for high-throughput propagation between independently governed nodes.",
      "Presented at IEEE ICCBI in Dubai."],
     ["event-driven", "messaging"],
-    [ext("https://iccbi.com/", "IEEE ICCBI")])
+    [ext(ICCBIPAPER, "IEEE Xplore record")])
 
 add("invention/index.html",
     "Invention and innovation | Pravin Khandke",
@@ -804,10 +920,10 @@ add("invention/index.html",
       "loop pattern applied to operational workflows, including the confidence-tiered "
       "review model used in the reconciliation pipeline.",
       [ext(IJCA, "IJCA, 2026")]) + "\n" + claim(
-      "Scalable Event-Driven Architectures for Distributed Retail Data Collection Using "
+      "Scalable Event-Driven Architectures for Distributed Retail Data Collection using "
       "ActiveMQ Artemis, IEEE ICCBI. The messaging architecture that moves collected "
       "and reconciled data between systems.",
-      [ext("https://iccbi.com/", "IEEE ICCBI")]) + """
+      [ext(ICCBIPAPER, "IEEE Xplore record")]) + """
     </ul>
 
     <div class="note">
@@ -983,7 +1099,14 @@ CASE_CAPSTONE = case_study(
      "The specification called for hybrid search with source citations and token budgeting.",
      "It also required a feasibility study naming where human oversight remains essential."],
     ["capstone", "cost-aware AI"],
-    ["Project documentation available through the application"],
+    [proof(PROOF_KSU_AGREEMENT, "Master agreement, completion notice (image)"),
+      proof(PROOF_KSU_ORDER, "Project order, completion notice (image)")],
+    evidence=evidence_strip(
+        [(PROOF_KSU_AGREEMENT, "ksu-capstone-master-agreement-email",
+          "Master agreement, completion notice", "DocuSign notice, image", True),
+         (PROOF_KSU_ORDER, "ksu-capstone-project-order-email",
+          "Project order, completion notice", "DocuSign notice, image", True)],
+        label="The documents"),
     art=figure("mentoring-capstone.jpg"))
 
 CASE_STANDARD = case_study(
@@ -1042,7 +1165,8 @@ add("mentoring/index.html",
       "through the design and delivery of KnowledgeBridge, a working retrieval-augmented "
       "generation platform. I sponsored the work rather than merely advising on "
       "it, which meant the students had a route to it being built.",
-      ["Project documentation available through the application"]) + "\n" + claim(
+      [proof(PROOF_KSU_AGREEMENT, "Master agreement, completion notice (image)"),
+       proof(PROOF_KSU_ORDER, "Project order, completion notice (image)")]) + "\n" + claim(
       "I authored the capstone specification so the students met the hard parts of real "
       "engineering rather than a sanitised exercise. It called for a working retrieval and "
       "generation system. Hybrid search had to carry source citations. Cost-aware architecture "
@@ -1054,8 +1178,8 @@ add("mentoring/index.html",
       "I judge student work, most recently on the spring 2026 Computing Showcase panel at "
       "Kennesaw State University, assessing undergraduate projects and giving the teams "
       "direct feedback on them.",
-      [ext("https://www.kennesaw.edu/", "Kennesaw State University"),
-       ext("https://www.linkedin.com/in/pravin-khandke", "Announcement and certificate of appreciation, LinkedIn")]) + "\n" + claim(
+      [ext("https://campus.kennesaw.edu/colleges-departments/ccse/events/computing-showcase/sp26-cday-program.php",
+           "KSU Computing Showcase, Spring 2026 judges list")]) + "\n" + claim(
       "I authored an open, age-banded guide called Using AI at Home and School, published as a "
       "public repository, so that a parent or a school can adopt it. It extends the "
       "same commitment beyond engineers to the next generation of users, who meet these "
@@ -1121,14 +1245,14 @@ add("inspiring/index.html",
        else ext("https://pravin-khandke.hashnode.dev/", "Hashnode profile")]) + "\n" + claim(
       "I gave the keynote at the IEEE 5th World Conference on Applied Intelligence and Computing in Jabalpur, and I presented event-driven architecture at IEEE ICCBI in Dubai.",
       [ext(AIC_LIST, "Keynote talk page on the conference site"),
-       ext("https://iccbi.com/", "IEEE ICCBI")]) + "\n" + claim(
+       ext(ICCBIPAPER, "IEEE Xplore record")]) + "\n" + claim(
       "The human-in-the-loop pattern behind my reconciliation work is published in a peer-reviewed journal, so engineers beyond my own employer can use it.",
       [ext(IJCA, "International Journal of Computer Applications")]) + "\n" + claim(
       "I paired junior engineers on the difficult production work and stood behind them while they learned to lead.",
       ["Named mentees available for confirmation through the application"]) + "\n" + claim(
       "I am guiding an eight-student capstone team at Kennesaw State University, four of them pursuing AI master's degrees, through KnowledgeBridge, a working retrieval-augmented generation platform.",
-      [ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards"),
-       "Project documentation available through the application"]) + """
+      [proof(PROOF_KSU_AGREEMENT, "Master agreement, completion notice (image)"),
+       proof(PROOF_KSU_ORDER, "Project order, completion notice (image)")]) + """
     </ul>
 
     <h2>What changed</h2>
@@ -1262,19 +1386,21 @@ add("standing/index.html",
       "Confirmed speaker at Extract Summit, held at Brazos Hall in Austin, Texas on 7 "
       "and 8 October. My session is The Naive AI Trap: Why Finance-Grade Extraction "
       "Needs Hybrid Agents, on the second day.",
-      [ext("https://www.extractsummit.io/", "Extract Summit programme")]) + """
+      [ext("https://www.extractsummit.io/speakers", "Extract Summit speakers")]) + """
     </ul>
 
     <h2>Technical programme committees</h2>
     <p>
-      I serve on the technical programme committees of three international venues, where the
-      work is deciding which submitted research is accepted and presented. One of the three
-      is an IEEE workshop rather than a full conference, and I describe it as such.
+      I serve on the technical programme committees of four international venues, where the
+      work is deciding which submitted research is accepted and presented. One of the four
+      is an IEEE workshop rather than a full conference, and one is held jointly with a
+      sister conference. I describe both as what they are.
     </p>
     <ul class="venues">
       <li><img class="flag" src="/assets/flags/us.png" alt="United States" width="18" height="12"> AIIoT <span class="where">IEEE World AI IoT Congress, Seattle, United States</span></li>
-      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME <span class="where">Sousse, Tunisia</span></li>
-      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME <span class="where">IEEE workshop, Vilamoura, Portugal</span></li>
+      <li><img class="flag" src="/assets/flags/tn.png" alt="Tunisia" width="18" height="12"> SIME <span class="where">International Conference on Smart Innovations for Medicine and Engineering, Sousse, Tunisia</span></li>
+      <li><img class="flag" src="/assets/flags/pt.png" alt="Portugal" width="18" height="12"> NGSME <span class="where">Next-Generation Multimedia Services at the Edge, IEEE workshop, Vilamoura, Portugal</span></li>
+      <li><img class="flag" src="/assets/flags/es.png" alt="Spain" width="18" height="12"> BDAA <span class="where">2nd International Conference on Big Data Analytics and Applications, Las Palmas de Gran Canaria, Spain</span></li>
     </ul>
 
     <h2>Peer review</h2>
@@ -1319,15 +1445,13 @@ add("standing/index.html",
       [ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards")]) + "\n" + claim(
       "Judge at Kennesaw State University, most recently on the spring 2026 Computing "
       "Showcase panel.",
-      [ext("https://www.kennesaw.edu/", "Kennesaw State University"),
-       ext("https://www.linkedin.com/in/pravin-khandke/details/honors/", "LinkedIn honors and awards")]) + "\n" + claim(
+      [ext("https://campus.kennesaw.edu/colleges-departments/ccse/events/computing-showcase/sp26-cday-program.php",
+           "KSU Computing Showcase, Spring 2026 judges list")]) + "\n" + claim(
       "Guest speaker at Kennesaw State University, giving the Center for Cybersecurity "
       "Education session on adversarial resilience in AI systems on 17 September 2026. "
       "Eight people attended in the room and 24 joined online.",
       [doc("/assets/docs/ksu-cybersecurity-talk-letter-2026.pdf",
-           "letter from the university (PDF)"),
-       ext("https://www.linkedin.com/in/pravin-khandke/details/honors/",
-           "LinkedIn honors and awards")]) + """
+           "letter of appreciation from the university (PDF)")]) + """
     </ul>
 
     <div class="note">
@@ -1348,34 +1472,43 @@ SCHOLAR = "https://scholar.google.com/citations?user=e8zPvu8AAAAJ&hl=en"
 
 PAPERS = [
     {"title": "Designing Adaptive Human-in-the-Loop Interfaces for Enhanced Collaborative Incident Management",
-     "venue": "International Journal of Computer Applications", "year": "2026",
+     "venue": "International Journal of Computer Applications, volume 187, number 118",
+     "year": "2026",
      "summary": "Examines interface architectures in which human operators and AI systems "
                 "jointly manage complex incident workflows, with cognitive task allocation "
                 "shifting according to the operator's state and the system's own confidence. "
                 "It is the published statement of the human-in-the-loop pattern I apply to "
                 "production systems.",
-     "url": IJCA, "link": "International Journal of Computer Applications"},
-    {"title": "Scalable Event-Driven Architectures for Distributed Retail Data Collection Using ActiveMQ Artemis",
-     "venue": "IEEE ICCBI, the 5th International Conference on Computer Networks, Big Data and IoT",
-     "year": None,
+     "url": IJCAPAPER, "link": "IJCA article record"},
+    {"title": "Scalable Event-Driven Architectures for Distributed Retail Data Collection using ActiveMQ Artemis",
+     "venue": "2026 5th International Conference on Computer Networks, Big Data and IoT (ICCBI), Dubai",
+     "year": "2026",
+     "doi": "10.1109/ICCBI68589.2026.11619835",
      "summary": "Examines high-throughput messaging topologies for multi-site data aggregation, "
                 "using ActiveMQ Artemis as the backbone for event propagation across "
                 "independently governed retail nodes. Presented in Dubai in June.",
-     "url": "https://iccbi.com/", "link": "IEEE ICCBI"},
+     "url": ICCBIPAPER, "link": "IEEE Xplore record"},
     {"title": "An Event-Driven Context-Aware Framework for Margin-Preserving Dynamic Pricing in High-Velocity Retail Commerce Systems",
-     "venue": "IEEE International Workshop on Intelligent Systems (IWIS), accepted paper", "year": "2026",
+     "venue": "2026 International Workshop on Intelligent Systems (IWIS), Ulsan, Korea",
+     "year": "2026",
+     "doi": "10.1109/IWIS70716.2026.11667738",
      "summary": "Co-authored with Jayakumar Ramalingam and Jose Prabhu Michael Singarayan. "
                 "Proposes a context-aware pricing framework that adjusts retail prices in "
                 "real time from streaming demand and inventory signals while preserving "
-                "margin targets.",
-     "url": SCHOLAR, "link": "Google Scholar profile"},
+                "margin targets. Presented in Ulsan in August.",
+     "url": IWISPAPER, "link": "IEEE Xplore record"},
 ]
 
 
 def pub_entry(p) -> str:
     year = f", {html.escape(p['year'])}" if p["year"] else ""
+    doi = ""
+    if p.get("doi"):
+        d = html.escape(p["doi"])
+        doi = (f'<p class="pub-doi">DOI <a href="https://doi.org/{d}" '
+               f'{target_blank("https://doi.org/" + d)}>{d}</a></p>')
     return (f'<article class="pub-entry"><h3 class="pub-title">{html.escape(p["title"])}</h3>'
-            f'<p class="pub-venue"><em>{html.escape(p["venue"])}</em>{year}</p>'
+            f'<p class="pub-venue"><em>{html.escape(p["venue"])}</em>{year}</p>{doi}'
             f'<p>{html.escape(p["summary"])}</p>'
             f'<p class="claim-src">Source: {ext(p["url"], p["link"])}</p></article>')
 
@@ -1392,8 +1525,9 @@ add("publications/index.html",
     <p class="kicker">Publications</p>
     <h1>Peer-reviewed papers, with the record linked</h1>
     <p class="lede">
-      Three papers have been through peer review. Each entry links to the published version or to the record of acceptance
-      rather than quoting it. Talks and technical articles have their own pages.
+      Three papers have been through peer review. Each entry links to the published record,
+      where the title, the authors and the DOI can be checked. Talks and technical articles
+      have their own pages.
     </p>
   </div>
 </section>
@@ -1451,7 +1585,7 @@ TALKS = [
      "summary": "Why extraction that has to be correct, as opposed to merely plausible, needs "
                 "hybrid agent designs rather than a single model in a loop. The session is "
                 "on the second day.",
-     "url": "https://www.extractsummit.io/", "link": "Extract Summit programme",
+     "url": "https://www.extractsummit.io/speakers", "link": "Extract Summit speakers",
      "photo": "talk-extract-summit.jpg"},
     {"group": "Conference sessions",
      "event": "IEEE ICCBI, the 5th International Conference on Computer Networks, Big Data and IoT",
@@ -1520,7 +1654,12 @@ add("talks/index.html",
           twenty four joined online, and a recording is kept in the university's own media
           library. The letter below is written for the record rather than for me.
         </p>
-        <a class="linkbtn src" href="/assets/docs/ksu-cybersecurity-talk-letter-2026.pdf">The university letter on the session (PDF)</a>
+""" + evidence_strip(
+        [("/assets/docs/ksu-cybersecurity-talk-letter-2026.pdf",
+          "ksu-cybersecurity-talk-letter-2026",
+          "Letter of appreciation, 21 September 2026", "Letter, PDF", False,
+          "Coles Center for Cybersecurity Education, Kennesaw State University")],
+        label="The letter") + """
       </div>
     </article>
   </section>
@@ -1593,7 +1732,7 @@ add("peer-review/index.html",
     <p class="kicker">Peer review and programme committees</p>
     <h1>The venues, named</h1>
     <p class="lede">
-      I review submitted papers and serve on technical programme committees across four
+      I review submitted papers and serve on technical programme committees across three
       continents. The venues are listed individually below, because a named venue can be
       checked against the conference's own committee page and a total cannot.
     </p>
@@ -1602,15 +1741,31 @@ add("peer-review/index.html",
 
 <div class="wrap">
   <section>
-    <h2>Technical programme committees</h2>
+    <h2>Reviewer certificates</h2>
     <p>
-      Committee service means deciding which submitted research is accepted and presented.
-      Three appointments, one of which is an IEEE workshop co-located with a larger
-      conference rather than a stand-alone event.
+      A conference that issues a certificate has put its own name to the review, which is
+      why these links open the document itself rather than describe it. Each one is signed
+      by the chair of the conference that sent it.
     </p>
-    <ul class="plain committee-list">
+""" + certificate_rows_html() + """
+    <p class="src-note">
+      Reproduced as received, with the file size reduced for the web and the wording left
+      untouched. A conference that has not issued a certificate is listed below and is not
+      listed here.
+    </p>
+
+    <div class="committee-feature">
+      <p class="committee-kicker">Four appointments</p>
+      <h2>Technical programme committees</h2>
+      <p class="committee-intro">
+        Committee service means deciding which submitted research is accepted and presented.
+        One appointment is an IEEE workshop co-located with a larger conference rather than a
+        stand-alone event, and one is held jointly with a sister conference.
+      </p>
+      <ul class="committee-grid">
 """ + committee_rows_html() + """
-    </ul>
+      </ul>
+    </div>
 
     <h2>Peer review for conferences</h2>
     <p>
@@ -1627,7 +1782,7 @@ add("peer-review/index.html",
 """ + venue_rows_html() + """
     </ul>
     <p class="src-note">
-      28 review venues plus three committee appointments. Links verified on
+      28 review venues plus four committee appointments. Links verified on
       """ + VERIFIED_DATE + """. Eight venues have no live listing to link.
     </p>
 
@@ -1637,21 +1792,6 @@ add("peer-review/index.html",
       instead. The authoritative number is stated in my application, which holds the review
       record conference by conference.
     </div>
-
-    <h2>Reviewer certificates</h2>
-    <p>
-      A conference that issues a certificate has put its own name to the review, which is
-      why these links open the document itself rather than describe it. Each one is signed
-      by the chair of the conference that sent it.
-    </p>
-    <ul class="plain venue-list">
-""" + certificate_rows_html() + """
-    </ul>
-    <p class="src-note">
-      Reproduced as received, with the file size reduced for the web and the wording left
-      untouched. A conference that has not issued a certificate is listed above and is not
-      listed here.
-    </p>
 
     <h2>Review platforms</h2>
     <p>

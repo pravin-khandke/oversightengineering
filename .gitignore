@@ -10,3 +10,9 @@ __pycache__/
 
 # private source documents (resume, LinkedIn snapshots, submitted form). Never publish.
 docs/sync/
+
+# agent tooling, not part of the site
+.agents/
+.claude/
+.hermes/
+skills-lock.json

@@ -198,10 +198,10 @@ class Rules(unittest.TestCase):
     def test_counters_agree_everywhere(self):
         got = dict(re.findall(r'data-counter="(\w+)">(\d+)<', read("index.html")))
         self.assertEqual(got, {"years": "26", "venues": "28",
-                               "committees": "3", "publications": "3"})
+                               "committees": "4", "publications": "3"})
         review = read("peer-review/index.html")
         self.assertEqual(review.count('class="venue-row"'), 28)
-        self.assertEqual(review.count('class="committee-row"'), 3)
+        self.assertEqual(review.count('class="committee-card"'), 4)
         self.assertEqual(read("publications/index.html").count('class="pub-entry"'), 3)
 
     def test_no_review_totals(self):
@@ -210,13 +210,22 @@ class Rules(unittest.TestCase):
             with self.subTest(page=p.relative_to(DOCS).as_posix()):
                 self.assertIsNone(pattern.search(visible_text(p.read_text(encoding="utf-8"))))
 
-    def test_connect_row_is_orcid_linkedin_email_only(self):
+    def test_connect_row_is_orcid_and_linkedin_only(self):
         row = re.search(r'<div class="connect-row">(.*?)</div>', read("index.html"), re.S).group(1)
         hrefs = re.findall(r'href="([^"]+)"', row)
-        self.assertEqual(len(hrefs), 3)
+        self.assertEqual(len(hrefs), 2)
         self.assertTrue(hrefs[0].startswith("https://orcid.org/"))
         self.assertTrue(hrefs[1].startswith("https://www.linkedin.com/"))
-        self.assertTrue(hrefs[2].startswith("mailto:"))
+
+    def test_no_email_address_anywhere(self):
+        # The owner asked for the address to be kept off the site, so no page carries
+        # one, in text or in a mailto: link.
+        pattern = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+|mailto:", re.I)
+        for p in real_pages():
+            with self.subTest(page=p.relative_to(DOCS).as_posix()):
+                raw = p.read_text(encoding="utf-8")
+                body = raw.split("<body", 1)[-1]
+                self.assertIsNone(pattern.search(visible_text(body)))
 
     def test_canonical_urls_are_clean(self):
         for p in real_pages():
@@ -318,7 +327,11 @@ class Home(unittest.TestCase):
         section = re.search(r'<section id="highlights">(.*?)</section>', read("index.html"), re.S)
         self.assertIsNotNone(section, "home page has no highlights section")
         body = section.group(1)
-        items = re.findall(r"<li>(.*?)</li>", body, re.S)
+        # The claim list is what the rule is about; the evidence strip below it is
+        # navigation, not a highlight.
+        claims = re.search(r'<ul class="claims">(.*?)</ul>', body, re.S)
+        self.assertIsNotNone(claims, "highlights section has no claim list")
+        items = re.findall(r"<li>(.*?)</li>", claims.group(1) if claims else "", re.S)
         self.assertTrue(5 <= len(items) <= 8, f"{len(items)} highlights")
         for item in items:
             with self.subTest(item=item[:40]):
