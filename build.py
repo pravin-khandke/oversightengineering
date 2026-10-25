@@ -289,12 +289,21 @@ def evidence_strip(items: list[tuple], label: str = "") -> str:
     for item in items:
         href, stem, title, kind, is_image = item[:5]
         note = item[5] if len(item) > 5 else ""
+        note_html = (f'<span class="ev-note">{html.escape(note)}</span>' if note else "")
+        if href is None:
+            # Reserved slot: the document is not hosted yet, so nothing points at a file
+            # that does not exist. Swap in a real href once the file lands.
+            cards.append(
+                f'<li><div class="ev-card pending">'
+                f'<span class="ev-thumb"></span>'
+                f'<span class="ev-body"><span class="ev-title">{html.escape(title)}</span>'
+                f'{note_html}<span class="ev-kind">{html.escape(kind)}</span></span></div></li>')
+            continue
         if is_image:
             attrs = (f'class="ev-card proof" data-proof="{href}" '
                      f'data-title="{html.escape(title)}"')
         else:
             attrs = 'class="ev-card" target="_blank" rel="noopener noreferrer"'
-        note_html = (f'<span class="ev-note">{html.escape(note)}</span>' if note else "")
         cards.append(
             f'<li><a {attrs} href="{href}">'
             f'<span class="ev-thumb"><img src="{THUMBS}/{stem}.jpg" '
@@ -403,6 +412,25 @@ PROOF_RSS_EMAIL = "/assets/proof/rss-fellowship-email.png"
 PROOF_RSS_LETTER = "/assets/proof/rss-fellowship-letter.png"
 PROOF_KSU_AGREEMENT = "/assets/proof/ksu-capstone-master-agreement-email.png"
 PROOF_KSU_ORDER = "/assets/proof/ksu-capstone-project-order-email.png"
+PROOF_KEMP = "/assets/proof/brian-kemp-with-governor.jpg"
+
+# The document behind the recognition is not in the repo yet. Drop it at
+# docs/assets/docs/smap-recognition.pdf, or docs/assets/proof/smap-recognition.jpg,
+# then run scripts/make_thumbs.py and rebuild: the dashed slot becomes a real card.
+RECOGNITION_STEM = "smap-recognition"
+
+
+def recognition_item() -> tuple:
+    """The recognition document as an evidence item, or a reserved slot when it is absent."""
+    title, note = "Recognition document", "The record of the recognition itself"
+    if (OUT / "assets" / "docs" / f"{RECOGNITION_STEM}.pdf").exists():
+        return (f"/assets/docs/{RECOGNITION_STEM}.pdf", RECOGNITION_STEM, title,
+                "Document, PDF", False, note)
+    for ext in (".jpg", ".jpeg", ".png"):
+        if (OUT / "assets" / "proof" / f"{RECOGNITION_STEM}{ext}").exists():
+            return (f"/assets/proof/{RECOGNITION_STEM}{ext}", RECOGNITION_STEM, title,
+                    "Document, image", True, note)
+    return (None, "", title, "Document, to be added", False, note)
 SAS_VERIFY = "https://www.sassociety.com/membership-id-sas-sefm-770-2026/"
 AIC_LIST = "https://scrs.in/conference/aic2026/speaker/talk/23186"
 KIDS_REPO = "https://github.com/pravin-khandke/safe-ai-for-kids"
@@ -1341,12 +1369,6 @@ add("career/index.html",
     <h3>Observability</h3>
 """ + skill_row(["Splunk", "New Relic", "DataDog", "PagerDuty"]) + """
 
-    <h2>Community service</h2>
-    <ul class="claims">
-""" + claim(
-      "Volunteer at the Celebration 250 Community Recognition Event run by the Cobb County Sheriff's Office, August 2026.",
-      ["Volunteer record available through the application"]) + """
-    </ul>
   </section>
 </div>
 """)
@@ -1356,23 +1378,43 @@ add("career/index.html",
 # ============================================================================
 add("standing/index.html",
     "Public influencer | Pravin Khandke",
-    "Keynotes at recognised events, technical programme committees at international "
-    "conferences, a peer review record, and sustained written work on digital and IT topics.",
+    "Community service for a non-profit, keynotes at recognised events, technical programme "
+    "committees at international conferences, a peer review record, and sustained written work "
+    "on digital and IT topics.",
     """
 <section class="hero">
   <div class="wrap">
     <p class="kicker">Standing in the community</p>
     <h1>Invited to speak, asked to judge, and read beyond my own organisation</h1>
     <p class="lede">
-      Standing in a profession shows up as other people asking you to do something. The
-      invitations on this page came from conference organisers and journal editors. Each
-      one is listed with a public record where one exists.
+      Standing in a profession shows up as other people asking you to do something. Most of
+      what follows came from conference organisers and journal editors. The community service
+      at the top is different. It is unpaid work for a non-profit, and it sits on this page
+      because it is service to the same community. Each entry is listed with a public record
+      where one exists.
     </p>
   </div>
 </section>
 
 <div class="wrap">
   <section>
+    <h2>Community service</h2>
+""" + evidence_strip(
+      [(PROOF_KEMP, "brian-kemp-with-governor",
+        "Photograph with Governor Brian Kemp", "Photograph, image", True,
+        "Taken 2 January 2020"),
+       recognition_item()],
+      label="The photograph and the record") + """
+    <ul class="claims">
+""" + claim(
+      "Volunteer with SMAP Foundation, a non-profit, since January 2019. The work is teaching "
+      "students and advising them on study and career choices. The foundation's community work, "
+      "some of it for young people, was recognised by Governor Brian Kemp at the Georgia State Capitol.",
+      ["Volunteer record available through the application"]) + claim(
+      "Volunteer at the Celebration 250 Community Recognition Event run by the Cobb County Sheriff's Office, August 2026.",
+      ["Volunteer record available through the application"]) + """
+    </ul>
+
     <h2>Keynote and conference speaking</h2>
     <ul class="claims">
 """ + claim(

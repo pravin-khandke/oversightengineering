@@ -438,6 +438,14 @@ ul.evidence li { margin: 0; }
 /* a.proof carries a dotted underline for text links; a card is already a border */
 .ev-card.proof { border-bottom: 1px solid var(--line); }
 
+/* A reserved slot for a document that has not been added yet. Dashed and not clickable,
+   so the row keeps its shape without pointing at a file that is not there. */
+.ev-card.pending { border-style: dashed; background: #fcfdfc; }
+.ev-card.pending:hover { border-color: var(--line); transform: none; box-shadow: none; }
+.ev-card.pending .ev-thumb {
+  background: repeating-linear-gradient(135deg, #f6f8f7 0 9px, #eef2f0 9px 18px); }
+.ev-card.pending .ev-kind { color: var(--muted); }
+
 .ev-thumb { display: block; aspect-ratio: 4 / 3; background: #f6f8f7;
   border-bottom: 1px solid var(--line-soft); overflow: hidden; }
 .ev-thumb img { width: 100%; height: 100%; object-fit: contain; object-position: top center;
