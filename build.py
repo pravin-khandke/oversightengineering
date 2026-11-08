@@ -605,6 +605,19 @@ HIGHLIGHTS = [
 ]
 
 
+def connect_row_html() -> str:
+    """The hero link row. The blog leads, ahead of ORCID and LinkedIn, since it is the
+    place a reader can spend the most time."""
+    blog = ""
+    if BLOG:
+        blog = (f'<a href="{html.escape(BLOG["url"])}" target="_blank" '
+                f'rel="noopener noreferrer">{html.escape(BLOG["title"])}</a>\n        ')
+    return (f'<div class="connect-row">\n        {blog}'
+            '<a href="https://orcid.org/0009-0004-9693-9334">ORCID 0009-0004-9693-9334</a>\n'
+            '        <a href="https://www.linkedin.com/in/pravin-khandke">linkedin.com/in/pravin-khandke</a>\n'
+            '      </div>')
+
+
 def blog_banner() -> str:
     """The blog, called out as a panel. Empty when there is no archive to point at."""
     if not BLOG:
@@ -694,10 +707,7 @@ add("index.html",
         <a class="btn" href="#record">Read the record</a>
         <a class="btn ghost" href="/peer-review/">Peer review</a>
       </div>
-      <div class="connect-row">
-        <a href="https://orcid.org/0009-0004-9693-9334">ORCID 0009-0004-9693-9334</a>
-        <a href="https://www.linkedin.com/in/pravin-khandke">linkedin.com/in/pravin-khandke</a>
-      </div>
+""" + connect_row_html() + """
     </div>
     <div class="hero-photo">
       <img src="/assets/img/profile.jpg" alt="Pravin Khandke, headshot" width="370" height="480">

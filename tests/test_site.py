@@ -210,12 +210,17 @@ class Rules(unittest.TestCase):
             with self.subTest(page=p.relative_to(DOCS).as_posix()):
                 self.assertIsNone(pattern.search(visible_text(p.read_text(encoding="utf-8"))))
 
-    def test_connect_row_is_orcid_and_linkedin_only(self):
+    def test_connect_row_leads_with_blog_then_orcid_and_linkedin(self):
+        # The owner asked for the blog link in the hero, ahead of ORCID. The row stays a
+        # closed set: the blog first, then ORCID, then LinkedIn, and nothing else.
         row = re.search(r'<div class="connect-row">(.*?)</div>', read("index.html"), re.S).group(1)
         hrefs = re.findall(r'href="([^"]+)"', row)
-        self.assertEqual(len(hrefs), 2)
-        self.assertTrue(hrefs[0].startswith("https://orcid.org/"))
-        self.assertTrue(hrefs[1].startswith("https://www.linkedin.com/"))
+        self.assertEqual(len(hrefs), 3)
+        self.assertTrue(hrefs[0].startswith("https://pravin-khandke-blog.blogspot.com/"))
+        self.assertTrue(hrefs[1].startswith("https://orcid.org/"))
+        self.assertTrue(hrefs[2].startswith("https://www.linkedin.com/"))
+        # The blog is a third-party site, so it leaves the tab. The site's own profiles do not.
+        self.assertIn('target="_blank"', row)
 
     def test_no_email_address_anywhere(self):
         # The owner asked for the address to be kept off the site, so no page carries
