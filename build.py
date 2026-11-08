@@ -59,6 +59,24 @@ ARTICLES = [
 if os.environ.get("SITE_ARTICLES") == "none":
     ARTICLES = []
 
+# The blog archive. Called out on the home page and again at the top of the Writing page
+# because it is the largest body of bylined writing in the record, and because a reader
+# arriving from a form or an assessor's inbox should be able to reach it in one click.
+BLOG = {
+    "title": "From EJB to Agents",
+    "url": "https://pravin-khandke-blog.blogspot.com/",
+    "host": "pravin-khandke-blog.blogspot.com",
+    "count": 85,
+    "blurb": (
+        "Posts on the Java and enterprise stack, written from the operator's seat. "
+        "Spring and EJB, messaging and data platforms, and the agents and tooling "
+        "around them now. Each one takes a release, a standard or a failure mode and "
+        "asks what it changes for the people who have to run the thing in production."
+    ),
+}
+if os.environ.get("SITE_ARTICLES") == "none":
+    BLOG = None
+
 # One table drives the nav, the sub-tab strip and the "current page" marker.
 # label, landing page, pages that mark the item current
 NAV_GROUPS = [
@@ -587,6 +605,24 @@ HIGHLIGHTS = [
 ]
 
 
+def blog_banner() -> str:
+    """The blog, called out as a panel. Empty when there is no archive to point at."""
+    if not BLOG:
+        return ""
+    return f"""  <section class="blog-banner" id="blog">
+    <div class="bb-text">
+      <p class="kicker">Blog</p>
+      <h2>{html.escape(BLOG["title"])}</h2>
+      <p>{html.escape(BLOG["blurb"])}</p>
+      <p class="bb-meta">{BLOG["count"]} posts at {html.escape(BLOG["host"])}</p>
+    </div>
+    <div class="bb-cta">
+      {ext(BLOG["url"], "Read the blog")}
+    </div>
+  </section>
+"""
+
+
 def highlights_html() -> str:
     """The sort key orders the list. No date is printed, so no timeline is implied."""
     rows = sorted(HIGHLIGHTS, key=lambda h: h[0], reverse=True)
@@ -626,7 +662,7 @@ HOME_CARDS = [
      "28 review venues and 4 committee appointments, each linked to its public listing where one exists.",
      5, "card-review.jpg"),
     ("/writing/", "Writing",
-     "Technical articles for practising engineers on developer platforms.",
+     "The blog archive of 85 posts, plus articles published on developer platforms.",
      6, "card-writing.jpg"),
 ]
 
@@ -680,6 +716,7 @@ add("index.html",
 
 <div class="wrap">
 
+""" + blog_banner() + """
   <section id="highlights">
     <h2 class="section-rule">Highlights</h2>
     <p class="section-intro">Items from the record. Each one links to its source.</p>
@@ -1740,6 +1777,7 @@ if ARTICLES:
 </section>
 
 <div class="wrap">
+""" + blog_banner() + """
   <section>
     <h2>Technical articles</h2>
     <div class="articles">
