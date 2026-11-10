@@ -437,24 +437,6 @@ PROOF_RSS_LETTER = "/assets/proof/rss-fellowship-letter.png"
 PROOF_KSU_AGREEMENT = "/assets/proof/ksu-capstone-master-agreement-email.png"
 PROOF_KSU_ORDER = "/assets/proof/ksu-capstone-project-order-email.png"
 PROOF_KEMP = "/assets/proof/brian-kemp-with-governor.jpg"
-
-# The document behind the recognition is not in the repo yet. Drop it at
-# docs/assets/docs/smap-recognition.pdf, or docs/assets/proof/smap-recognition.jpg,
-# then run scripts/make_thumbs.py and rebuild: the dashed slot becomes a real card.
-RECOGNITION_STEM = "smap-recognition"
-
-
-def recognition_item() -> tuple:
-    """The recognition document as an evidence item, or a reserved slot when it is absent."""
-    title, note = "Recognition document", "The record of the recognition itself"
-    if (OUT / "assets" / "docs" / f"{RECOGNITION_STEM}.pdf").exists():
-        return (f"/assets/docs/{RECOGNITION_STEM}.pdf", RECOGNITION_STEM, title,
-                "Document, PDF", False, note)
-    for ext in (".jpg", ".jpeg", ".png"):
-        if (OUT / "assets" / "proof" / f"{RECOGNITION_STEM}{ext}").exists():
-            return (f"/assets/proof/{RECOGNITION_STEM}{ext}", RECOGNITION_STEM, title,
-                    "Document, image", True, note)
-    return (None, "", title, "Document, to be added", False, note)
 SAS_VERIFY = "https://www.sassociety.com/membership-id-sas-sefm-770-2026/"
 AIC_LIST = "https://scrs.in/conference/aic2026/speaker/talk/23186"
 KIDS_REPO = "https://github.com/pravin-khandke/safe-ai-for-kids"
@@ -1455,9 +1437,8 @@ add("standing/index.html",
 """ + evidence_strip(
       [(PROOF_KEMP, "brian-kemp-with-governor",
         "Photograph with Governor Brian Kemp", "Photograph, image", True,
-        "Taken 2 January 2020"),
-       recognition_item()],
-      label="The photograph and the record") + """
+        "Taken 2 January 2020")],
+      label="The photograph") + """
     <ul class="claims">
 """ + claim(
       "Volunteer with SMAP Foundation, a non-profit, since January 2019. The work is teaching "
