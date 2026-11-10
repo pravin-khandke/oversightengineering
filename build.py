@@ -426,6 +426,12 @@ IJCA = IJCAPAPER
 PROOF_IEEE = "/assets/proof/ieee-senior-member-certificate.png"
 PROOF_SEFM = "/assets/proof/sefm-eminent-fellow-certificate.png"
 PROOF_SCRS = "/assets/proof/scrs-fellow-certificate.png"
+
+# The certificate IJSRSET issues for a paper. It is held separately from the three papers
+# listed above it on the publications page, because the journal's own article page is the
+# record for that paper rather than a publisher DOI.
+CERT_IJSRSET = "/assets/docs/ijsrset-publication-certificate-2025.pdf"
+IJSRSET_ARTICLE = "https://ijsrset.com/home/article/view/IJSRSET2613450"
 PROOF_RSS_EMAIL = "/assets/proof/rss-fellowship-email.png"
 PROOF_RSS_LETTER = "/assets/proof/rss-fellowship-letter.png"
 PROOF_KSU_AGREEMENT = "/assets/proof/ksu-capstone-master-agreement-email.png"
@@ -1626,6 +1632,23 @@ add("publications/index.html",
     <h2>Peer-reviewed papers</h2>
 """ + "\n".join(pub_entry(p) for p in PAPERS) + """
     <p>Google Scholar lists all three papers. """ + ext(SCHOLAR, "Google Scholar profile") + """</p>
+
+    <h2>Journal publication certificate</h2>
+    <p>
+      A fourth paper, on event-driven reconciliation for canonical financial data, was
+      published in the International Journal of Scientific Research in Science, Engineering
+      and Technology in volume 12, issue 1, January to February 2025, and the journal issued
+      the certificate below for it. That journal is not in the Directory of Open Access
+      Journals and the paper carries no publisher DOI, so it is recorded here on the
+      journal's own article page rather than counted with the three papers above.
+    </p>
+    <p class="claim-src">Source: """ + ext(IJSRSET_ARTICLE, "IJSRSET article record") + """</p>
+""" + evidence_strip(
+        [(CERT_IJSRSET, "ijsrset-publication-certificate-2025",
+          "Certificate of publication, 27 January 2025", "Certificate, PDF", False,
+          "International Journal of Scientific Research in Science, Engineering and "
+          "Technology, volume 12, issue 1")],
+        label="The certificate") + """
 
     <h2>Open source</h2>
     <p>Two of the papers have a companion repository. The children's guide is the third public repository.</p>
