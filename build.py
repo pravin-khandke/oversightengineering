@@ -427,9 +427,8 @@ PROOF_IEEE = "/assets/proof/ieee-senior-member-certificate.png"
 PROOF_SEFM = "/assets/proof/sefm-eminent-fellow-certificate.png"
 PROOF_SCRS = "/assets/proof/scrs-fellow-certificate.png"
 
-# The certificate IJSRSET issues for a paper, with the DOI the journal lists for it. The
-# paper sits apart from the three above on the publications page because the journal is not
-# in the Directory of Open Access Journals, not because it lacks a DOI.
+# The certificate IJSRSET issued for a paper, with the DOI the journal lists for it. It is
+# shown in its own section of the publications page, below the three papers.
 CERT_IJSRSET = "/assets/docs/ijsrset-publication-certificate-2025.pdf"
 IJSRSET_ARTICLE = "https://ijsrset.com/home/article/view/IJSRSET2613450"
 IJSRSET_DOI = "10.5281/zenodo.24088140"
@@ -1621,9 +1620,7 @@ add("publications/index.html",
       A fourth paper, on event-driven reconciliation for canonical financial data, was
       published in the International Journal of Scientific Research in Science, Engineering
       and Technology in volume 12, issue 1, January to February 2025, and the journal issued
-      the certificate below for it. The journal lists a DOI for the paper. That journal is
-      not in the Directory of Open Access Journals, so the paper is recorded here on its own
-      rather than counted with the three papers above.
+      the certificate below for it. The journal lists a DOI for the paper.
     </p>
     <p class="pub-doi">DOI """ + ext(IJSRSET_DOI_URL, IJSRSET_DOI) + """</p>
     <p class="claim-src">Source: """ + ext(IJSRSET_ARTICLE, "IJSRSET article record") + """</p>
