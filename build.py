@@ -658,7 +658,7 @@ HOME_CARDS = [
      "Standing in the community and the grades I hold, each with its public record.",
      3, "card-community.jpg"),
     ("/publications/", "Papers and talks",
-     "Three peer-reviewed papers and the talks I have given, linked to the organiser's record.",
+     "Four papers, three of them peer reviewed, and the talks I have given, linked to the organiser's record.",
      4, "card-papers.jpg"),
     ("/peer-review/", "Peer review",
      "28 review venues and 4 committee appointments, each linked to its public listing where one exists.",
@@ -709,7 +709,7 @@ add("index.html",
     <span class="stat"><span class="stat-n" data-counter="years">26</span><span class="stat-l">Years</span></span>
     <span class="stat"><span class="stat-n" data-counter="venues">28</span><span class="stat-l">Review venues</span></span>
     <span class="stat"><span class="stat-n" data-counter="committees">4</span><span class="stat-l">Committees</span></span>
-    <span class="stat"><span class="stat-n" data-counter="publications">3</span><span class="stat-l">Publications</span></span>
+    <span class="stat"><span class="stat-n" data-counter="publications">4</span><span class="stat-l">Publications</span></span>
   </div>
 </div>
 
@@ -1602,7 +1602,8 @@ add("publications/index.html",
     <p class="kicker">Publications</p>
     <h1>Peer-reviewed papers, with the record linked</h1>
     <p class="lede">
-      Three papers have been through peer review. Each entry links to the published record,
+      Four papers are listed. Three have been through peer review, and the fourth is recorded
+      with the certificate the journal issued for it. Each entry links to the published record,
       where the title, the authors and the DOI can be checked. Talks and technical articles
       have their own pages.
     </p>
@@ -1648,8 +1649,8 @@ add("publications/index.html",
     <p>See also the """ + SEE_ALSO + """.</p>
 
     <div class="note">
-      <strong>On the publication record.</strong> I list three peer-reviewed papers, which is
-      the accurate count. I do not list work in draft, work under review, or a citation
+      <strong>On the publication record.</strong> I list four papers, three of them through
+      peer review. I do not list work in draft, work under review, or a citation
       total, because a reader who follows a dead link or an empty profile learns more from
       the absence than from the claim.
     </div>
