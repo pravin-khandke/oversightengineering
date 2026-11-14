@@ -513,6 +513,8 @@ CERTIFICATE_ROWS = [
      "Reviewer certificate", "reviewer-certificate-incosst-2026.pdf"),
     ("AMLDS", "International Conference on Advanced Machine Learning and Data Science",
      "Reviewer certificate", "reviewer-certificate-amlds-2026.pdf"),
+    ("IEEE ICTMOD", "IEEE Technology Management, Operations and Decisions",
+     "Certificate of Appreciation, peer reviewer", "reviewer-certificate-ictmod-2026.pdf"),
 ]
 
 
